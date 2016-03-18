@@ -1,6 +1,8 @@
 package base;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -12,7 +14,7 @@ import com.zkrkj.peoplehospital.R;
 /**
  * Created by lenovo on 2016/3/16.
  */
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends FragmentActivity {
     public static String TAG = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

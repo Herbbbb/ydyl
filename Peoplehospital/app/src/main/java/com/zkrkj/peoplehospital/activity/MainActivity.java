@@ -40,10 +40,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         actionBar = getSupportActionBar();
-        actionBar.setLogo(R.drawable.ic_tab_find_b);
-        actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+
         // setContentView(R.layout.activity_main);
     }
 
@@ -110,27 +107,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 Toast.makeText(this,"home",Toast.LENGTH_SHORT).show();
                 select(0);
-                actionBar.setTitle("百姓医院");
+
                 break;
             case R.id.tab_hospitals:
                 Toast.makeText(this,"tab_hospitals",Toast.LENGTH_SHORT).show();
                 select(1);
-                actionBar.setTitle("医院主站");
+
                 break;
             case R.id.tab_docters:
                 select(2);
                 Toast.makeText(this,"doctor",Toast.LENGTH_SHORT).show();
-                actionBar.setTitle("医生信息");
+
                 break;
             case R.id.tab_talk:
                 select(3);
                 Toast.makeText(this,"talk",Toast.LENGTH_SHORT).show();
-                actionBar.setTitle("就医记录");
+
                 break;
             case R.id.tab_user:
                 select(4);
                 Toast.makeText(this,"user",Toast.LENGTH_SHORT).show();
-                actionBar.setTitle("个人中心");
+
                 break;
 
             default:

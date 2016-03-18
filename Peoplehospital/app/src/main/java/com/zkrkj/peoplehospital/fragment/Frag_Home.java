@@ -25,6 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.IStringRequest;
 import util.LogUtil;
+import util.TitleBarUtils;
 
 /**
  * Created by lenovo on 2016/3/16.
@@ -65,7 +66,19 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener{
         view = inflater.inflate(R.layout.frag_home, null);
         ButterKnife.bind(this, view);
         initView();
+        initTitle();
         return view;
+    }
+    private void initTitle() {
+        TitleBarUtils titleBarUtils = (TitleBarUtils) view.findViewById(R.id.titleBar);
+        titleBarUtils.setTitle("登录");
+        titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
     }
 
     @Override
