@@ -5,11 +5,13 @@
     android:layout_height="match_parent">
 
 
-
+<view.VerticalScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:id="@+id/frag_home1"
     android:orientation="vertical"
     >
 <view.SearchView
@@ -25,6 +27,7 @@
         android:background="#000000"
         />
     <include layout="@layout/index_home_list5"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
@@ -97,7 +100,10 @@
         />
 
 
+
 </LinearLayout>
+
+</view.VerticalScrollView>
 
 
 </LinearLayout>
