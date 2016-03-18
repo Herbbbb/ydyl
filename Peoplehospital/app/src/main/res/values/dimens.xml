@@ -3,5 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
     <dimen name="text_size_default">10dp</dimen>
+
+    <dimen name="bigButtonHeight">46dip</dimen>
+    <dimen name="marginMore">10dip</dimen>
+
 </resources>
