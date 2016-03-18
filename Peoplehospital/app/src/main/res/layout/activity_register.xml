@@ -17,12 +17,30 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="50dp">
 
         <EditText
             android:id="@+id/et_account"
             android:hint="手机号"
+            android:singleLine="true"
             android:digits="1234567890"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <EditText
+            android:id="@+id/et_pwd"
+            android:hint="密码：6-18位数字或字母"
             android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -34,27 +52,56 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="50dp">
 
         <EditText
-            android:id="@+id/et_pwd"
-            android:hint="密码"
+            android:id="@+id/et_pwd_sure"
+            android:hint="确认密码"
             android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </RelativeLayout>
 
-    <Button
-        android:layout_marginTop="10dp"
+    <TextView
+        android:id="@+id/tv_pwd_diff_error"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="10dip"
+        android:textColor="@color/red"
+        android:text="*两次输入的密码不一致"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
-        android:id="@+id/btn_submit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:background="@drawable/login_btn_submit"
-        android:text="立即登录" />
+        android:orientation="horizontal"
+        android:layout_height="50dp">
+
+        <EditText
+            android:id="@+id/et_yzm"
+            android:hint="验证码"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:singleLine="true"
+            android:digits="1234567890"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:id="@+id/btn_yzm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:background="@drawable/login_btn_submit"
+            android:text="发送验证码" />
+
+    </LinearLayout>
 
     <Button
         android:layout_marginTop="20dp"
