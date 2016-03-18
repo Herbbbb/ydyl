@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
 import android.support.v7.app.ActionBar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,14 +34,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Fragment mUserFragment;
     private ImageView image1,image2,image3,image4,docterimage;
     private TextView textView1,textView2,textView3,textView4,doctertextView;
-
-
+     public ActionBar actionBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar = getSupportActionBar();
+         actionBar = getSupportActionBar();
         actionBar.setLogo(R.drawable.ic_tab_find_b);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
@@ -107,24 +107,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tab_home:
+
                 Toast.makeText(this,"home",Toast.LENGTH_SHORT).show();
                 select(0);
+                actionBar.setTitle("百姓医院");
                 break;
             case R.id.tab_hospitals:
                 Toast.makeText(this,"tab_hospitals",Toast.LENGTH_SHORT).show();
                 select(1);
+                actionBar.setTitle("医院主站");
                 break;
             case R.id.tab_docters:
                 select(2);
                 Toast.makeText(this,"doctor",Toast.LENGTH_SHORT).show();
+                actionBar.setTitle("医生信息");
                 break;
             case R.id.tab_talk:
                 select(3);
                 Toast.makeText(this,"talk",Toast.LENGTH_SHORT).show();
+                actionBar.setTitle("就医记录");
                 break;
             case R.id.tab_user:
                 select(4);
                 Toast.makeText(this,"user",Toast.LENGTH_SHORT).show();
+                actionBar.setTitle("个人中心");
                 break;
 
             default:

@@ -1,6 +1,7 @@
 package com.zkrkj.peoplehospital.fragment;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ public class Frag_Home extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.frag_home,null);
+
+
 
         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
         IStringRequest stringRequest=new IStringRequest(Request.Method.GET,
