@@ -37,6 +37,7 @@
             android:text="中国人民解放军医院  普通外科"/>
 
         <LinearLayout
+            android:layout_marginBottom="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
@@ -45,7 +46,7 @@
                 android:textSize="15sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/blue"
+                android:textColor="#2ec075"
                 android:text="缴费单"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -53,7 +54,7 @@
                 android:textSize="15sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/blue"
+                android:textColor="#2ec075"
                 android:text="处方单"/>
         </LinearLayout>
 
