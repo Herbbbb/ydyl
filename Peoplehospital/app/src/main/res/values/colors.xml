@@ -9,7 +9,8 @@
     <color name="bg_wait">#f0f0f0</color>
     <!--通用标题栏背景色-->
     <color name="bg_title">#2ec075</color>
-
+    <!--通用layout隔断浅灰背景色-->
+    <color name="bg_layout_line">#f2f2f2</color>
 
 
     <!--视频详情页顶部Bar颜色-->
