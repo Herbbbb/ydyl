@@ -1,14 +1,11 @@
 package com.zkrkj.peoplehospital.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
 import com.zkrkj.peoplehospital.R;
-import com.zkrkj.peoplehospital.adapter.FindDocAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import base.BaseActivity;
 import butterknife.Bind;
@@ -16,8 +13,7 @@ import butterknife.ButterKnife;
 import util.TitleBarUtils;
 import view.SearchView;
 
-public class FindDocActivity extends BaseActivity {
-
+public class FindHospitalActivity extends BaseActivity {
 
     @Bind(R.id.finddoc)
     SearchView finddoc;
@@ -28,11 +24,10 @@ public class FindDocActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_find_doc);
+
+        setContentView(R.layout.activity_find_hospital);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -42,17 +37,11 @@ public class FindDocActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        initTitle();
-        List<String> list = new ArrayList<>();
-        list.add("hahaha");
-        FindDocAdapter adapter = new FindDocAdapter(list, this);
-        listView.setAdapter(adapter);
-
-
+       initTitle();
     }
     private void initTitle() {
         TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("找医生");
+        titleBarUtils.setTitle("找医院");
         titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
 
             @Override

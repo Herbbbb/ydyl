@@ -105,28 +105,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.tab_home:
 
-                Toast.makeText(this,"home",Toast.LENGTH_SHORT).show();
+
                 select(0);
 
                 break;
             case R.id.tab_hospitals:
-                Toast.makeText(this,"tab_hospitals",Toast.LENGTH_SHORT).show();
+
                 select(1);
 
                 break;
             case R.id.tab_docters:
                 select(2);
-                Toast.makeText(this,"doctor",Toast.LENGTH_SHORT).show();
+
 
                 break;
             case R.id.tab_talk:
                 select(3);
-                Toast.makeText(this,"talk",Toast.LENGTH_SHORT).show();
+
 
                 break;
             case R.id.tab_user:
                 select(4);
-                Toast.makeText(this,"user",Toast.LENGTH_SHORT).show();
+
 
                 break;
 

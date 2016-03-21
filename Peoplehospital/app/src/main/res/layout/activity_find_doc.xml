@@ -4,8 +4,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.zkrkj.peoplehospital.activity.FindDocActivity">
+     <util.TitleBarUtils
+         android:id="@+id/titleBar"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/bigButtonHeight" >
+     </util.TitleBarUtils>
      <view.SearchView
          android:id="@+id/finddoc"
          android:layout_width="match_parent"
@@ -22,12 +28,14 @@
 
               android:layout_height="match_parent"
               android:layout_weight="1"
+              android:entries="@array/zhicheng"
               ></Spinner>
           <Spinner
               android:layout_width="0dp"
 
               android:layout_height="match_parent"
               android:layout_weight="1"
+              android:entries="@array/zhicheng"
               ></Spinner>
           <Spinner
          android:layout_width="0dp"
