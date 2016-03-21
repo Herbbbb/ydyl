@@ -1,5 +1,6 @@
 package com.zkrkj.peoplehospital.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.activity.MainActivity;
 
 import base.BaseFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
+import util.ToastUtil;
 
 /**
  * Created by lenovo on 2016/3/16.
@@ -62,19 +65,23 @@ public class Frag_User extends BaseFragment implements View.OnClickListener{
     }
     private void initTitle() {
         TitleBarUtils titleBarUtils = (TitleBarUtils) view.findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("登录");
+        titleBarUtils.setTitle("个人中心");
         titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                Intent intent=new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
     }
 
     @Override
     protected void initView() {
-      usernameText.setOnClickListener(this);
+
+        usernameText.setOnClickListener(this);
+        resiglogin.setOnClickListener(this);
+        dangan.setOnClickListener(this);
     }
 
     @Override
@@ -98,6 +105,34 @@ public class Frag_User extends BaseFragment implements View.OnClickListener{
         switch (view.getId()){
             case R.id.username_text:
                 Toast.makeText(getActivity(),"点击了人",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.dangan:
+                ToastUtil.ToastShow(getActivity(),"点击了健康档案",true);
+               // Toast.makeText(getActivity(),"点击了健康档案",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.yuyue:
+                Toast.makeText(getActivity(),"点击了退出登录",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.setaccount:
+                Toast.makeText(getActivity(),"点击了退出登录",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.setmsg:
+                Toast.makeText(getActivity(),"点击了退出登录",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.func:
+                Toast.makeText(getActivity(),"点击了退出登录",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.yijian:
+                Toast.makeText(getActivity(),"点击了退出登录",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.about:
+                Toast.makeText(getActivity(),"点击了退出登录",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.update:
+                Toast.makeText(getActivity(),"点击了退出登录",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.resiglogin:
+                Toast.makeText(getActivity(),"点击了退出登录",Toast.LENGTH_SHORT).show();
                 break;
         }
     }

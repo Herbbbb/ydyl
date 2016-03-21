@@ -1,5 +1,6 @@
 package com.zkrkj.peoplehospital.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,11 +69,10 @@ public class Frag_Talk extends BaseFragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if(holder instanceof MyViewHolder){
+            if(holder instanceof MyViewHolder) {
                 ((MyViewHolder) holder).tv_title.setText(lists.get(position).getTitle());
                 ((MyViewHolder) holder).tv_content.setText(lists.get(position).getContent());
-            }
-        }
+            }}
 
         @Override
         public int getItemCount() {

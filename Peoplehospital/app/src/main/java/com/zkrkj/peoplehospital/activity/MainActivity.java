@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Fragment mUserFragment;
     private ImageView image1,image2,image3,image4,docterimage;
     private TextView textView1,textView2,textView3,textView4,doctertextView;
-     public ActionBar actionBar;
+    public ActionBar actionBar;
 
 
     @Override
