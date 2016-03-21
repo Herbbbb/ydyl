@@ -71,7 +71,10 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener{
     }
     private void initTitle() {
         TitleBarUtils titleBarUtils = (TitleBarUtils) view.findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("登录");
+        titleBarUtils.setTitle("百姓医院");
+        titleBarUtils.setLeftImage(R.mipmap.menu);
+        titleBarUtils.setRightImageOne(R.mipmap.email);
+
         titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
 
             @Override

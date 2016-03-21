@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="#eee"
+              android:background="#ffffff"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <LinearLayout
-        android:background="#eb4f38"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -20,7 +20,10 @@
             <EditText
                 android:id="@+id/search_et_input"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="2dp"
                 android:drawableRight="@drawable/search_icon"
                 android:drawablePadding="5dp"
                 android:layout_width="match_parent"

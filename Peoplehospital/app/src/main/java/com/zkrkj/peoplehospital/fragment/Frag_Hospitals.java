@@ -1,5 +1,6 @@
 package com.zkrkj.peoplehospital.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.activity.MainActivity;
 
 import base.BaseFragment;
 import util.TitleBarUtils;
@@ -24,12 +26,13 @@ public class Frag_Hospitals extends BaseFragment {
     }
     private void initTitle() {
         TitleBarUtils titleBarUtils = (TitleBarUtils) view.findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("登录");
+        titleBarUtils.setTitle("医院主站");
         titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                Intent intent=new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
     }
