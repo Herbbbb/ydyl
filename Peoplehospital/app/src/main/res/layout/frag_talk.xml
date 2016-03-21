@@ -85,7 +85,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/ic_capture_video_normal"/>
+                android:background="@mipmap/record_yyjl"/>
 
             <TextView
                 android:layout_marginTop="8dp"
@@ -112,7 +112,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/ic_capture_video_normal"/>
+                android:background="@mipmap/record_mzcf"/>
 
             <TextView
                 android:layout_marginTop="8dp"
@@ -139,7 +139,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/ic_capture_video_normal"/>
+                android:background="@mipmap/record_ylfy"/>
 
             <TextView
                 android:layout_marginTop="8dp"
@@ -166,7 +166,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/ic_capture_video_normal"/>
+                android:background="@mipmap/record_bgcx"/>
 
             <TextView
                 android:layout_marginTop="8dp"
