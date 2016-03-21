@@ -16,6 +16,7 @@
         />
 
     <ScrollView
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -202,10 +203,10 @@
             android:background="@color/bg_layout_line"/>
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.Recyc-lerView
         android:id="@+id/rl_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"></android.support.v7.widget.Recyc-lerView>
 
     <!--<widget.MyRecyclerview
         android:id="@+id/rl_listview"
