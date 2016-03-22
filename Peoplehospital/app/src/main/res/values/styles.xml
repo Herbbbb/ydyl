@@ -1,5 +1,36 @@
 <resources>
 
+    <style name="personalRelativeLayoutSetting">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/parent_expandable_list_height</item>
+        <item name="android:padding">@dimen/margin</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="personalRelativeLayoutIvOneSetting">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">15dp</item>
+    </style>
+
+    <style name="personalRelativeLayoutTvSetting">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:textSize">@dimen/list_below</item>
+    </style>
+
+    <style name="personalRelativeLayoutIvTwoSetting">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:src">@drawable/arrow_right</item>
+    </style>
+
     <style name="table_btn_no">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

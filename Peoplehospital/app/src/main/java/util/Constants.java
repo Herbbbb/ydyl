@@ -8,4 +8,8 @@ public class Constants {
      * sharepre共享文件名
      */
     public static final String SHARE_FILES = "BXYY_FILES";
+    /**
+     * log输出标识
+     */
+    public static final String TAG = "gnifeifeiing";
 }
