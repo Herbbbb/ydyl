@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  android:background="#ffffff"
+    tools:context="com.zkrkj.peoplehospital.hospital.SpecialDepartmentActivity">
+    <util.TitleBarUtils
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bigButtonHeight" >
+    </util.TitleBarUtils>
+
+    <TextView
+        android:id="@+id/hosname"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:text="北京大学第三医院"
+
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#F2F2F2"
+        />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:textSize="15sp"
+        android:textColor="#333333"
+        android:text="神经外科"
+
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#F2F2F2"
+        />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:textSize="13sp"
+        android:textColor="#333333"
+        android:text="脑膜，神经科"
+
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#F2F2F2"
+        />
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:textSize="15sp"
+        android:textColor="#333333"
+        android:text="推荐医生"
+
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#F2F2F2"
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView5"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>

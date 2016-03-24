@@ -18,9 +18,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.activity.DrugPriceActivity;
 import com.zkrkj.peoplehospital.activity.FindDocActivity;
 import com.zkrkj.peoplehospital.login.LoginActivity;
+import com.zkrkj.peoplehospital.activity.FindHospitalActivity;
+import com.zkrkj.peoplehospital.activity.ServicePriceActivity;
 import com.zkrkj.peoplehospital.registered.RegisteredMain;
+
 
 import base.BaseFragment;
 import butterknife.Bind;
@@ -50,6 +54,9 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
     TextView textView4;
     @Bind(R.id.finddoc)
     RelativeLayout finddoc;
+    @Bind(R.id.findhos1)
+    RelativeLayout findhos1;
+
     @Bind(R.id.tab_hos)
     LinearLayout tabHos;
     @Bind(R.id.tab_doc)
@@ -94,6 +101,11 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initView() {
         finddoc.setOnClickListener(this);
+
+        findhos1.setOnClickListener(this);
+        tabHos.setOnClickListener(this);
+        tabDoc.setOnClickListener(this);
+
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         IStringRequest stringRequest = new IStringRequest(Request.Method.GET,
                 "http://192.168.1.252:9401/AppointMentServer/api/login?username=ceshi&password=11111111",
@@ -142,6 +154,19 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
             case R.id.finddoc:
                 intent = new Intent(getActivity(), FindDocActivity.class);
                 startActivity(intent);
+                break;
+
+            case R.id.findhos1:
+                Intent intent1 =new Intent(getActivity(),FindHospitalActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.tab_hos:
+                Intent intent2 =new Intent(getActivity(),DrugPriceActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.tab_doc:
+                Intent intent3 =new Intent(getActivity(),ServicePriceActivity.class);
+                startActivity(intent3);
                 break;
 
         }

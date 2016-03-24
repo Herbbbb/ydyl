@@ -6,15 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import android.support.v7.app.ActionBar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.fragment.Frag_Doctor;
 import com.zkrkj.peoplehospital.fragment.Frag_Home;
@@ -34,7 +32,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Fragment mUserFragment;
     private ImageView image1,image2,image3,image4,docterimage;
     private TextView textView1,textView2,textView3,textView4,doctertextView;
-    public ActionBar actionBar;
+
 
 
     @Override
@@ -105,28 +103,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.tab_home:
 
-                Toast.makeText(this,"home",Toast.LENGTH_SHORT).show();
+
                 select(0);
 
                 break;
             case R.id.tab_hospitals:
-                Toast.makeText(this,"tab_hospitals",Toast.LENGTH_SHORT).show();
+
                 select(1);
 
                 break;
             case R.id.tab_docters:
                 select(2);
-                Toast.makeText(this,"doctor",Toast.LENGTH_SHORT).show();
+
 
                 break;
             case R.id.tab_talk:
                 select(3);
-                Toast.makeText(this,"talk",Toast.LENGTH_SHORT).show();
+
 
                 break;
             case R.id.tab_user:
                 select(4);
-                Toast.makeText(this,"user",Toast.LENGTH_SHORT).show();
+
 
                 break;
 
@@ -137,11 +135,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     long time=0;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (System.currentTimeMillis() - time > 2000) {
-            time = System.currentTimeMillis();
-            Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
-        } else {
-            finish();
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            if (System.currentTimeMillis() - time > 2000) {
+                time = System.currentTimeMillis();
+                Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            } else {
+               // finish();
+                MyApplication.getInstance().ExitApp();
+            }
         }
         return true;
     }

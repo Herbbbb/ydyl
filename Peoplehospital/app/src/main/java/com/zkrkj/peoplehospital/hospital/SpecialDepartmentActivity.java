@@ -1,42 +1,37 @@
-package com.zkrkj.peoplehospital.activity;
-
+package com.zkrkj.peoplehospital.hospital;
+//特色科室Activity
+//miao
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
-import com.zkrkj.peoplehospital.adapter.FindDocAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
-import view.SearchView;
-/**
- *
- * Created by miao on 2016/3/16.
- * 找医生ctivity
- */
-public class FindDocActivity extends BaseActivity {
 
+public class SpecialDepartmentActivity extends BaseActivity {
 
-    @Bind(R.id.finddoc)
-    SearchView finddoc;
-    @Bind(R.id.listView)
-    ListView listView;
     @Bind(R.id.titleBar)
     TitleBarUtils titleBar;
+    @Bind(R.id.hosname)
+    TextView hosname;
+    @Bind(R.id.textView)
+    TextView textView;
+    @Bind(R.id.textView1)
+    TextView textView1;
+    @Bind(R.id.listView5)
+    ListView listView5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_find_doc);
+
+        setContentView(R.layout.activity_special_department);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -47,17 +42,16 @@ public class FindDocActivity extends BaseActivity {
     @Override
     public void initView() {
         initTitle();
-        finddoc.setHint(this,"医生");
-        List<String> list = new ArrayList<>();
-        list.add("hahaha");
-        FindDocAdapter adapter = new FindDocAdapter(list, this);
-        listView.setAdapter(adapter);
+    }
 
+    @Override
+    public void initAction() {
 
     }
+
     private void initTitle() {
         TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("找医生");
+        titleBarUtils.setTitle("科室信息");
         titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
 
             @Override
@@ -68,13 +62,8 @@ public class FindDocActivity extends BaseActivity {
     }
 
     @Override
-    public void initAction() {
-
-    }
-
-    @Override
     protected void onDestroy() {
-        ButterKnife.unbind(this);
         super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

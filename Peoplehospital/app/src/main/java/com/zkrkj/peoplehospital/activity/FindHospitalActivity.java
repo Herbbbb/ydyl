@@ -1,11 +1,12 @@
 package com.zkrkj.peoplehospital.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
 import com.zkrkj.peoplehospital.R;
-import com.zkrkj.peoplehospital.adapter.FindDocAdapter;
+import com.zkrkj.peoplehospital.adapter.FindHosAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,9 @@ import view.SearchView;
 /**
  *
  * Created by miao on 2016/3/16.
- * 找医生ctivity
+ * 找医院activity
  */
-public class FindDocActivity extends BaseActivity {
-
+public class FindHospitalActivity extends BaseActivity {
 
     @Bind(R.id.finddoc)
     SearchView finddoc;
@@ -32,11 +32,10 @@ public class FindDocActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_find_doc);
+
+        setContentView(R.layout.activity_find_hospital);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -46,18 +45,16 @@ public class FindDocActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        List<String> list=new ArrayList<>();
+        list.add(0,"2");
         initTitle();
-        finddoc.setHint(this,"医生");
-        List<String> list = new ArrayList<>();
-        list.add("hahaha");
-        FindDocAdapter adapter = new FindDocAdapter(list, this);
-        listView.setAdapter(adapter);
-
-
+        finddoc.setHint(this,"医院");
+        listView.setAdapter(new FindHosAdapter(list,this
+        ));
     }
     private void initTitle() {
         TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("找医生");
+        titleBarUtils.setTitle("找医院");
         titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
 
             @Override

@@ -12,11 +12,14 @@
 
 
 <view.VerticalScrollView
+    android:scrollbars="none"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:id="@+id/frag_home1"
     android:orientation="vertical"
     >
@@ -25,7 +28,7 @@
     android:layout_height="wrap_content">
 
 </view.SearchView>
-    <include layout="@layout/index_home_list4"/>
+    <include layout="@layout/index_home_list4" />
 
     <View
         android:layout_width="match_parent"
@@ -90,7 +93,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textColor="#008000"
             android:text="好礼"
             android:id="@+id/textView17"
@@ -112,7 +115,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:text="健康"
             android:textColor="#008000"
             android:id="@+id/textView19"
@@ -154,6 +157,9 @@
         android:background="#F2F2F2"
         />
     <include layout="@layout/index_home_list5"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 
 
 

@@ -233,7 +233,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="14sp"
             android:text="查询我在本院的门诊处方信息"
-            android:id="@+id/textView10"
+            android:id="@+id/textView100"
             android:layout_below="@+id/textView9"
             android:layout_alignLeft="@+id/textView9"
             android:layout_alignStart="@+id/textView9" />
