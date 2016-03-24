@@ -116,7 +116,8 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/tab_tesekeshi">
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
@@ -136,7 +137,8 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/tab_zhuanjiajieshao">
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
@@ -156,7 +158,8 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/tab_yiyuandaohang">
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"

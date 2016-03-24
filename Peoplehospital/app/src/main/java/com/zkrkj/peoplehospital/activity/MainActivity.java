@@ -6,15 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import android.support.v7.app.ActionBar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.fragment.Frag_Doctor;
 import com.zkrkj.peoplehospital.fragment.Frag_Home;
@@ -34,7 +32,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Fragment mUserFragment;
     private ImageView image1,image2,image3,image4,docterimage;
     private TextView textView1,textView2,textView3,textView4,doctertextView;
-    public ActionBar actionBar;
+
 
 
     @Override
@@ -137,11 +135,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     long time=0;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (System.currentTimeMillis() - time > 2000) {
-            time = System.currentTimeMillis();
-            Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
-        } else {
-            finish();
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            if (System.currentTimeMillis() - time > 2000) {
+                time = System.currentTimeMillis();
+                Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            } else {
+               // finish();
+                MyApplication.getInstance().ExitApp();
+            }
         }
         return true;
     }

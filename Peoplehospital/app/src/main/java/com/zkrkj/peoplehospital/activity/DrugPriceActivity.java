@@ -1,15 +1,11 @@
 package com.zkrkj.peoplehospital.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
-import com.zkrkj.peoplehospital.adapter.FindHosAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import base.BaseActivity;
 import butterknife.Bind;
@@ -19,21 +15,26 @@ import view.SearchView;
 /**
  *
  * Created by miao on 2016/3/16.
- * 找医院activity
+ * 药品价格activity
  */
-public class FindHospitalActivity extends BaseActivity {
+public class DrugPriceActivity extends BaseActivity {
 
-    @Bind(R.id.finddoc)
-    SearchView finddoc;
-    @Bind(R.id.listView)
-    ListView listView;
+
     @Bind(R.id.titleBar)
     TitleBarUtils titleBar;
+    @Bind(R.id.textView36)
+    TextView textView36;
+    @Bind(R.id.textView37)
+    TextView textView37;
+    @Bind(R.id.listView2)
+    ListView listView2;
+    @Bind(R.id.search)
+    SearchView search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setContentView(R.layout.activity_find_hospital);
+        setContentView(R.layout.activity_drug_price);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
     }
@@ -45,23 +46,9 @@ public class FindHospitalActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        List<String> list=new ArrayList<>();
-        list.add(0,"2");
         initTitle();
-        finddoc.setHint(this,"医院");
-        listView.setAdapter(new FindHosAdapter(list,this
-        ));
-    }
-    private void initTitle() {
-        TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("找医院");
-        titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
+        search.setHint(this,"药品");
 
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     @Override
@@ -69,9 +56,16 @@ public class FindHospitalActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
+    private void initTitle() {
+        TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
+        titleBarUtils.setTitle("价格查询");
+
+        titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

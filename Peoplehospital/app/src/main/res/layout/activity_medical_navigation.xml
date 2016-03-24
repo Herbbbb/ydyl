@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.zkrkj.peoplehospital.hospital.PriceSearchActivity">
+
+    <util.TitleBarUtils
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bigButtonHeight" >
+    </util.TitleBarUtils>
+    <view.VerticalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:paddingLeft="8dp"
+                android:text="北京大学第三医院"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+            <View
+                android:layout_width="match_parent"
+                android:background="#F2F2F2"
+                android:layout_height="2dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/dangan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/u1"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#333333"
+
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:text="院内分布"
+                    android:textSize="15sp" />
+
+
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/hui_discount_item_rule_arrow"/>
+            </LinearLayout>
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F2F2F2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/yuyue"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/u2"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="3dp"
+                    android:textColor="#333333"
+                    android:gravity="center_vertical"
+                    android:text="楼层分布"
+                    android:textSize="15sp" />
+
+
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/hui_discount_item_rule_arrow"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F2F2F2" />
+
+            <LinearLayout
+                android:id="@+id/setaccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/u3"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:text="科室分布"
+                    android:textSize="15sp" />
+
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/hui_discount_item_rule_arrow"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F2F2F2" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/setmsg"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/u4"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:text="挂号处"
+                    android:textSize="15sp" />
+
+
+
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/hui_discount_item_rule_arrow"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F2F2F2" />
+            <LinearLayout
+                android:id="@+id/func"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/u5"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:text="取号处"
+                    android:textSize="15sp" />
+
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/hui_discount_item_rule_arrow" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F2F2F2" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/yijian"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/u6"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:text="收费处"
+                    android:textSize="15sp" />
+
+
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/hui_discount_item_rule_arrow"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F2F2F2" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/about"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/u8"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:text="检验室"
+                    android:textSize="15sp" />
+
+
+
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/hui_discount_item_rule_arrow"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F2F2F2" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/update"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/u8"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:text="检查室"
+                    android:textSize="15sp" />
+
+
+
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/hui_discount_item_rule_arrow"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#F2F2F2" />
+
+
+
+        </LinearLayout>
+    </view.VerticalScrollView>
+
+</LinearLayout>

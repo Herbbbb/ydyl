@@ -7,5 +7,10 @@
         <item>医师</item>
         <item>医士</item>
     </string-array>
+    <string-array name="sex">
+
+        <item>男</item>
+        <item>女</item>
+    </string-array>
 
 </resources>

@@ -1,41 +1,48 @@
-package com.zkrkj.peoplehospital.activity;
+package com.zkrkj.peoplehospital.hospital;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 
 import com.zkrkj.peoplehospital.R;
-import com.zkrkj.peoplehospital.adapter.FindHosAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
-import view.SearchView;
 /**
  *
  * Created by miao on 2016/3/16.
- * 找医院activity
+ * 就医导航activity
  */
-public class FindHospitalActivity extends BaseActivity {
+public class MedicalNavigationActivity extends BaseActivity {
 
-    @Bind(R.id.finddoc)
-    SearchView finddoc;
-    @Bind(R.id.listView)
-    ListView listView;
     @Bind(R.id.titleBar)
     TitleBarUtils titleBar;
+    @Bind(R.id.dangan)
+    LinearLayout dangan;
+    @Bind(R.id.yuyue)
+    LinearLayout yuyue;
+    @Bind(R.id.setaccount)
+    LinearLayout setaccount;
+    @Bind(R.id.setmsg)
+    LinearLayout setmsg;
+    @Bind(R.id.func)
+    LinearLayout func;
+    @Bind(R.id.yijian)
+    LinearLayout yijian;
+    @Bind(R.id.about)
+    LinearLayout about;
+    @Bind(R.id.update)
+    LinearLayout update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setContentView(R.layout.activity_find_hospital);
+        setContentView(R.layout.activity_medical_navigation);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
+        initTitle();
     }
 
     @Override
@@ -45,16 +52,17 @@ public class FindHospitalActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        List<String> list=new ArrayList<>();
-        list.add(0,"2");
-        initTitle();
-        finddoc.setHint(this,"医院");
-        listView.setAdapter(new FindHosAdapter(list,this
-        ));
+  initTitle();
     }
+
+    @Override
+    public void initAction() {
+
+    }
+
     private void initTitle() {
         TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("找医院");
+        titleBarUtils.setTitle("就医导航");
         titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
 
             @Override
@@ -65,13 +73,8 @@ public class FindHospitalActivity extends BaseActivity {
     }
 
     @Override
-    public void initAction() {
-
-    }
-
-    @Override
     protected void onDestroy() {
-        ButterKnife.unbind(this);
         super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

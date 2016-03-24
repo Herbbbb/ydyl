@@ -1,5 +1,4 @@
 package view;
-
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,7 +10,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -85,6 +83,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 
     private void initViews() {
         etInput = (EditText) findViewById(R.id.search_et_input);
+
         ivDelete = (ImageView) findViewById(R.id.search_iv_delete);
 
         lvTips = (ListView) findViewById(R.id.search_lv_tips);
@@ -141,6 +140,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             lvTips.setAdapter(mHintAdapter);
         }
     }
+    public  void setHint(Context context,String s){
+        etInput.setHint(s);
+    }
 
     /**
      * 设置自动补全adapter
@@ -159,7 +161,8 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
             if (!"".equals(charSequence.toString())) {
                 ivDelete.setVisibility(VISIBLE);
-                lvTips.setVisibility(VISIBLE);
+                //热搜提示
+               // lvTips.setVisibility(VISIBLE);
                 if (mAutoCompleteAdapter != null && lvTips.getAdapter() != mAutoCompleteAdapter) {
                     lvTips.setAdapter(mAutoCompleteAdapter);
                 }
@@ -194,6 +197,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 break;
         }
     }
+
 
     /**
      * search view回调方法

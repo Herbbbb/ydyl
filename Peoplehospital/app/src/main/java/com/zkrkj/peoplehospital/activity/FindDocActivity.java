@@ -15,7 +15,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
 import view.SearchView;
-
+/**
+ *
+ * Created by miao on 2016/3/16.
+ * 找医生ctivity
+ */
 public class FindDocActivity extends BaseActivity {
 
 
@@ -43,6 +47,7 @@ public class FindDocActivity extends BaseActivity {
     @Override
     public void initView() {
         initTitle();
+        finddoc.setHint(this,"医生");
         List<String> list = new ArrayList<>();
         list.add("hahaha");
         FindDocAdapter adapter = new FindDocAdapter(list, this);

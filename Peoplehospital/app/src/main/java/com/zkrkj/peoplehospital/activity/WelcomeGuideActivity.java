@@ -15,7 +15,11 @@ import android.widget.ImageView;
 import com.zkrkj.peoplehospital.R;
 
 import base.BaseActivity;
-
+/**
+ *
+ * Created by miao on 2016/3/16.
+ * 引导页activity
+ */
 public class WelcomeGuideActivity extends BaseActivity{
 
 	private ImageView btn;
