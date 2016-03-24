@@ -40,7 +40,7 @@
         <activity
             android:name=".login.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FindDocActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -49,7 +49,23 @@
             android:name=".login.RegisterActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".registered.RegisteredMain"></activity>
+        <activity
+            android:name=".registered.RegisteredMain"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".registered.MyOutpatients"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".registered.RegisteredDetail"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".registered.RegisteredHistory"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name=".registered.DepartmentRegistered"></activity>
     </application>
 
 </manifest>
