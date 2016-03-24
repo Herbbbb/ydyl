@@ -50,6 +50,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+
             android:name=".activity.FindHospitalActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
@@ -89,6 +90,25 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             ></activity>
+
+        <activity
+            android:name=".registered.RegisteredMain"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".registered.MyOutpatients"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".registered.RegisteredDetail"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".registered.RegisteredHistory"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name=".registered.DepartmentRegistered"></activity>
+
     </application>
 
 </manifest>

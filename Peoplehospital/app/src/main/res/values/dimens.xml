@@ -9,4 +9,8 @@
     <dimen name="bigButtonHeight">46dip</dimen>
     <dimen name="marginMore">10dip</dimen>
 
+    <dimen name="parent_expandable_list_height">46dp</dimen>
+    <dimen name="margin">3dip</dimen>
+    <dimen name="list_below">15sp</dimen>
+
 </resources>

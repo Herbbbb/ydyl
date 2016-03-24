@@ -4,326 +4,6 @@
     android:background="#FFFFFF"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-<LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="120dp">
-
-    <ImageView
-        android:id="@+id/iv_photo"
-        android:layout_margin="20dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@mipmap/people_head"/>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_doctor_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="张云志"/>
-
-            <TextView
-                android:id="@+id/tv_doctor_level"
-                android:layout_toRightOf="@+id/tv_doctor_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:layout_marginLeft="20dp"
-                android:text="3.6分"/>
-
-            <TextView
-                android:id="@+id/tv_change"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:textSize="16sp"
-                android:textColor="#5757ff"
-                android:layout_marginRight="20dp"
-                android:text="切换>"/>
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textSize="16sp"
-            android:layout_marginTop="5dp"
-            android:text="主任医师"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textSize="16sp"
-            android:layout_marginTop="5dp"
-            android:text="北京大学第三医院 消化内科"/>
-
-    </LinearLayout>
-</LinearLayout>
-
-<View
-    android:layout_width="match_parent"
-    android:background="#F2F2F2"
-    android:layout_height="8dp"/>
-
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="医院信息" />
-<View
-    android:layout_width="match_parent"
-    android:background="#F2F2F2"
-    android:layout_height="3dp"/>
-
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:textSize="14sp"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="栗震亚，男，1981年华西医科大学口腔医学院研究生毕业，硕士。国际牙医师学院院士，甘肃省优秀专家。主任医师，教授，兰州大学硕士研究生导师，中华医学会甘肃省分会副会长。" />
-
-<View
-    android:layout_width="match_parent"
-    android:background="#F2F2F2"
-    android:layout_height="8dp"/>
-
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="出诊" />
-<View
-    android:layout_width="match_parent"
-    android:background="#F2F2F2"
-    android:layout_height="3dp"/>
-
-<LinearLayout
-    android:orientation="horizontal"
-    android:gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:text="2016/03/21 - 2016/03/27"/>
-
-</LinearLayout>
-
-<TableLayout
-    android:layout_marginTop="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TableRow
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="一"/>
-    </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="二"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="三"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="四"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="五"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="六"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="日"/>
-        </LinearLayout>
-    </TableRow>
-    <TableRow
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="上午"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <Button
-                style="@style/table_btn_no"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <Button
-                style="@style/table_btn_no"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <Button
-                style="@style/table_btn_yes"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <Button
-                style="@style/table_btn_yes"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""/>
-        </LinearLayout>
-    </TableRow>
-    <TableRow
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="下午"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:text=""/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <Button
-                style="@style/table_btn_yes"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""/>
-        </LinearLayout>
-    </TableRow>
-</TableLayout>
-    </LinearLayout>
-
     <util.TitleBarUtils
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
@@ -334,5 +14,334 @@
         android:layout_height="match_parent"
         android:scrollbars="none">
 
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+
+                <ImageView
+                    android:id="@+id/iv_photo"
+                    android:layout_margin="20dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@mipmap/people_head"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tv_doctor_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:text="张云志"/>
+
+                        <TextView
+                            android:id="@+id/tv_doctor_level"
+                            android:layout_toRightOf="@+id/tv_doctor_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:layout_marginLeft="20dp"
+                            android:text="3.6分"/>
+
+                        <TextView
+                            android:id="@+id/tv_change"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:textSize="16sp"
+                            android:textColor="#5757ff"
+                            android:layout_marginRight="20dp"
+                            android:text="切换>"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:text="主任医师"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:text="北京大学第三医院 消化内科"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:background="#F2F2F2"
+                android:layout_height="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="医院信息" />
+            <View
+                android:layout_width="match_parent"
+                android:background="#F2F2F2"
+                android:layout_height="3dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="14sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="栗震亚，男，1981年华西医科大学口腔医学院研究生毕业，硕士。国际牙医师学院院士，甘肃省优秀专家。主任医师，教授，兰州大学硕士研究生导师，中华医学会甘肃省分会副会长。" />
+
+            <View
+                android:layout_width="match_parent"
+                android:background="#F2F2F2"
+                android:layout_height="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="出诊" />
+            <View
+                android:layout_width="match_parent"
+                android:background="#F2F2F2"
+                android:layout_height="3dp"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_date_up"
+                    android:text="&#060;"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="2016/03/21 - 2016/03/27"/>
+
+                <Button
+                    android:id="@+id/btn_date_down"
+                    android:text="&#062;"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TableRow>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="一"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="二"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="三"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="四"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="五"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="六"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="日"/>
+                    </LinearLayout>
+                </TableRow>
+                <TableRow>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="上午"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <Button
+                            style="@style/table_btn_no"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <Button
+                            style="@style/table_btn_no"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <Button
+                            style="@style/table_btn_yes"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <Button
+                            style="@style/table_btn_yes"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""/>
+                    </LinearLayout>
+                </TableRow>
+                <TableRow>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="下午"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#cccccc"
+                            android:text=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <Button
+                            style="@style/table_btn_yes"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/table_col_border"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""/>
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

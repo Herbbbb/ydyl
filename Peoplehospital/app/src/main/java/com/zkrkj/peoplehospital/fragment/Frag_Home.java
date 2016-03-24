@@ -22,10 +22,13 @@ import com.zkrkj.peoplehospital.activity.DrugPriceActivity;
 import com.zkrkj.peoplehospital.activity.FindDocActivity;
 import com.zkrkj.peoplehospital.activity.FindHospitalActivity;
 import com.zkrkj.peoplehospital.activity.ServicePriceActivity;
+import com.zkrkj.peoplehospital.registered.RegisteredMain;
+
 
 import base.BaseFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import util.IStringRequest;
 import util.LogUtil;
 import util.TitleBarUtils;
@@ -33,7 +36,7 @@ import util.TitleBarUtils;
 /**
  * Created by lenovo on 2016/3/16.
  */
-public class Frag_Home extends BaseFragment implements View.OnClickListener{
+public class Frag_Home extends BaseFragment implements View.OnClickListener {
     @Bind(R.id.guahao)
     TextView guahao;
     @Bind(R.id.imageView)
@@ -65,6 +68,8 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener{
     TextView textView7;
     @Bind(R.id.frag_home1)
     LinearLayout fragHome1;
+    @Bind(R.id.ll_yygh)
+    LinearLayout llYygh;
     private ListView listView1;
 
     @Override
@@ -75,6 +80,7 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener{
         initTitle();
         return view;
     }
+
     private void initTitle() {
         TitleBarUtils titleBarUtils = (TitleBarUtils) view.findViewById(R.id.titleBar);
         titleBarUtils.setTitle("百姓医院");
@@ -93,9 +99,11 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener{
     @Override
     protected void initView() {
         finddoc.setOnClickListener(this);
+
         findhos1.setOnClickListener(this);
         tabHos.setOnClickListener(this);
         tabDoc.setOnClickListener(this);
+
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         IStringRequest stringRequest = new IStringRequest(Request.Method.GET,
                 "http://192.168.1.252:9401/AppointMentServer/api/login?username=ceshi&password=11111111",
@@ -139,11 +147,13 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        Intent intent;
+        switch (view.getId()) {
             case R.id.finddoc:
-                Intent intent =new Intent(getActivity(),FindDocActivity.class);
+                intent = new Intent(getActivity(), FindDocActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.findhos1:
                 Intent intent1 =new Intent(getActivity(),FindHospitalActivity.class);
                 startActivity(intent1);
@@ -156,6 +166,13 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener{
                 Intent intent3 =new Intent(getActivity(),ServicePriceActivity.class);
                 startActivity(intent3);
                 break;
+
         }
+    }
+
+    @OnClick(R.id.ll_yygh)
+    public void onClick() {
+        Intent intent = new Intent(getActivity(), RegisteredMain.class);
+        startActivity(intent);
     }
 }
