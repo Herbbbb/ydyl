@@ -38,12 +38,12 @@
             <LinearLayout
                 android:id="@+id/dangan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/u1"/>
 
                 <TextView
@@ -62,8 +62,8 @@
 
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/hui_discount_item_rule_arrow"/>
             </LinearLayout>
 
@@ -75,13 +75,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:id="@+id/yuyue"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/u2"/>
 
                 <TextView
@@ -99,8 +99,8 @@
 
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/hui_discount_item_rule_arrow"/>
             </LinearLayout>
 
@@ -112,13 +112,13 @@
             <LinearLayout
                 android:id="@+id/setaccount"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
 
                 android:gravity="center_vertical"
                 android:padding="8dp" >
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/u3"/>
 
                 <TextView
@@ -135,8 +135,8 @@
 
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/hui_discount_item_rule_arrow"/>
             </LinearLayout>
 
@@ -146,13 +146,13 @@
                 android:background="#F2F2F2" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:id="@+id/setmsg"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/u4"/>
 
                 <TextView
@@ -171,8 +171,8 @@
 
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/hui_discount_item_rule_arrow"/>
             </LinearLayout>
 
@@ -183,13 +183,13 @@
             <LinearLayout
                 android:id="@+id/func"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
 
                 android:gravity="center_vertical"
                 android:padding="8dp" >
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/u5"/>
                 <TextView
                     android:layout_width="0dp"
@@ -205,8 +205,8 @@
 
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/hui_discount_item_rule_arrow" />
             </LinearLayout>
 
@@ -216,13 +216,13 @@
                 android:background="#F2F2F2" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:id="@+id/yijian"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/u6"/>
 
                 <TextView
@@ -240,8 +240,8 @@
 
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/hui_discount_item_rule_arrow"/>
             </LinearLayout>
 
@@ -251,13 +251,13 @@
                 android:background="#F2F2F2" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:id="@+id/about"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/u8"/>
 
                 <TextView
@@ -277,8 +277,8 @@
 
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/hui_discount_item_rule_arrow"/>
             </LinearLayout>
             <View
@@ -287,13 +287,13 @@
                 android:background="#F2F2F2" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:id="@+id/update"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@mipmap/u8"/>
 
                 <TextView
@@ -312,8 +312,8 @@
 
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/hui_discount_item_rule_arrow"/>
             </LinearLayout>
 

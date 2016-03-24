@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableLeft="@drawable/user_ic"
-            android:drawablePadding="3dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="健康档案"
             android:textSize="15sp" />
@@ -32,8 +32,8 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/hui_discount_item_rule_arrow"/>
     </LinearLayout>
 
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableLeft="@drawable/user_ic"
-            android:drawablePadding="3dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="我的预约"
             android:textSize="15sp" />
@@ -64,8 +64,8 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/hui_discount_item_rule_arrow"/>
     </LinearLayout>
 
@@ -88,7 +88,7 @@
 
             android:layout_weight="1"
             android:drawableLeft="@drawable/user_ic"
-            android:drawablePadding="3dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="账号设置"
             android:textSize="15sp" />
@@ -96,8 +96,8 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/hui_discount_item_rule_arrow"/>
     </LinearLayout>
 
@@ -118,7 +118,7 @@
 
             android:layout_weight="1"
             android:drawableLeft="@drawable/user_ic"
-            android:drawablePadding="3dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="消息提醒设置"
             android:textSize="15sp" />
@@ -128,8 +128,8 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/hui_discount_item_rule_arrow"/>
     </LinearLayout>
 
@@ -151,7 +151,7 @@
 
             android:layout_weight="1"
             android:drawableLeft="@drawable/user_ic"
-            android:drawablePadding="3dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="功能介绍"
             android:textSize="15sp" />
@@ -159,8 +159,8 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/hui_discount_item_rule_arrow" />
     </LinearLayout>
 
@@ -181,7 +181,7 @@
 
             android:layout_weight="1"
             android:drawableLeft="@drawable/user_ic"
-            android:drawablePadding="3dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="意见反馈"
             android:textSize="15sp" />
@@ -190,8 +190,8 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/hui_discount_item_rule_arrow"/>
     </LinearLayout>
 
@@ -212,7 +212,7 @@
 
             android:layout_weight="1"
             android:drawableLeft="@drawable/user_ic"
-            android:drawablePadding="3dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="关于"
             android:textSize="15sp" />
@@ -222,8 +222,8 @@
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/hui_discount_item_rule_arrow"/>
     </LinearLayout>
         <View
@@ -243,7 +243,7 @@
 
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/user_ic"
-                android:drawablePadding="3dp"
+                android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="检查更新"
                 android:textSize="15sp" />
@@ -253,8 +253,8 @@
 
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/hui_discount_item_rule_arrow"/>
         </LinearLayout>
 
@@ -275,7 +275,7 @@
 
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/user_ic"
-                android:drawablePadding="3dp"
+                android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="退出登录"
                 android:textSize="15sp" />
@@ -284,8 +284,8 @@
 
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/hui_discount_item_rule_arrow"/>
         </LinearLayout>
 

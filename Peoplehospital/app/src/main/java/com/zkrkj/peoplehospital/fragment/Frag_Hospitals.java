@@ -18,6 +18,7 @@ import com.zkrkj.peoplehospital.hospital.MedicalNavigationActivity;
 import com.zkrkj.peoplehospital.hospital.PriceSearchActivity;
 import com.zkrkj.peoplehospital.hospital.SpecialDepartmentActivity;
 import com.zkrkj.peoplehospital.hospital.TrackingStationActivity;
+import com.zkrkj.peoplehospital.registered.DepartmentRegistered;
 
 import base.BaseFragment;
 import butterknife.Bind;
@@ -140,6 +141,7 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
         tabYiyuandaohang.setOnClickListener(this);
         tabJiuyidaohang.setOnClickListener(this);
         tabJiagechaxun.setOnClickListener(this);
+        tabYuyueguahao.setOnClickListener(this);
 
     }
 
@@ -158,6 +160,10 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
         switch (view.getId()) {
             case R.id.tab_jiuyidaohang:
                 intent = new Intent(getActivity(), MedicalNavigationActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tab_yuyueguahao:
+                intent = new Intent(getActivity(), DepartmentRegistered.class);
                 startActivity(intent);
                 break;
             case R.id.tab_tesekeshi:
