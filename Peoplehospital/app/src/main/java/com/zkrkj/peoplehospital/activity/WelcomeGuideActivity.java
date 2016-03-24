@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import com.zkrkj.peoplehospital.R;
 
 import base.BaseActivity;
+import base.OptsharepreInterface;
+
 /**
  *
  * Created by miao on 2016/3/16.
@@ -25,7 +27,7 @@ public class WelcomeGuideActivity extends BaseActivity{
 	private ImageView btn;
 
 	private ViewPager pager;
-
+	private OptsharepreInterface share;
 
 	private List<View> list;
 
@@ -33,17 +35,22 @@ public class WelcomeGuideActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome_guide);
-		pager= (ViewPager) findViewById(R.id.welcome_guide_viewpager);
-		btn= (ImageView) findViewById(R.id.welcome_guide_btn);
-		btn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				click(view);
-			}
-		});
+		share=new OptsharepreInterface(this);
+		if(share.getPres("isFirstLogin").equals("0")){
+			pager= (ViewPager) findViewById(R.id.welcome_guide_viewpager);
+			btn= (ImageView) findViewById(R.id.welcome_guide_btn);
+			btn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					click(view);
+				}
+			});
+			initViewPager();
+		}else{
+			startActivity(new Intent(this, MainActivity.class));
+			finish();
+		}
 
-
-		initViewPager();
 	}
 
 	@Override
@@ -63,7 +70,7 @@ public class WelcomeGuideActivity extends BaseActivity{
 
 	public void click(View view)
 	{
-
+		share.putPres("isFirstLogin","1");
 		startActivity(new Intent(this, MainActivity.class));
 		finish();
 	}

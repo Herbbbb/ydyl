@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.activity.DrugPriceActivity;
 import com.zkrkj.peoplehospital.activity.FindDocActivity;
+import com.zkrkj.peoplehospital.login.LoginActivity;
 import com.zkrkj.peoplehospital.activity.FindHospitalActivity;
 import com.zkrkj.peoplehospital.activity.ServicePriceActivity;
 import com.zkrkj.peoplehospital.registered.RegisteredMain;
@@ -91,7 +92,8 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
 
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                Intent intent=new Intent(getActivity(), LoginActivity.class);
+                getActivity().startActivity(intent);
             }
         });
     }
