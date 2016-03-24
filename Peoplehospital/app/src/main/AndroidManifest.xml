@@ -21,11 +21,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.WelcomeGuideActivity"
@@ -65,7 +60,7 @@
             android:name=".registered.RegisteredHistory"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".registered.DepartmentRegistered"></activity>
+        <activity android:name=".registered.DepartmentRegistered"/>
     </application>
 
 </manifest>

@@ -28,25 +28,13 @@ public class OptsharepreInterface {
 		SharedPreferences.Editor editor = settings.edit();
 		if (optName.equals("guid")) {
 			editor.putString("guid", values);// 登录人guid
-		} else if (optName.equals("username")) {
-			editor.putString("username", values);// 登录人userid
-		} else if (optName.equals("userid")) {
-			editor.putString("userid", values);// 登录人名称
-		}  else if (optName.equals("nickname")) {
-			editor.putString("nickname", values);// 昵称
-		} else if (optName.equals("password")) {
-			editor.putString("password", values);// 密码
-		} else if (optName.equals("isRemPwd")) {
-			editor.putString("isRemPwd", values);// 是否记住密码
 		} else if (optName.equals("account")) {
 			editor.putString("account", values);// 登录账号
-		} else if (optName.equals("versionNo")) {
-			editor.putString("versionNo", values);// 版本号
-		} else if (optName.equals("mobileNumber")) {
-			editor.putString("mobileNumber", values);// 登录手机号
-		} else if (optName.equals("state")) {
-			editor.putString("state", values);// 状态
-		} else {
+		} else if (optName.equals("password")) {
+			editor.putString("password", values);// 登录密码
+		} else if (optName.equals("isFirstLogin")) {
+			editor.putString("isFirstLogin", values);// 是否首次登陆(0:是	1:否)
+		}  else {
 			editor.putString(optName, values);
 		}
 		
@@ -56,23 +44,15 @@ public class OptsharepreInterface {
 
 	public String getPres(String optName) {
 		String values = "";
-		if (optName.equals("guid")) {// 获取登陆人唯一标识
+		if (optName.equals("guid")) {// 获取登陆人guid
 			values = settings.getString("guid", "");
-		} else if (optName.equals("isRemPwd")) {// 获取是否记忆密码参数
-			values = settings.getString("isRemPwd", "0");
-		} else if (optName.equals("password")) {// 获取密码参数
-			values = settings.getString("password", "");
-		} else if (optName.equals("account")) {// 获取账号
-			values = settings.getString("account", "");
-		} else if (optName.equals("username")) {// 获取用户名
-			values = settings.getString("username", "");
-		}  else if (optName.equals("nickname")) {// 获取昵称
-			values = settings.getString("nickname", "");
-		}else if (optName.equals("mobileNumber")) {//
-			values = settings.getString("mobileNumber", "");
-		}  else if (optName.equals("state")) {//
-			values = settings.getString("state", "");
-		} else{
+		} else if (optName.equals("account")) {// 登录账号
+			values = settings.getString("account", "0");
+		} else if (optName.equals("password")) {// 登录密码
+			values = settings.getString("password", "0");
+		} else if (optName.equals("isFirstLogin")) {// 是否首次登陆
+			values = settings.getString("isFirstLogin", "0");
+		}  else{
 			values= settings.getString(optName, "");
 		}
 		// System.out.println("读取配置文件操作------" + optName + "---" + values);

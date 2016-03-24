@@ -12,4 +12,8 @@ public class Constants {
      * log输出标识
      */
     public static final String TAG = "gnifeifeiing";
+    /**
+     * 默认每页显示的item数量
+     */
+    public static final int PAGE_SIZE = 20;
 }
