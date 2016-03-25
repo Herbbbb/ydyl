@@ -108,7 +108,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:id="@+id/tab_menzhenchufang">
 
             <ImageView
                 android:layout_width="35dp"
@@ -135,7 +136,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:id="@+id/tab_yiliaofeiyong">
 
             <ImageView
                 android:layout_width="35dp"

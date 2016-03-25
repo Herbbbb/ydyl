@@ -113,12 +113,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 break;
             case R.id.tab_docters:
-                select(2);
+                select(3);
 
 
                 break;
             case R.id.tab_talk:
-                select(3);
+                select(2);
 
 
                 break;
@@ -185,7 +185,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 } else {
                     transaction.show(mNewsFragment);
                 }
-                changeStatus(2);
+                changeStatus(3);
                 break;
             case 3:
                 if (mTalkFragment == null) {
@@ -194,7 +194,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 } else {
                     transaction.show(mTalkFragment);
                 }
-                changeStatus(3);
+                changeStatus(2);
                 break;
             case 4:
                 if (mUserFragment == null) {
