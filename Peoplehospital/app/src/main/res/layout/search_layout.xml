@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="#ffffff"
+              android:background="#F2F2F2"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
@@ -24,7 +24,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="2dp"
-                android:drawableRight="@drawable/search_icon"
+
                 android:drawablePadding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -35,10 +35,10 @@
                 android:hint="医院/医生"/>
 
             <ImageView
-                android:visibility="gone"
+
                 android:layout_marginRight="20dp"
-                android:src="@drawable/iv_delete_bg"
-                android:id="@+id/search_iv_delete"
+                android:src="@drawable/search_icon"
+                android:id="@+id/search_in"
                 android:layout_gravity="right|center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -47,14 +47,5 @@
 
     </LinearLayout>
 
-    <ListView
-        android:visibility="gone"
-        android:id="@+id/search_lv_tips"
-        android:background="@drawable/lv_search_tips_bg"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-    </ListView>
+
 </LinearLayout>

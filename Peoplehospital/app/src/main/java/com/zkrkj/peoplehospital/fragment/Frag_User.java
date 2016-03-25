@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.User.MyDocCard;
 import com.zkrkj.peoplehospital.User.PersonalDetail;
+import com.zkrkj.peoplehospital.User.UnreadMessagesActivity;
 import com.zkrkj.peoplehospital.activity.MainActivity;
 
 import base.BaseFragment;
@@ -27,6 +29,9 @@ import util.ToastUtil;
 
 public class Frag_User extends BaseFragment implements View.OnClickListener {
 
+
+    @Bind(R.id.titleBar)
+    TitleBarUtils titleBar;
     @Bind(R.id.imageView4)
     ImageView imageView4;
     @Bind(R.id.username_text)
@@ -41,10 +46,6 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     LinearLayout dangan;
     @Bind(R.id.yuyue)
     LinearLayout yuyue;
-    @Bind(R.id.setaccount)
-    LinearLayout setaccount;
-    @Bind(R.id.setmsg)
-    LinearLayout setmsg;
     @Bind(R.id.func)
     LinearLayout func;
     @Bind(R.id.yijian)
@@ -53,10 +54,15 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     LinearLayout about;
     @Bind(R.id.update)
     LinearLayout update;
+    @Bind(R.id.xiugaimima)
+    LinearLayout xiugaimima;
     @Bind(R.id.resiglogin)
     LinearLayout resiglogin;
     @Bind(R.id.jiuyika)
     LinearLayout jiuyika;
+    @Bind(R.id.tab_message)
+    RelativeLayout tabMessage;
+    private Intent intent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,6 +93,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         usernameText.setOnClickListener(this);
         resiglogin.setOnClickListener(this);
         dangan.setOnClickListener(this);
+        tabMessage.setOnClickListener(this);
     }
 
     @Override
@@ -143,6 +150,9 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.jiuyika://我的就医卡
                 intent = new Intent(getActivity(), MyDocCard.class);
+                startActivity(intent);
+            case R.id.tab_message:
+                intent=new Intent(getActivity(), UnreadMessagesActivity.class);
                 startActivity(intent);
                 break;
         }
