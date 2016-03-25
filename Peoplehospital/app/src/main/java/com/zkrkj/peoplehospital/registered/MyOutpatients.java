@@ -16,6 +16,7 @@ import com.zkrkj.peoplehospital.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import base.BaseActivity;
 import bean.MyRecord;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,7 +29,7 @@ import widget.FullyLinearLayoutManager;
 * User:         LF
 * Date:         2016/3/23 10:13
 */
-public class MyOutpatients extends Activity implements View.OnClickListener {
+public class MyOutpatients extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.rl_listview)
     RecyclerView rlListview;
@@ -44,6 +45,8 @@ public class MyOutpatients extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_my_outpatients);
         init();
     }
+
+
 
     private void init() {
         ButterKnife.bind(this);
@@ -133,5 +136,22 @@ public class MyOutpatients extends Activity implements View.OnClickListener {
                 tv_idcard= (TextView) itemView.findViewById(R.id.tv_idcard);
             }
         }
+    }
+
+
+
+    @Override
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initAction() {
+
     }
 }

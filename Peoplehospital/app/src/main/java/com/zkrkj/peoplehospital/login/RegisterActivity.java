@@ -20,6 +20,7 @@ import com.zkrkj.peoplehospital.R;
 
 import org.json.JSONObject;
 
+import base.BaseActivity;
 import util.TitleBarUtils;
 import util.ToastUtil;
 import util.ValidateUtil;
@@ -28,7 +29,7 @@ import util.ValidateUtil;
 * User:         LF
 * Date:         2016/3/18 14:20
 */
-public class RegisterActivity extends Activity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText et_account,et_pwd,et_yzm,et_pwd_sure;
     private Button btn_yzm,btn_register;
@@ -152,5 +153,21 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
 
             }
         });
+    }
+
+
+    @Override
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initAction() {
+
     }
 }

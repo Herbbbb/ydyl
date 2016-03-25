@@ -14,9 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
-import com.zkrkj.peoplehospital.fragment.Frag_Doctor;
 import com.zkrkj.peoplehospital.fragment.Frag_Home;
 import com.zkrkj.peoplehospital.fragment.Frag_Hospitals;
+import com.zkrkj.peoplehospital.fragment.Frag_News;
 import com.zkrkj.peoplehospital.fragment.Frag_Talk;
 import com.zkrkj.peoplehospital.fragment.Frag_User;
 
@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private Fragment mHomeFragment;
     private Fragment mHospitalsFragment;
-    private Fragment mDoctorFragment;
+    private Fragment mNewsFragment;
     private Fragment mTalkFragment;
     private Fragment mUserFragment;
     private ImageView image1,image2,image3,image4,docterimage;
@@ -83,8 +83,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (mHomeFragment != null) {
             transaction.hide(mHomeFragment);
         }
-        if (mDoctorFragment != null) {
-            transaction.hide(mDoctorFragment);
+        if (mNewsFragment != null) {
+            transaction.hide(mNewsFragment);
         }
         if (mHospitalsFragment != null) {
             transaction.hide(mHospitalsFragment);
@@ -179,11 +179,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 changeStatus(1);
                 break;
             case 2:
-                if (mDoctorFragment == null) {
-                    mDoctorFragment = new Frag_Doctor();
-                    transaction.add(R.id.cccc, mDoctorFragment);
+                if (mNewsFragment == null) {
+                    mNewsFragment = new Frag_News();
+                    transaction.add(R.id.cccc, mNewsFragment);
                 } else {
-                    transaction.show(mDoctorFragment);
+                    transaction.show(mNewsFragment);
                 }
                 changeStatus(2);
                 break;
