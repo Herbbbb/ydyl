@@ -105,7 +105,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".registered.DealDetail" />
         <activity android:name=".findDoc.FindDocDetail" />
-        <activity android:name=".fragment.Frag_News"></activity>
+        <activity android:name=".User.PersonalDetail" />
+        <activity android:name=".User.MyDocCard" />
+        <activity android:name=".record.SeeDocDetail"></activity>
     </application>
 
 </manifest>
