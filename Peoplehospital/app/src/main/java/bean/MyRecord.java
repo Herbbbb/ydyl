@@ -5,7 +5,10 @@ package bean;
  * @author: LF
  * @date: ${date} ${time}
  */
-public class MyRecord {
+public class
+
+
+MyRecord {
     String title;
     String content;
     String date;
