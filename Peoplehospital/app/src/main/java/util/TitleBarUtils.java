@@ -74,7 +74,7 @@ public class TitleBarUtils extends RelativeLayout {
 		titleTextColor = arr.getColor(
 				R.styleable.TitleBarLayout_titleTextColor, Color.WHITE);
 		titleTextSize = arr.getDimension(
-				R.styleable.TitleBarLayout_titleTextSize, 18.0f);
+				R.styleable.TitleBarLayout_titleTextSize, 20.0f);
 		leftImage = arr.getDrawable(R.styleable.TitleBarLayout_leftImage);
 		leftImage = context.getResources().getDrawable(R.drawable.left_arrow);
 		rightImageOne = arr

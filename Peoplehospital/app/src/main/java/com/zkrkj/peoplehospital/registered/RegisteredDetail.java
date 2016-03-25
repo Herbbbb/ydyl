@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
 
+import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
@@ -17,7 +18,7 @@ import util.TitleBarUtils;
 * User:         LF
 * Date:         2016/3/23 15:28
 */
-public class RegisteredDetail extends Activity implements View.OnClickListener {
+public class RegisteredDetail extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.tv_hospital)
     TextView tvHospital;//医院
@@ -50,6 +51,8 @@ public class RegisteredDetail extends Activity implements View.OnClickListener {
         init();
     }
 
+
+
     private void init() {
         initTitle();
         initListener();
@@ -73,6 +76,23 @@ public class RegisteredDetail extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
+    }
+
+
+
+    @Override
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initAction() {
 
     }
 }

@@ -1,6 +1,7 @@
 package com.zkrkj.peoplehospital.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.findDoc.FindDocDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,13 @@ public class FindDocAdapter extends BaseAdapter {
             view=View.inflate(context, R.layout.item_doctoryuyue,null);
 
         }
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, FindDocDetail.class);
+                context.startActivity(intent);
+            }
+        });
         return view;
     }
     class ViewHolder{

@@ -29,6 +29,8 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="17sp"
         android:text="注册" />
 
     <TextView
@@ -38,6 +40,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dip"
+        android:textSize="17sp"
         android:layout_toLeftOf="@+id/iv_right_two"
         android:text="注册" />
 

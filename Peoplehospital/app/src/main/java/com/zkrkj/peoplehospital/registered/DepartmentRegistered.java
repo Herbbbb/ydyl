@@ -19,11 +19,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
 
-public class DepartmentRegistered extends Activity {
+public class DepartmentRegistered extends BaseActivity {
 
     @Bind(R.id.department_one)
     RecyclerView departmentOne;
@@ -40,6 +41,8 @@ public class DepartmentRegistered extends Activity {
         ButterKnife.bind(this);
         init();
     }
+
+
 
     private void init() {
         initTitle();
@@ -191,5 +194,21 @@ public class DepartmentRegistered extends Activity {
                 Toast.makeText(DepartmentRegistered.this,listsTwo.get(getPosition()),Toast.LENGTH_SHORT);
             }
         }
+    }
+
+
+    @Override
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initAction() {
+
     }
 }

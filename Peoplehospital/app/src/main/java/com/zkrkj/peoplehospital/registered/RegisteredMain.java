@@ -10,13 +10,14 @@ import android.widget.RelativeLayout;
 
 import com.zkrkj.peoplehospital.R;
 
+import base.BaseActivity;
 import util.TitleBarUtils;
 /**
 * Describe:     预约挂号首页
 * User:         LF
 * Date:         2016/3/23 15:27
 */
-public class RegisteredMain extends Activity implements View.OnClickListener {
+public class RegisteredMain extends BaseActivity implements View.OnClickListener {
 
     private RelativeLayout rl_wdjzr,rl_history,min_sjwk;
     private Button btn_submit;
@@ -26,6 +27,7 @@ public class RegisteredMain extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_registered_main);
         init();
     }
+
 
     private void init() {
         initTitle();
@@ -77,5 +79,21 @@ public class RegisteredMain extends Activity implements View.OnClickListener {
                 startActivity(intent3);
                 break;
         }
+    }
+
+
+    @Override
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initAction() {
+
     }
 }

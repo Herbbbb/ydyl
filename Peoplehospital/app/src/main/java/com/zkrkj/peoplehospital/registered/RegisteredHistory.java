@@ -1,6 +1,7 @@
 package com.zkrkj.peoplehospital.registered;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
 
+import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
@@ -21,7 +23,7 @@ import util.TitleBarUtils;
  * User:         LF
  * Date:         2016/3/23 15:25
  */
-public class RegisteredHistory extends Activity {
+public class RegisteredHistory extends BaseActivity {
 
     @Bind(R.id.rl_listview)
     RecyclerView rlListview;
@@ -33,6 +35,7 @@ public class RegisteredHistory extends Activity {
         ButterKnife.bind(this);
         init();
     }
+
 
     private void init() {
         initTitle();
@@ -97,7 +100,30 @@ public class RegisteredHistory extends Activity {
                 tv_deal_state= (TextView) itemView.findViewById(R.id.tv_deal_state);
                 btn_deal_detail= (Button) itemView.findViewById(R.id.btn_deal_detail);
                 btn_back_no= (Button) itemView.findViewById(R.id.btn_back_no);
+                btn_deal_detail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(RegisteredHistory.this,DealDetail.class);
+                        startActivity(intent);
+                    }
+                });
             }
         }
+    }
+
+
+    @Override
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initAction() {
+
     }
 }
