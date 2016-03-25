@@ -12,8 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zkrkj.peoplehospital.R;
+
 import com.zkrkj.peoplehospital.User.ChangePasswordActivity;
 import com.zkrkj.peoplehospital.User.FeedBackActivity;
+
+import com.zkrkj.peoplehospital.User.MyDocCard;
+import com.zkrkj.peoplehospital.User.PersonalDetail;
+
 import com.zkrkj.peoplehospital.User.UnreadMessagesActivity;
 import com.zkrkj.peoplehospital.activity.MainActivity;
 
@@ -46,8 +51,6 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     LinearLayout dangan;
     @Bind(R.id.yuyue)
     LinearLayout yuyue;
-    @Bind(R.id.jiuyika)
-    LinearLayout jiuyika;
     @Bind(R.id.func)
     LinearLayout func;
     @Bind(R.id.yijian)
@@ -60,6 +63,8 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     LinearLayout xiugaimima;
     @Bind(R.id.resiglogin)
     LinearLayout resiglogin;
+    @Bind(R.id.jiuyika)
+    LinearLayout jiuyika;
     @Bind(R.id.tab_message)
     RelativeLayout tabMessage;
     private Intent intent;
@@ -89,7 +94,11 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initView() {
+
         xiugaimima.setOnClickListener(this);
+
+        jiuyika.setOnClickListener(this);
+
         usernameText.setOnClickListener(this);
         resiglogin.setOnClickListener(this);
         dangan.setOnClickListener(this);
@@ -115,9 +124,11 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
-            case R.id.username_text:
-                Toast.makeText(getActivity(), "点击了人", Toast.LENGTH_SHORT).show();
+            case R.id.username_text://个人信息
+                intent = new Intent(getActivity(), PersonalDetail.class);
+                startActivity(intent);
                 break;
             case R.id.dangan:
                 ToastUtil.ToastShow(getActivity(), "点击了健康档案", true);
@@ -148,6 +159,9 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
             case R.id.resiglogin:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.jiuyika://我的就医卡
+                intent = new Intent(getActivity(), MyDocCard.class);
+                startActivity(intent);
             case R.id.tab_message:
                 intent=new Intent(getActivity(), UnreadMessagesActivity.class);
                 startActivity(intent);

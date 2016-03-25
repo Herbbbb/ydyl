@@ -179,6 +179,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 changeStatus(1);
                 break;
             case 2:
+                if (mTalkFragment == null) {
+                    mTalkFragment = new Frag_Talk();
+                    transaction.add(R.id.cccc, mTalkFragment);
+                } else {
+                    transaction.show(mTalkFragment);
+                }
+
+                changeStatus(2);
+
+
+                break;
+            case 3:
+
                 if (mNewsFragment == null) {
                     mNewsFragment = new Frag_News();
                     transaction.add(R.id.cccc, mNewsFragment);
@@ -186,15 +199,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     transaction.show(mNewsFragment);
                 }
                 changeStatus(3);
-                break;
-            case 3:
-                if (mTalkFragment == null) {
-                    mTalkFragment = new Frag_Talk();
-                    transaction.add(R.id.cccc, mTalkFragment);
-                } else {
-                    transaction.show(mTalkFragment);
-                }
-                changeStatus(2);
                 break;
             case 4:
                 if (mUserFragment == null) {
