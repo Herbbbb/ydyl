@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
 
+import util.ToastUtil;
+
 
 /**
  * Created by yetwish on 2015-05-11
@@ -33,7 +35,8 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
     /**
      * 删除键
      */
-    private ImageView ivDelete;
+   // private ImageView ivDelete;
+    private ImageView search;
 
     /**
      * 返回按钮
@@ -83,63 +86,64 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 
     private void initViews() {
         etInput = (EditText) findViewById(R.id.search_et_input);
-
-        ivDelete = (ImageView) findViewById(R.id.search_iv_delete);
-
-        lvTips = (ListView) findViewById(R.id.search_lv_tips);
-
-        lvTips.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //set edit text
-                String text = lvTips.getAdapter().getItem(i).toString();
-                etInput.setText(text);
-                etInput.setSelection(text.length());
-                //hint list view gone and result list view show
-                lvTips.setVisibility(View.GONE);
-                notifyStartSearching(text);
-            }
-        });
-
-        ivDelete.setOnClickListener(this);
+        search = (ImageView) findViewById(R.id.search_in);
 
 
-        etInput.addTextChangedListener(new EditChangedListener());
-        etInput.setOnClickListener(this);
-        etInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    lvTips.setVisibility(GONE);
-                    notifyStartSearching(etInput.getText().toString());
-                }
-                return true;
-            }
-        });
+
+
+//        lvTips.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                //set edit text
+//                String text = lvTips.getAdapter().getItem(i).toString();
+//                etInput.setText(text);
+//                etInput.setSelection(text.length());
+//                //hint list view gone and result list view show
+//                lvTips.setVisibility(View.GONE);
+//                notifyStartSearching(text);
+//            }
+//        });
+
+        search.setOnClickListener(this);
     }
+
+
+//        etInput.addTextChangedListener(new EditChangedListener());
+//       // etInput.setOnClickListener(this);
+//        etInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    lvTips.setVisibility(GONE);
+//                    notifyStartSearching(etInput.getText().toString());
+//                }
+//                return true;
+//            }
+//        });
+//    }
 
     /**
      * 通知监听者 进行搜索操作
      * @param text
      */
-    private void notifyStartSearching(String text){
-        if (mListener != null) {
-            mListener.onSearch(etInput.getText().toString());
-        }
-        //隐藏软键盘
-        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-    }
+//    private void notifyStartSearching(String text){
+//        if (mListener != null) {
+//            mListener.onSearch(etInput.getText().toString());
+//        }
+//        //隐藏软键盘
+//        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//    }
 
     /**
      * 设置热搜版提示 adapter
      */
-    public void setTipsHintAdapter(ArrayAdapter<String> adapter) {
-        this.mHintAdapter = adapter;
-        if (lvTips.getAdapter() == null) {
-            lvTips.setAdapter(mHintAdapter);
-        }
-    }
+//    public void setTipsHintAdapter(ArrayAdapter<String> adapter) {
+//        this.mHintAdapter = adapter;
+//        if (lvTips.getAdapter() == null) {
+//            lvTips.setAdapter(mHintAdapter);
+//        }
+//    }
     public  void setHint(Context context,String s){
         etInput.setHint(s);
     }
@@ -159,24 +163,24 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            if (!"".equals(charSequence.toString())) {
-                ivDelete.setVisibility(VISIBLE);
-                //热搜提示
-               // lvTips.setVisibility(VISIBLE);
-                if (mAutoCompleteAdapter != null && lvTips.getAdapter() != mAutoCompleteAdapter) {
-                    lvTips.setAdapter(mAutoCompleteAdapter);
-                }
-                //更新autoComplete数据
-                if (mListener != null) {
-                    mListener.onRefreshAutoComplete(charSequence + "");
-                }
-            } else {
-                ivDelete.setVisibility(GONE);
-                if (mHintAdapter != null) {
-                    lvTips.setAdapter(mHintAdapter);
-                }
-                lvTips.setVisibility(GONE);
-            }
+//            if (!"".equals(charSequence.toString())) {
+//              //  ivDelete.setVisibility(VISIBLE);
+//                //热搜提示
+//               // lvTips.setVisibility(VISIBLE);
+//                if (mAutoCompleteAdapter != null && lvTips.getAdapter() != mAutoCompleteAdapter) {
+//                    lvTips.setAdapter(mAutoCompleteAdapter);
+//                }
+//                //更新autoComplete数据
+//                if (mListener != null) {
+//                    mListener.onRefreshAutoComplete(charSequence + "");
+//                }
+//            } else {
+//              //  ivDelete.setVisibility(GONE);
+//                if (mHintAdapter != null) {
+//                    lvTips.setAdapter(mHintAdapter);
+//                }
+//                lvTips.setVisibility(GONE);
+//            }
 
         }
 
@@ -188,12 +192,11 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.search_et_input:
-                lvTips.setVisibility(VISIBLE);
-                break;
-            case R.id.search_iv_delete:
-                etInput.setText("");
-                ivDelete.setVisibility(GONE);
+//            case R.id.search_et_input:
+//                lvTips.setVisibility(VISIBLE);
+//                break;
+            case R.id.search_in:
+                ToastUtil.ToastShow(getContext(),"搜索",true);
                 break;
         }
     }
