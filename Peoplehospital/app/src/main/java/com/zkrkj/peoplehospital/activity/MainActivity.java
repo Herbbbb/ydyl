@@ -113,12 +113,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 break;
             case R.id.tab_docters:
-                select(3);
+                select(2);
 
 
                 break;
             case R.id.tab_talk:
-                select(2);
+                select(3);
 
 
                 break;
