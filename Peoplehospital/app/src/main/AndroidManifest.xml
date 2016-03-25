@@ -107,17 +107,48 @@
             android:name=".User.UnreadMessagesActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".registered.DealDetail" />
-        <activity android:name=".findDoc.FindDocDetail" />
-        <activity android:name=".User.PersonalDetail" />
-        <activity android:name=".User.MyDocCard" />
-        <activity android:name=".record.SeeDocDetail" />
-        <activity android:name=".record.SeeDocDetailJyd" />
-        <activity android:name=".record.SeeDocDetailJcd" />
-        <activity android:name=".record.SeeDocDetailCfd" />
-        <activity android:name=".record.ReportQuery" />
-        <activity android:name=".record.ReportQueryJybg" />
-        <activity android:name=".record.ReportQueryJcbg"></activity>
+        <activity
+            android:name=".registered.DealDetail"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".findDoc.FindDocDetail"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".User.PersonalDetail"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".User.MyDocCard"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".record.SeeDocDetail"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".record.ReportQuery"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".User.FeedBackActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".User.ChangePasswordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".record.OutpatientPrescriptionsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"  />
+        <activity
+            android:name=".record.MedicalExpensesActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+
+
     </application>
 
 </manifest>

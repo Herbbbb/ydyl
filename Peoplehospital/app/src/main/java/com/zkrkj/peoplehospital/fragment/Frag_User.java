@@ -12,8 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zkrkj.peoplehospital.R;
+
+import com.zkrkj.peoplehospital.User.ChangePasswordActivity;
+import com.zkrkj.peoplehospital.User.FeedBackActivity;
+
 import com.zkrkj.peoplehospital.User.MyDocCard;
 import com.zkrkj.peoplehospital.User.PersonalDetail;
+
 import com.zkrkj.peoplehospital.User.UnreadMessagesActivity;
 import com.zkrkj.peoplehospital.activity.MainActivity;
 
@@ -89,11 +94,16 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initView() {
+
+        xiugaimima.setOnClickListener(this);
+
         jiuyika.setOnClickListener(this);
+
         usernameText.setOnClickListener(this);
         resiglogin.setOnClickListener(this);
         dangan.setOnClickListener(this);
         tabMessage.setOnClickListener(this);
+        yijian.setOnClickListener(this);
     }
 
     @Override
@@ -137,7 +147,8 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.yijian:
-                Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
+                intent=new Intent(getActivity(), FeedBackActivity.class);
+                startActivity(intent);
                 break;
             case R.id.about:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
@@ -153,6 +164,10 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
             case R.id.tab_message:
                 intent=new Intent(getActivity(), UnreadMessagesActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.xiugaimima:
+                intent=new Intent(getActivity(), ChangePasswordActivity.class);
                 startActivity(intent);
                 break;
         }
