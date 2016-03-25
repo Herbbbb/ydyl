@@ -15,32 +15,23 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
 
-public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
+public class ReportQuery extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.tv_dzbl)
-    TextView tvDzbl;
-    @Bind(R.id.tv_jyd)
-    TextView tvJyd;
-    @Bind(R.id.tv_jcd)
-    TextView tvJcd;
-    @Bind(R.id.tv_cfd)
-    TextView tvCfd;
+    @Bind(R.id.tv_jybg)
+    TextView tvJybg;
+    @Bind(R.id.tv_jcbg)
+    TextView tvJcbg;
     @Bind(R.id.ll_fragment)
     LinearLayout llFragment;
-
-    private Fragment mDzbl;
-    private Fragment mJyd;
-    private Fragment mJcd;
-    private Fragment mCfd;
     private FragmentManager mManager;
-//    private  FragmentTransaction trans;
+    private Fragment mJybg;
+    private Fragment mJcbg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_see_doc_detail);
+        setContentView(R.layout.activity_report_query);
         ButterKnife.bind(this);
-        mManager=getSupportFragmentManager();
         init();
     }
 
@@ -51,12 +42,11 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
     }
 
     private void initFragment() {
-        mDzbl=new SeeDocDetailDzbl();
-        mJyd=new SeeDocDetailJyd();
-        mJcd=new SeeDocDetailJcd();
-        mCfd=new SeeDocDetailCfd();
+        mJybg=new ReportQueryJybg();
+        mJcbg=new ReportQueryJcbg();
+        mManager = getSupportFragmentManager();
         FragmentTransaction trans = mManager.beginTransaction();
-        trans.add(R.id.ll_fragment, mDzbl);
+        trans.add(R.id.ll_fragment, mJybg);
         trans.commit();
     }
 
@@ -64,16 +54,10 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         switch (id){
             case 0:
-                trans.replace(R.id.ll_fragment, new SeeDocDetailDzbl());
+                trans.replace(R.id.ll_fragment, mJybg);
                 break;
             case 1:
-                trans.replace(R.id.ll_fragment, new SeeDocDetailJyd());
-                break;
-            case 2:
-                trans.replace(R.id.ll_fragment, new SeeDocDetailJcd());
-                break;
-            case 3:
-                trans.replace(R.id.ll_fragment, new SeeDocDetailCfd());
+                trans.replace(R.id.ll_fragment, mJcbg);
                 break;
         }
         trans.addToBackStack(null);
@@ -81,10 +65,8 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
     }
 
     private void initWidget() {
-        tvDzbl.setOnClickListener(this);
-        tvJyd.setOnClickListener(this);
-        tvJcd.setOnClickListener(this);
-        tvCfd.setOnClickListener(this);
+        tvJybg.setOnClickListener(this);
+        tvJcbg.setOnClickListener(this);
     }
 
     private void initTitle() {
@@ -98,7 +80,20 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
             }
         });
     }
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_jybg://检验报告
+                seleFragment(0);
+                break;
+            case R.id.tv_jcbg://检查报告
+                seleFragment(1);
+                break;
+        }
+        if(v instanceof TextView){
+            ((TextView) v).getPaint().setFakeBoldText(true);
+        }
+    }
 
     @Override
     public int getLayoutId() {
@@ -113,21 +108,4 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_dzbl://电子病历
-                seleFragment(0);
-                break;
-            case R.id.tv_jyd://检验单
-                seleFragment(1);
-                break;
-            case R.id.tv_jcd://检查单
-                seleFragment(2);
-                break;
-            case R.id.tv_cfd://处方单
-                seleFragment(3);
-                break;
-        }
-    }
 }

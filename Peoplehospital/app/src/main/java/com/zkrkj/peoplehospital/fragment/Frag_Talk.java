@@ -7,10 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.activity.MainActivity;
+import com.zkrkj.peoplehospital.record.ReportQuery;
+import com.zkrkj.peoplehospital.record.SeeDocDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +26,10 @@ import widget.MyRecyclerview;
 /**
  * Created by lenovo on 2016/3/16.
  */
-public class Frag_Talk extends BaseFragment {
+public class Frag_Talk extends BaseFragment implements View.OnClickListener {
 
     private RecyclerView rl_listview;
+    private LinearLayout ll_bgcx;
     private List<MyRecord> lists=new ArrayList<MyRecord>();
 
     @Override
@@ -52,10 +56,24 @@ public class Frag_Talk extends BaseFragment {
     }
 
     private void initWidget() {
+        ll_bgcx= (LinearLayout) view.findViewById(R.id.ll_bgcx);
         rl_listview= (RecyclerView) view.findViewById(R.id.rl_listview);
+
         rl_listview.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
         rl_listview.setAdapter(new MyRecyclerView());
         rl_listview.setFocusable(false);
+
+        ll_bgcx.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ll_bgcx:
+                Intent intent=new Intent(getActivity(), ReportQuery.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     private class MyRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -86,7 +104,13 @@ public class Frag_Talk extends BaseFragment {
                 super(itemView);
                 tv_title= (TextView) itemView.findViewById(R.id.tv_title);
                 tv_content= (TextView) itemView.findViewById(R.id.tv_content);
-
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(getActivity(), SeeDocDetail.class);
+                        startActivity(intent);
+                    }
+                });
             }
         }
     }
