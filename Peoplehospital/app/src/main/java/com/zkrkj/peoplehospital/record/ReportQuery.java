@@ -1,5 +1,6 @@
 package com.zkrkj.peoplehospital.record;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -82,6 +83,8 @@ public class ReportQuery extends BaseActivity implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
+        tvJybg.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        tvJcbg.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         switch (v.getId()){
             case R.id.tv_jybg://检验报告
                 seleFragment(0);
@@ -91,7 +94,7 @@ public class ReportQuery extends BaseActivity implements View.OnClickListener {
                 break;
         }
         if(v instanceof TextView){
-            ((TextView) v).getPaint().setFakeBoldText(true);
+            ((TextView) v).setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         }
     }
 

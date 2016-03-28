@@ -1,5 +1,6 @@
 package com.zkrkj.peoplehospital.record;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,7 +15,11 @@ import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
-
+/**
+* Describe:     就诊明细
+* User:         LF
+* Date:         2016/3/25 17:53
+*/
 public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.tv_dzbl)
@@ -115,6 +120,10 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        tvDzbl.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        tvJyd.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        tvJcd.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        tvCfd.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         switch (v.getId()){
             case R.id.tv_dzbl://电子病历
                 seleFragment(0);
@@ -128,6 +137,9 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
             case R.id.tv_cfd://处方单
                 seleFragment(3);
                 break;
+        }
+        if(v instanceof TextView){
+            ((TextView) v).setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         }
     }
 }
