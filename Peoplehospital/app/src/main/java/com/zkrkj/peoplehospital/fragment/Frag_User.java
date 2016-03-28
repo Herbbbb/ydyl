@@ -162,6 +162,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
             case R.id.jiuyika://我的就医卡
                 intent = new Intent(getActivity(), MyDocCard.class);
                 startActivity(intent);
+                break;
             case R.id.tab_message:
                 intent=new Intent(getActivity(), UnreadMessagesActivity.class);
                 startActivity(intent);

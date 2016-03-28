@@ -1,12 +1,14 @@
 package com.zkrkj.peoplehospital.fragment;
 
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.activity.MainActivity;
 
@@ -42,7 +44,12 @@ public class Frag_News extends BaseFragment {
 
     @Override
     protected void initView() {
+        ViewPager pager = (ViewPager)view.findViewById(R.id.viewPager);
+        //pager.setAdapter(new TestAdapter(getSupportFragmentManager()));
 
+        //向ViewPager绑定PagerSlidingTabStrip
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip)view.findViewById(R.id.tabs);
+        tabs.setViewPager(pager);
     }
 
     @Override

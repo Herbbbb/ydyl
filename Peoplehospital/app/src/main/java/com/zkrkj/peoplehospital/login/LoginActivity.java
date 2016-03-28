@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -26,7 +27,14 @@ import com.zkrkj.peoplehospital.R;
 
 import org.json.JSONObject;
 
+import java.util.Map;
+
 import base.BaseActivity;
+import base.OptsharepreInterface;
+import util.IStringRequest;
+import util.JsonUtils;
+import util.LogUtil;
+import util.NetUtil;
 import util.TitleBarUtils;
 import util.ToastUtil;
 import util.ValidateUtil;
@@ -87,7 +95,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 validation();
                 break;
             case R.id.btn_register:
-                Intent intent=new Intent(this,RegisterActivity.class);
+                Intent intent = new Intent(this, RegisterActivity.class);
                 startActivity(intent);
                 break;
             default:
@@ -99,42 +107,87 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         account = et_account.getText().toString().trim();
         pwd = et_pwd.getText().toString().trim();
 
+
         if (TextUtils.isEmpty(account)) {
-            ToastUtil.ToastShow(this,"请输入手机号",true);
+            ToastUtil.ToastShow(this, "请输入手机号", true);
         } else if (!ValidateUtil.isMobileNO(account)) {
-            ToastUtil.ToastShow(this,"手机格式不正确",true);
+            loginMethod();
+            // ToastUtil.ToastShow(this,"手机格式不正确",true);
         } else {
             if (TextUtils.isEmpty(account)) {
-                ToastUtil.ToastShow(this,"请输入密码",true);
+                ToastUtil.ToastShow(this, "请输入密码", true);
             } else if (!ValidateUtil.checkPassWord(pwd)) {
-                ToastUtil.ToastShow(this,"密码6-18位或出现非法字符",true);
+                ToastUtil.ToastShow(this, "密码6-18位或出现非法字符", true);
             } else {
                 loginMethod();
             }
         }
+
     }
 
-    /**
-    * Describe:     登录
-    * User:         LF
-    * Date:         2016/3/18 14:19
-    */
     private void loginMethod() {
         pb = ProgressDialogStyle.createLoadingDialog(this, "正在登录...");
         pb.show();
         RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest requset = new JsonObjectRequest(Request.Method.GET, "https://github.com/github", null, new Response.Listener<JSONObject>() {
+        IStringRequest requset = new IStringRequest(Request.Method.GET,
+                "http://192.168.1.252:9401/AppointMentServer/api/login?username="+account+"&password="+pwd,
+                new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
+                Log.i("aaa",response);
+                parseLogin(response);
+                //
                 pb.dismiss();
+
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                pb.dismiss();
-            }
-        });
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("err",error.toString());
+                     pb.dismiss();
+                    }
+                }
+        );
         queue.add(requset);
+    }
+
+    private void parseLogin(String response) {
+        Map<String,Object> object=null;
+        Map<String,Object> data=null;
+        String token="";
+        String msg="";
+        String success="";
+        try {
+            object= JsonUtils.getMapObj(response);
+            success=object.get("success").toString();
+            if (success.equals("0")){
+                ToastUtil.ToastShow(getBaseContext(),"用户手机号或密码错误", true);
+            }else {
+                data = JsonUtils.getMapObj(object.get("data").toString());
+
+                Log.i("aaa", success);
+
+                token = data.get("token").toString();
+                OptsharepreInterface o = new OptsharepreInterface(this);
+                o.putPres("token", token);
+                o.putPres("account", account);
+                o.putPres("password", pwd);
+                msg = object.get("msg").toString();
+                ToastUtil.ToastShow(getBaseContext(), msg, true);
+                finish();
+            }
+
+
+
+
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -3,6 +3,7 @@ package com.zkrkj.peoplehospital.login;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.zkrkj.peoplehospital.R;
 import org.json.JSONObject;
 
 import base.BaseActivity;
+import util.IStringRequest;
 import util.TitleBarUtils;
 import util.ToastUtil;
 import util.ValidateUtil;
@@ -141,18 +143,28 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     * Date:         2016/3/18 14:19
     */
     private void register() {
-        RequestQueue queue= Volley.newRequestQueue(this);
-        JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, "", null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        IStringRequest requset = new IStringRequest(Request.Method.GET,
+                "http://192.168.1.252:9401/AppointMentServer/api/register?phone=15539793157&password=m12345678&verifyCode=123456",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("aaa",response);
+                     //   parseL(response);
+                        ToastUtil.ToastShow(getBaseContext(), "注册成功", true);
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-            }
-        });
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("aaa",error.toString());
+
+                    }
+                }
+        );
+        queue.add(requset);
     }
 
 

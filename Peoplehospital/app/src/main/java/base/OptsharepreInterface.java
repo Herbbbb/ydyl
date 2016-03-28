@@ -34,7 +34,9 @@ public class OptsharepreInterface {
 			editor.putString("password", values);// 登录密码
 		} else if (optName.equals("isFirstLogin")) {
 			editor.putString("isFirstLogin", values);// 是否首次登陆(0:是	1:否)
-		}  else {
+		}  else if (optName.equals("token")){
+			editor.putString("token", values);//登录成功后返回的token值
+		} else {
 			editor.putString(optName, values);
 		}
 		
@@ -52,7 +54,10 @@ public class OptsharepreInterface {
 			values = settings.getString("password", "0");
 		} else if (optName.equals("isFirstLogin")) {// 是否首次登陆
 			values = settings.getString("isFirstLogin", "0");
-		}  else{
+		}  else if (optName.equals("token")) {// 登录成功后返回token值
+			values = settings.getString("token", "");
+		}
+			else{
 			values= settings.getString(optName, "");
 		}
 		// System.out.println("读取配置文件操作------" + optName + "---" + values);
