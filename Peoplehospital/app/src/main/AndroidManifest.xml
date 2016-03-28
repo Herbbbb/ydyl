@@ -147,7 +147,10 @@
             android:name=".record.MedicalExpensesActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".User.MyUserActivity"></activity>
+        <activity android:name=".User.MyUserActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>
