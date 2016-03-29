@@ -16,4 +16,8 @@ public class Constants {
      * 默认每页显示的item数量
      */
     public static final int PAGE_SIZE = 20;
+    /**
+     * 网络请求失败监听
+     */
+    public static final String VOLLEY_ERROR = "请求失败";
 }
