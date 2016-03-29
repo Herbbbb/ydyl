@@ -34,9 +34,13 @@ public class OptsharepreInterface {
 			editor.putString("password", values);// 登录密码
 		} else if (optName.equals("isFirstLogin")) {
 			editor.putString("isFirstLogin", values);// 是否首次登陆(0:是	1:否)
-		}  else if (optName.equals("token")){
+		}  else if (optName.equals("token")) {
 			editor.putString("token", values);//登录成功后返回的token值
-		} else {
+		}
+			else if (optName.equals("total")) {
+			editor.putString("total", values);//就诊人的数量
+		}
+		 else {
 			editor.putString(optName, values);
 		}
 		
@@ -54,7 +58,10 @@ public class OptsharepreInterface {
 			values = settings.getString("password", "0");
 		} else if (optName.equals("isFirstLogin")) {// 是否首次登陆
 			values = settings.getString("isFirstLogin", "0");
-		}  else if (optName.equals("token")) {// 登录成功后返回token值
+		}  else if (optName.equals("total")) {// 就诊人的数量
+			values = settings.getString("total", "0");
+		}
+		else if (optName.equals("token")) {// 登录成功后返回token值
 			values = settings.getString("token", "");
 		}
 			else{

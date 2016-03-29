@@ -106,28 +106,7 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
         tabHos.setOnClickListener(this);
         tabDoc.setOnClickListener(this);
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        IStringRequest stringRequest = new IStringRequest(Request.Method.GET,
-                "http://192.168.1.252:9401/AppointMentServer/api/login?username=ceshi&password=11111111",
-                new Response.Listener<String>() {
 
-                    @Override
-                    public void onResponse(String response) {
-                        //parseJsonPaihang(response);
-                        Log.i("aaa", response.toString());
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                LogUtil.i("aaa", error.toString());
-
-            }
-        }) {
-
-
-        };
-        requestQueue.add(stringRequest);
 
     }
 

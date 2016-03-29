@@ -13,6 +13,7 @@ import util.RecycleUtil;
  */
 public abstract class BaseFragment extends Fragment {
     public View view;
+    public OptsharepreInterface o;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
