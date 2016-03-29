@@ -16,6 +16,7 @@ import com.zkrkj.peoplehospital.R;
  */
 public abstract class BaseActivity extends FragmentActivity {
     public static String TAG = "";
+    public OptsharepreInterface o;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
