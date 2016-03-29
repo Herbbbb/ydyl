@@ -3,24 +3,17 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.zkrkj.peoplehospital.fragment.Frag_News">
+    android:layout_height="match_parent">
+
+
+
 
     <util.TitleBarUtils
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="46dp"/>
-    <com.astuetz.PagerSlidingTabStrip
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
 
-        ></com.astuetz.PagerSlidingTabStrip>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_below="@id/tabs"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+
 
 
     <RadioGroup

@@ -219,11 +219,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void changeStatus(int position) {
 
         // 重置所有图片
-        image1.setImageResource(R.drawable.ic_tab_home_normal);
-        image2.setImageResource(R.drawable.ic_tab_friends_a);
-        image3.setImageResource(R.drawable.ic_tab_find_a);
-        image4.setImageResource(R.drawable.ic_tab_user_normal);
-        docterimage.setImageResource(R.drawable.ic_tab_friends_a);
+        image1.setImageResource(R.mipmap.u011);
+        image2.setImageResource(R.mipmap.u012);
+        image3.setImageResource(R.mipmap.u013);
+        image4.setImageResource(R.mipmap.u014);
+        docterimage.setImageResource(R.mipmap.u015);
         // 重置所有文本的颜色
         textView1.setTextColor(Color.WHITE);
         textView2.setTextColor(Color.WHITE);

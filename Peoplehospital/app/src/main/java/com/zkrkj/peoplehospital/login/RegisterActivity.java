@@ -21,8 +21,12 @@ import com.zkrkj.peoplehospital.R;
 
 import org.json.JSONObject;
 
+import java.util.Map;
+
 import base.BaseActivity;
+import base.OptsharepreInterface;
 import util.IStringRequest;
+import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
 import util.ValidateUtil;
@@ -98,9 +102,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_yzm:
-                vaidate();
+
                 break;
             case R.id.btn_register:
+                vaidate();
                 break;
             default:
                 break;
@@ -126,7 +131,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
         if(validateRule){
             if(!ValidateUtil.checkPassWord(pwd)){
-                errorMsg="密码6-18位或出现非法字符";
+                errorMsg="密码6-18位字母与数字组成或出现非法字符";
                 validateRule=false;
             }
         }
@@ -145,13 +150,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void register() {
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                "http://192.168.1.252:9401/AppointMentServer/api/register?phone=15539793157&password=m12345678&verifyCode=123456",
+                "http://192.168.1.252:9401/AppointMentServer/api/register?phone="+account+"&password="+pwd_sure+"&verifyCode="+yzm,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.i("aaa",response);
-                     //   parseL(response);
-                        ToastUtil.ToastShow(getBaseContext(), "注册成功", true);
+                        parseRegister(response);
+                       // ToastUtil.ToastShow(getBaseContext(), "注册成功", true);
 
 
                     }
@@ -165,6 +170,24 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
         );
         queue.add(requset);
+    }
+
+    private void parseRegister(String response) {
+        Map<String,Object> object=null;
+        try {
+            object= JsonUtils.getMapObj(response);
+            String success=object.get("success").toString();
+            if (success.equals("0")){
+                String msg = object.get("msg").toString();
+                ToastUtil.ToastShow(getBaseContext(),msg, true);
+            }else if(success.equals("1")){
+
+                ToastUtil.ToastShow(getBaseContext(),"注册成功", true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
