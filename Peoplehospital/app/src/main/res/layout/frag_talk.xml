@@ -41,7 +41,7 @@
                 android:id="@+id/iv_photo"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@drawable/myphoto"/>
+                android:background="@mipmap/user_head"/>
 
             <TextView
                 android:id="@+id/tv_name"
@@ -86,7 +86,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@mipmap/record_yyjl"/>
+                android:background="@mipmap/rd_01"/>
 
             <TextView
                 android:layout_marginTop="8dp"
@@ -114,7 +114,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@mipmap/record_mzcf"/>
+                android:background="@mipmap/rd_02"/>
 
             <TextView
                 android:layout_marginTop="8dp"
@@ -142,7 +142,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@mipmap/record_ylfy"/>
+                android:background="@mipmap/rd_04"/>
 
             <TextView
                 android:layout_marginTop="8dp"
@@ -170,7 +170,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@mipmap/record_bgcx"/>
+                android:background="@mipmap/rd_03"/>
 
             <TextView
                 android:layout_marginTop="8dp"
