@@ -41,14 +41,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/tv_fyd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:textColor="#2ec075"
-                android:text="缴费单"/>
+                android:text="费用单"/>
             <TextView
+                android:id="@+id/tv_cfd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
@@ -56,6 +58,24 @@
                 android:layout_marginTop="10dp"
                 android:textColor="#2ec075"
                 android:text="处方单"/>
+            <TextView
+            android:id="@+id/tv_jyd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#2ec075"
+            android:text="检验单"/>
+            <TextView
+                android:id="@+id/tv_jcd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#2ec075"
+                android:text="检查单"/>
         </LinearLayout>
 
 
@@ -75,6 +95,7 @@
             android:background="@color/bg_layout_line"></TextView>
 
         <TextView
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
