@@ -3,6 +3,7 @@ package com.zkrkj.peoplehospital.fragment;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.activity.MainActivity;
+import com.zkrkj.peoplehospital.adapter.RecyclerBaseAdapter;
 import com.zkrkj.peoplehospital.record.ReportQuery;
 import com.zkrkj.peoplehospital.record.SeeDocDetail;
 import com.zkrkj.peoplehospital.record.MedicalExpensesActivity;
@@ -65,10 +67,15 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
     @Bind(R.id.tab_yiliaofeiyong)
     LinearLayout tabYiliaofeiyong;
     private RecyclerView rl_listview;
+    private SwipeRefreshLayout swipRefresh;
     private List<Map<String,Object>> lists = new ArrayList<Map<String,Object>>();
     private Dialog pb;
 
     private OptsharepreInterface share;
+    private MyRecyclerView adapter=new MyRecyclerView();
+    private FullyLinearLayoutManager llManager=new FullyLinearLayoutManager(getActivity());
+    private int totalCount=0;
+    private int lastVisibleItem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,7 +101,6 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                ToastUtil.ToastShow(getActivity(), response,true);
                 loadData(response);
                 pb.dismiss();
             }
@@ -110,9 +116,40 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
 
     private void initWidget() {
         ll_bgcx = (LinearLayout) view.findViewById(R.id.ll_bgcx);
+        swipRefresh= (SwipeRefreshLayout) view.findViewById(R.id.swipRefresh);
         rl_listview = (RecyclerView) view.findViewById(R.id.rl_listview);
-        rl_listview.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
+
+        swipRefresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        swipRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                totalCount = 0;
+                lists.clear();
+                initData();
+            }
+        });
+
+        rl_listview.setLayoutManager(llManager);
         rl_listview.setFocusable(false);
+        rl_listview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisibleItem + 1 == adapter.getItemCount()) {
+                    // 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
+                    if(totalCount!=0&&totalCount%Constants.PAGE_SIZE==0){
+                        initData();
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = llManager.findLastVisibleItemPosition();
+            }
+        });
 
         ll_bgcx.setOnClickListener(this);
     }
@@ -128,8 +165,14 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
             if (success.equals("0")){
                 ToastUtil.ToastShow(getActivity(),  object.get("msg").toString(), true);
             }else{
-                lists= JsonUtils.getListMap(object.get("data").toString());
-                rl_listview.setAdapter(new MyRecyclerView());
+                if(lists.size()>0){
+                    lists.addAll(JsonUtils.getListMap(object.get("data").toString()));
+                    adapter.notifyDataSetChanged();
+                }else{
+                    lists.addAll(JsonUtils.getListMap(object.get("data").toString()));
+                    rl_listview.setAdapter(adapter);
+                }
+                totalCount=lists.size();
             }
         }catch (Exception e){
 
@@ -153,7 +196,7 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         ButterKnife.unbind(this);
     }
 
-    private class MyRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private class MyRecyclerView extends RecyclerBaseAdapter {
 
 
         @Override
