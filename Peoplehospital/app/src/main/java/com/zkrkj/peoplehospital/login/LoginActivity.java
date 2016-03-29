@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -24,17 +26,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
-
-import org.json.JSONObject;
-
 import java.util.Map;
-
 import base.BaseActivity;
 import base.OptsharepreInterface;
 import util.IStringRequest;
 import util.JsonUtils;
-import util.LogUtil;
-import util.NetUtil;
 import util.TitleBarUtils;
 import util.ToastUtil;
 import util.ValidateUtil;
@@ -42,8 +38,8 @@ import widget.ProgressDialogStyle;
 
 /**
 * Describe:     登录页
-* User:         LF
-* Date:         2016/3/18 14:20
+* User:         miao
+* Date:         2016/3/29 14:20
 */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -84,8 +80,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         et_pwd = (EditText) findViewById(R.id.et_pwd);
         btn_submit = (Button) findViewById(R.id.btn_submit);
         btn_register = (Button) findViewById(R.id.btn_register);
+        btn_submit.getBackground().setAlpha(100);//0~255透明度值
+        btn_submit.setEnabled(false);
         btn_submit.setOnClickListener(this);
         btn_register.setOnClickListener(this);
+        et_account.addTextChangedListener(new TextChange());
+        et_pwd.addTextChangedListener(new TextChange());
+
     }
 
     @Override
@@ -205,5 +206,31 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void initAction() {
 
     }
+     class TextChange implements TextWatcher {
+
+         @Override
+         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+         }
+
+         @Override
+         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+               if (et_account.getText().toString().length()<=0||et_pwd.getText().toString().length()<=0){
+                   btn_submit.getBackground().setAlpha(100);//0~255透明度值
+                   btn_submit.setEnabled(false);
+
+               }else
+               {
+                   btn_submit.getBackground().setAlpha(255);
+                   btn_submit.setEnabled(true);
+               }
+         }
+
+         @Override
+         public void afterTextChanged(Editable editable) {
+
+         }
+     }
+
 
 }
