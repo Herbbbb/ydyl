@@ -154,12 +154,7 @@ public class Frag_News extends BaseFragment implements ViewPager.OnPageChangeLis
 
     @Override
     protected void initView() {
-        ViewPager pager = (ViewPager)view.findViewById(R.id.viewPager);
-        //pager.setAdapter(new TestAdapter(getSupportFragmentManager()));
 
-        //向ViewPager绑定PagerSlidingTabStrip
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip)view.findViewById(R.id.tabs);
-        tabs.setViewPager(pager);
     }
 
     @Override

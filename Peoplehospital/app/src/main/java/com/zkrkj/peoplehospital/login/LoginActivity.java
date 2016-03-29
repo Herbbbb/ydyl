@@ -1,11 +1,6 @@
 package com.zkrkj.peoplehospital.login;
-
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -215,7 +210,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
          @Override
          public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               if (et_account.getText().toString().length()<=0||et_pwd.getText().toString().length()<=0){
+               if (et_account.getText().toString().length()<=0||et_pwd.getText().toString().length()<=5){
                    btn_submit.getBackground().setAlpha(100);//0~255透明度值
                    btn_submit.setEnabled(false);
 

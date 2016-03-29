@@ -221,39 +221,39 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         // 重置所有图片
         image1.setImageResource(R.mipmap.u011);
         image2.setImageResource(R.mipmap.u012);
-        image3.setImageResource(R.mipmap.u013);
-        image4.setImageResource(R.mipmap.u014);
-        docterimage.setImageResource(R.mipmap.u015);
+        image3.setImageResource(R.mipmap.u014);
+        image4.setImageResource(R.mipmap.u015);
+        docterimage.setImageResource(R.mipmap.u013);
         // 重置所有文本的颜色
-        textView1.setTextColor(Color.WHITE);
-        textView2.setTextColor(Color.WHITE);
-        textView3.setTextColor(Color.WHITE);
-        textView4.setTextColor(Color.WHITE);
-        doctertextView.setTextColor(Color.WHITE);
+        textView1.setTextColor(Color.parseColor("#999999"));
+        textView2.setTextColor(Color.parseColor("#999999"));
+        textView3.setTextColor(Color.parseColor("#999999"));
+        textView4.setTextColor(Color.parseColor("#999999"));
+        doctertextView.setTextColor(Color.parseColor("#999999"));
         // 改变对应图片和文本颜色
 
         switch (position) {
             case 0:
-                image1.setImageResource(R.drawable.ic_tab_home_press);
-                textView1.setTextColor(Color.parseColor("#FF1493"));
+                image1.setImageResource(R.mipmap.u001);
+                textView1.setTextColor(Color.parseColor("#2fad68"));
                 break;
             case 1:
-                image2.setImageResource(R.drawable.ic_tab_friends_b);
-                textView2.setTextColor(Color.parseColor("#FF1493"));
+                image2.setImageResource(R.mipmap.u002);
+                textView2.setTextColor(Color.parseColor("#2fad68"));
                 break;
             case 2:
-                docterimage.setImageResource(R.drawable.ic_tab_friends_b);
-                doctertextView.setTextColor(Color.parseColor("#FF1493"));
+                docterimage.setImageResource(R.mipmap.u003);
+                doctertextView.setTextColor(Color.parseColor("#2fad68"));
 
                 break;
             case 3:
-                image3.setImageResource(R.drawable.ic_tab_find_b);
-                textView3.setTextColor(Color.parseColor("#FF1493"));
+                image3.setImageResource(R.mipmap.u004);
+                textView3.setTextColor(Color.parseColor("#2fad68"));
 
                 break;
             case 4:
-                image4.setImageResource(R.drawable.ic_tab_user_press);
-                textView4.setTextColor(Color.parseColor("#FF1493"));
+                image4.setImageResource(R.mipmap.u005);
+                textView4.setTextColor(Color.parseColor("#2fad68"));
                 break;
 
             default:
