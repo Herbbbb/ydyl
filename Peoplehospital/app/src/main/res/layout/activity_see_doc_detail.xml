@@ -37,7 +37,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="3dp"/>
             <TextView
-                android:id="@+id/tv_jyd"
+                android:id="@+id/tv_Fjyd"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -51,7 +51,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="3dp"/>
             <TextView
-                android:id="@+id/tv_jcd"
+                android:id="@+id/tv_Fjcd"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -65,7 +65,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="3dp"/>
             <TextView
-                android:id="@+id/tv_cfd"
+                android:id="@+id/tv_Fcfd"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

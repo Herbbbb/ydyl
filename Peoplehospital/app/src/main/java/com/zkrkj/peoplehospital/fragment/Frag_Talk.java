@@ -3,31 +3,29 @@ package com.zkrkj.peoplehospital.fragment;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
-import com.zkrkj.peoplehospital.activity.MainActivity;
-import com.zkrkj.peoplehospital.record.ReportQuery;
-import com.zkrkj.peoplehospital.record.SeeDocDetail;
+import com.zkrkj.peoplehospital.login.LoginActivity;
 import com.zkrkj.peoplehospital.record.MedicalExpensesActivity;
 import com.zkrkj.peoplehospital.record.OutpatientPrescriptionsActivity;
-
-import org.json.JSONObject;
+import com.zkrkj.peoplehospital.record.ReportQuery;
+import com.zkrkj.peoplehospital.record.SeeDocDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +33,14 @@ import java.util.Map;
 
 import base.BaseFragment;
 import base.OptsharepreInterface;
-import bean.MyRecord;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.Constants;
 import util.JsonUtils;
+import util.SerializableMap;
 import util.ToastUtil;
-import widget.FullyLinearLayoutManager;
 import widget.ProgressDialogStyle;
+import widget.RefreshLayout;
 
 /**
  * Describe:     就医记录
@@ -54,47 +52,48 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
     private LinearLayout ll_bgcx;
     Intent intent;
 
-    @Bind(R.id.iv_photo)
-    ImageView ivPhoto;
-    @Bind(R.id.tv_name)
-    TextView tvName;
-    @Bind(R.id.rl_listview)
-    RecyclerView rlListview;
-    @Bind(R.id.tab_menzhenchufang)
-    LinearLayout tabMenzhenchufang;
-    @Bind(R.id.tab_yiliaofeiyong)
-    LinearLayout tabYiliaofeiyong;
-    private RecyclerView rl_listview;
-    private List<Map<String,Object>> lists = new ArrayList<Map<String,Object>>();
+    private ListView listview;
+    private RefreshLayout swipRefresh;
+    private List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
     private Dialog pb;
 
     private OptsharepreInterface share;
+    private MyAdapter adapter;
+    private int totalCount = 0;
+    private int startIndex = 1;
+
+    ImageView ivPhoto;
+    TextView tvName;
+    LinearLayout tabMenzhenchufang;
+    LinearLayout tabYiliaofeiyong;
+    LinearLayout llBgcx;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_talk, null);
         init();
+        ButterKnife.bind(this, view);
         return view;
     }
 
     private void init() {
         ButterKnife.bind(this, view);
-        share=new OptsharepreInterface(getActivity());
-        initData();
+        share = new OptsharepreInterface(getActivity());
         initWidget();
+        initData();
         initView();
     }
 
     private void initData() {
         pb = ProgressDialogStyle.createLoadingDialog(getActivity(), "请求中...");
         pb.show();
+        startIndex=(totalCount/Constants.PAGE_SIZE)*Constants.PAGE_SIZE+1;
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        Log.e(Constants.TAG,share.getPres("token"));
-        String url="http://192.168.1.252:9401/AppointMentServer/api/medicalRecords/patient-1?token="+share.getPres("token");
+        Log.e(Constants.TAG, share.getPres("token"));
+        String url = "http://192.168.1.252:9401/AppointMentServer/api/medicalRecords/patient-"+Constants.getPatientId(getActivity())+"?limit="+Constants.PAGE_SIZE+"&offset="+startIndex+"&token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                ToastUtil.ToastShow(getActivity(), response,true);
                 loadData(response);
                 pb.dismiss();
             }
@@ -109,29 +108,78 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
     }
 
     private void initWidget() {
-        ll_bgcx = (LinearLayout) view.findViewById(R.id.ll_bgcx);
-        rl_listview = (RecyclerView) view.findViewById(R.id.rl_listview);
-        rl_listview.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
-        rl_listview.setFocusable(false);
+        listview = (ListView) view.findViewById(R.id.lv);
+        swipRefresh = (RefreshLayout) view.findViewById(R.id.rl);
 
-        ll_bgcx.setOnClickListener(this);
+        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.frag_talk_head_vew, null);
+        listview.addHeaderView(headView);
+
+        ivPhoto= (ImageView) headView.findViewById(R.id.iv_photo);
+        tvName= (TextView) headView.findViewById(R.id.tv_name);
+        tabMenzhenchufang= (LinearLayout) headView.findViewById(R.id.tab_menzhenchufang);
+        tabYiliaofeiyong= (LinearLayout) headView.findViewById(R.id.tab_yiliaofeiyong);
+        llBgcx= (LinearLayout) headView.findViewById(R.id.ll_bgcx);
+
+        // 设置下拉刷新时的颜色值,颜色值需要定义在xml中
+        swipRefresh.setColorSchemeResources(R.color.switch_thumb_disabled_material_dark,
+                R.color.switch_thumb_normal_material_dark, R.color.switch_thumb_normal_material_light,
+                R.color.abc_secondary_text_material_light);
+
+        // 设置下拉刷新监听器
+        swipRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                totalCount=0;
+                startIndex = 0;
+                lists.clear();
+                initData();
+                swipRefresh.setRefreshing(false);
+            }
+        });
+
+        // 加载监听器
+        swipRefresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+            @Override
+            public void onLoad() {
+                if(totalCount!=0&&totalCount%Constants.PAGE_SIZE!=0){
+                    swipRefresh.setLoading(false);
+                    ToastUtil.ToastShow(getActivity(),"没有更多",false);
+                }else{
+                    initData();
+                    swipRefresh.setLoading(false);
+                }
+            }
+        });
+
+        llBgcx.setOnClickListener(this);
     }
 
-    private void loadData(String json){
-        Map<String,Object> object=null;
-        String token="";
-        String msg="";
-        String success="";
-        try{
-            object= JsonUtils.getMapObj(json);
-            success=object.get("success").toString();
-            if (success.equals("0")){
-                ToastUtil.ToastShow(getActivity(),  object.get("msg").toString(), true);
-            }else{
-                lists= JsonUtils.getListMap(object.get("data").toString());
-                rl_listview.setAdapter(new MyRecyclerView());
+    private void loadData(String json) {
+        Map<String, Object> object = null;
+        String success = "";
+        try {
+            object = JsonUtils.getMapObj(json);
+            success = object.get("success").toString();
+            if (success.equals("0")) {
+                ToastUtil.ToastShow(getActivity(), object.get("msg").toString(), true);
+            } else if (success.equals("1")) {
+                if (lists.size() > 0) {
+                    lists.addAll(JsonUtils.getListMap(object.get("data").toString()));
+                    adapter.notifyDataSetChanged();
+                } else {
+                    lists.addAll(JsonUtils.getListMap(object.get("data").toString()));
+                    adapter = new MyAdapter();
+                    listview.setAdapter(adapter);
+                }
+                totalCount = lists.size();
+            } else {
+                ToastUtil.ToastShow(getActivity(), "登录过期", true);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -153,76 +201,84 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         ButterKnife.unbind(this);
     }
 
-    private class MyRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            MyViewHolder holder = new MyViewHolder(LayoutInflater.from(getActivity()).inflate(R.layout.my_record_rl_listitem, parent, false));
-            return holder;
-        }
+    private class MyAdapter extends BaseAdapter {
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if (holder instanceof MyViewHolder) {
-                ((MyViewHolder) holder).tv_title.setText(lists.get(position).get("diag").toString());
-                String content=lists.get(position).get("hospitalName").toString()+"  "+lists.get(position).get("departmentName").toString();
-                ((MyViewHolder) holder).tv_content.setText(content);
-                ((MyViewHolder) holder).tv_date.setText(lists.get(position).get("diagDate").toString());
-                //检查单
-                if((int)lists.get(position).get("ckReportCount")==0){
-                    ((MyViewHolder) holder).tv_jcd.setVisibility(View.GONE);
-                }else{
-                    ((MyViewHolder) holder).tv_jcd.setText("检查单"+lists.get(position).get("ckReportCount").toString());
-                }
-                //检验单
-                if((int)lists.get(position).get("ttTestCount")==0){
-                    ((MyViewHolder) holder).tv_jyd.setVisibility(View.GONE);
-                }else{
-                    ((MyViewHolder) holder).tv_jyd.setText("检验单"+lists.get(position).get("ttTestCount").toString());
-                }
-                //费用单
-                if((int)lists.get(position).get("feeCount")==0){
-                    ((MyViewHolder) holder).tv_fyd.setVisibility(View.GONE);
-                }else{
-                    ((MyViewHolder) holder).tv_fyd.setText("费用单"+lists.get(position).get("feeCount").toString());
-                }
-                //处方单
-                if((int)lists.get(position).get("ttPCount")==0){
-                    ((MyViewHolder) holder).tv_cfd.setVisibility(View.GONE);
-                }else{
-                    ((MyViewHolder) holder).tv_cfd.setText("处方单"+lists.get(position).get("ttPCount").toString());
-                }
-            }
-        }
-
-        @Override
-        public int getItemCount() {
+        public int getCount() {
             return lists.size();
         }
 
-        class MyViewHolder extends RecyclerView.ViewHolder {
+        @Override
+        public Object getItem(int position) {
+            return lists.get(position);
+        }
 
-            TextView tv_title, tv_content,tv_date,tv_fyd,tv_cfd,tv_jyd,tv_jcd;
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
 
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                tv_title = (TextView) itemView.findViewById(R.id.tv_title);
-                tv_content = (TextView) itemView.findViewById(R.id.tv_content);
-                tv_date = (TextView) itemView.findViewById(R.id.tv_date);
-                tv_fyd = (TextView) itemView.findViewById(R.id.tv_fyd);
-                tv_cfd = (TextView) itemView.findViewById(R.id.tv_cfd);
-                tv_jyd = (TextView) itemView.findViewById(R.id.tv_jyd);
-                tv_jcd = (TextView) itemView.findViewById(R.id.tv_jcd);
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), SeeDocDetail.class);
-                        startActivity(intent);
-                    }
-                });
-
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            MyViewHolder holder = null;
+            if (convertView == null) {
+                holder = new MyViewHolder();
+                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.my_record_rl_listitem, null);
+                holder.tv_title = (TextView) convertView.findViewById(R.id.tv_titles);
+                holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+                holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
+                holder.tv_fyd = (TextView) convertView.findViewById(R.id.tv_fyd);
+                holder.tv_cfd = (TextView) convertView.findViewById(R.id.tv_cfd);
+                holder.tv_jyd = (TextView) convertView.findViewById(R.id.tv_jyd);
+                holder.tv_jcd = (TextView) convertView.findViewById(R.id.tv_jcd);
+                convertView.setTag(holder);
+            } else {
+                holder = (MyViewHolder) convertView.getTag();
             }
+            holder.tv_title.setText(lists.get(position).get("diag").toString());
+            String content = lists.get(position).get("hospitalName").toString() + "  " + lists.get(position).get("departmentName").toString();
+            holder.tv_content.setText(content);
+            holder.tv_date.setText(lists.get(position).get("diagDate").toString());
+            //检查单
+            if ((int) lists.get(position).get("ckReportCount") == 0) {
+                holder.tv_jcd.setVisibility(View.GONE);
+            } else {
+                holder.tv_jcd.setText("检查单" + lists.get(position).get("ckReportCount").toString());
+            }
+            //检验单
+            if ((int) lists.get(position).get("ttTestCount") == 0) {
+                holder.tv_jyd.setVisibility(View.GONE);
+            } else {
+                holder.tv_jyd.setText("检验单" + lists.get(position).get("ttTestCount").toString());
+            }
+            //费用单
+            if ((int) lists.get(position).get("feeCount") == 0) {
+                holder.tv_fyd.setVisibility(View.GONE);
+            } else {
+                holder.tv_fyd.setText("费用单" + lists.get(position).get("feeCount").toString());
+            }
+            //处方单
+            if ((int) lists.get(position).get("ttPCount") == 0) {
+                holder.tv_cfd.setVisibility(View.GONE);
+            } else {
+                holder.tv_cfd.setText("处方单" + lists.get(position).get("ttPCount").toString());
+            }
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), SeeDocDetail.class);
+                    SerializableMap tmpmap = new SerializableMap();
+                    tmpmap.setMap(lists.get(position));
+                    intent.putExtra("index", tmpmap);
+                    startActivity(intent);
+                }
+            });
+            return convertView;
+        }
+
+        private class MyViewHolder {
+            TextView tv_title, tv_content, tv_date, tv_fyd, tv_cfd, tv_jyd, tv_jcd;
+
         }
     }
 
