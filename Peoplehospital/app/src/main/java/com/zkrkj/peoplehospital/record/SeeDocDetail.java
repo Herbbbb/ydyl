@@ -94,7 +94,7 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
         pb.show();
         RequestQueue queue = Volley.newRequestQueue(this);
         Log.e(Constants.TAG, share.getPres("token"));
-        String url = "http://192.168.1.252:9401/AppointMentServer/api/medicalRecordsDetail/patient-" + tmpmap.getMap().get("id").toString() + "?token=" + share.getPres("token");
+        String url = Constants.SERVER_ADDRESS_BACKUP+"medicalRecordsDetail/patient-" + tmpmap.getMap().get("id").toString() + "?token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
