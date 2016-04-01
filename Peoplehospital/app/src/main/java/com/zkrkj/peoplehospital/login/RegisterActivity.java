@@ -1,8 +1,5 @@
 package com.zkrkj.peoplehospital.login;
-
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,24 +7,18 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.User.PersonalDetail;
-
-import org.json.JSONObject;
-
 import java.util.Map;
-
 import base.BaseActivity;
 import base.OptsharepreInterface;
+import util.Constants;
 import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
@@ -35,7 +26,7 @@ import util.ToastUtil;
 import util.ValidateUtil;
 /**
 * Describe:     注册页
-* User:         LF
+* User:         Miao
 * Date:         2016/3/18 14:20
 */
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
@@ -156,7 +147,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void register() {
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                "http://192.168.1.252:9401/AppointMentServer/api/register?phone="+account+"&password="+pwd_sure+"&verifyCode="+yzm,
+                Constants.SERVER_ADDRESS_BACKUP+ "register?phone="+account+"&password="+pwd_sure+"&verifyCode="+yzm,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

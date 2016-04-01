@@ -22,6 +22,7 @@ import com.zkrkj.peoplehospital.activity.MainActivity;
 import java.util.Map;
 import base.BaseActivity;
 import base.OptsharepreInterface;
+import util.Constants;
 import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
@@ -124,7 +125,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         pb.show();
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                "http://192.168.1.252:9401/AppointMentServer/api/login?username="+account+"&password="+pwd,
+                Constants.SERVER_ADDRESS_BACKUP+ "login?username="+account+"&password="+pwd,
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

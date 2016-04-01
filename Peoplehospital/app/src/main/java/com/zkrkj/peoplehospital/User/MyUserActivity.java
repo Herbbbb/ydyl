@@ -24,6 +24,7 @@ import base.BaseActivity;
 import base.OptsharepreInterface;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import util.Constants;
 import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
@@ -87,7 +88,7 @@ public class MyUserActivity extends BaseActivity {
         String token = o.getPres("token");
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                "http://192.168.1.252:9401/AppointMentServer/api/patients?limit=20&offset=0&token=" + token,
+                Constants.SERVER_ADDRESS_BACKUP+ "patients?limit=20&offset=0&token=" + token,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

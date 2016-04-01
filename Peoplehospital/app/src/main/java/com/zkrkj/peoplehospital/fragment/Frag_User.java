@@ -1,6 +1,4 @@
 package com.zkrkj.peoplehospital.fragment;
-
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +35,7 @@ import bean.MessageBean;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import db.DataBaseManager;
+import util.Constants;
 import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
@@ -91,6 +90,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     private RequestQueue queue;
     private String token;
     boolean first=true;
+    private DataBaseManager db;
 
 
     @Override
@@ -132,7 +132,13 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initView() {
 
+        try {
+            Log.i("bbb",db.getDataCounts("m"+ MyApplication.phone)+"");
 
+            idSum.setText(db.getDataCounts("m"+ MyApplication.phone));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         xiugaimima.setOnClickListener(this);
 
         jiuyika.setOnClickListener(this);
@@ -145,12 +151,13 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         wodejiuzhenren.setOnClickListener(this);
         o = new OptsharepreInterface(getActivity());
         token = o.getPres("token");
+
         if (MyApplication.loginFlag) {
 
 
             queue = Volley.newRequestQueue(getActivity());
             IStringRequest requset = new IStringRequest(Request.Method.GET,
-                    "http://192.168.1.252:9401/AppointMentServer/api/userinfo/summary?token=" + token,
+                    Constants.SERVER_ADDRESS_BACKUP+"userinfo/summary?token=" + token,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -168,6 +175,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                         }
                     }
             );
+            queue.add(requset);
 
         }
 
@@ -186,10 +194,10 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 message.setMesid(data.get(i).get("id").toString());
                 message.setMessagetype(data.get(i).get("msgtype").toString());
                 message.setUpdate1(data.get(i).get("updatetime").toString());
-                DataBaseManager db=DataBaseManager.getInstance(getActivity());
+                  db=DataBaseManager.getInstance(getActivity());
                 db.insertData1("m"+ MyApplication.phone,message);
 
-                Log.i("sql",db.getDataCounts("m"+ MyApplication.phone)+"");
+
 
 
             }
@@ -230,7 +238,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
         if (first&&MyApplication.loginFlag) {
             IStringRequest requset1 = new IStringRequest(Request.Method.GET,
-                    "http://192.168.1.252:9401/AppointMentServer/api/usermessage/unread?token=" + token,
+                    Constants.SERVER_ADDRESS_BACKUP+"usermessage/unread?token=" + token,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

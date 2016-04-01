@@ -33,6 +33,7 @@ import base.BaseActivity;
 import base.OptsharepreInterface;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import util.Constants;
 import util.IStringRequest;
 import util.TitleBarUtils;
 import util.ToastUtil;
@@ -83,7 +84,7 @@ public class FeedBackActivity extends BaseActivity implements TextWatcher {
                 final String token = o.getPres("token");
                 RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                 IStringRequest requset = new IStringRequest(Request.Method.POST,
-                        "http://192.168.1.252:9401/AppointMentServer/api/useropinion/add?",
+                        Constants.SERVER_ADDRESS_BACKUP+"useropinion/add?",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {

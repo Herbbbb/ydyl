@@ -58,7 +58,9 @@ public class MessageAdapter extends BaseAdapter {
             holder= (ViewHolder) view.getTag();
         }
 
-
+      holder.textView1.setText(list.get(i).get("context1").toString());
+      holder.textView2.setText(list.get(i).get("update1").toString());
+        holder.textView3.setText(list.get(i).get("messagetype").toString());
 
         return view;
     }

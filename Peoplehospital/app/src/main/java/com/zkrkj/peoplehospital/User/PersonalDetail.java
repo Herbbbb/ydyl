@@ -24,6 +24,7 @@ import base.BaseActivity;
 import base.OptsharepreInterface;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import util.Constants;
 import util.IStringRequest;
 import util.JsonUtils;
 import util.SharedPreferenceUtil;
@@ -136,7 +137,7 @@ public class PersonalDetail extends BaseActivity {
     private void save() {
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-         "http://192.168.1.252:9401/AppointMentServer/api/userinfo/edit?gender="+s2+"&idNo="+s3+"&name="+s1+"&token="+token,
+                Constants.SERVER_ADDRESS_BACKUP+"userinfo/edit?gender="+s2+"&idNo="+s3+"&name="+s1+"&token="+token,
         new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
