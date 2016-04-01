@@ -1,6 +1,7 @@
 package com.zkrkj.peoplehospital.login;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.User.PersonalDetail;
 
 import org.json.JSONObject;
 
@@ -105,6 +108,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
                 break;
             case R.id.btn_register:
+                account=et_account.getText().toString().trim();
+                o=new OptsharepreInterface(this);
+                o.putPres("phonenumber",account);
                 vaidate();
                 break;
             default:
@@ -120,7 +126,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void vaidate() {
         boolean validateRule=false;
         String errorMsg="";
-        account=et_account.getText().toString().trim();
+
         yzm=et_yzm.getText().toString().trim();
         pwd=et_pwd.getText().toString().trim();
         pwd_sure=et_pwd_sure.getText().toString().trim();
@@ -177,12 +183,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         try {
             object= JsonUtils.getMapObj(response);
             String success=object.get("success").toString();
+
             if (success.equals("0")){
                 String msg = object.get("msg").toString();
                 ToastUtil.ToastShow(getBaseContext(),msg, true);
             }else if(success.equals("1")){
-
+                String token=object.get("data").toString();
+                o=new OptsharepreInterface(this);
+                o.putPres("token",token);
+                MyApplication.loginFlag=true;
                 ToastUtil.ToastShow(getBaseContext(),"注册成功", true);
+                MyApplication.phone=account;
+                Intent intent=new Intent(this, PersonalDetail.class);
+                startActivity(intent);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,9 +1,9 @@
 package com.zkrkj.peoplehospital.fragment;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.User.ChangePasswordActivity;
 import com.zkrkj.peoplehospital.User.FeedBackActivity;
@@ -22,10 +28,17 @@ import com.zkrkj.peoplehospital.User.PersonalDetail;
 import com.zkrkj.peoplehospital.User.UnreadMessagesActivity;
 import com.zkrkj.peoplehospital.activity.MainActivity;
 
+import java.util.List;
+import java.util.Map;
+
 import base.BaseFragment;
 import base.OptsharepreInterface;
+import bean.MessageBean;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import db.DataBaseManager;
+import util.IStringRequest;
+import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
 
@@ -35,7 +48,7 @@ import util.ToastUtil;
 
 public class Frag_User extends BaseFragment implements View.OnClickListener {
 
-
+    MessageBean message=new MessageBean();
     @Bind(R.id.titleBar)
     TitleBarUtils titleBar;
     @Bind(R.id.imageView4)
@@ -70,7 +83,14 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     RelativeLayout tabMessage;
     @Bind(R.id.wodejiuzhenren)
     RelativeLayout wodejiuzhenren;
+    @Bind(R.id.id_sum)
+    TextView idSum;
     private Intent intent;
+    private String name;
+    private String idNo, gender;
+    private RequestQueue queue;
+    private String token;
+    boolean first=true;
 
 
     @Override
@@ -101,12 +121,17 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        o=new OptsharepreInterface(getActivity());
-        textView9.setText(o.getPres("total"));
+        if (!MyApplication.loginFlag) {
+            usernameText.setText("未登录");
+        }
+
+        initView();
+        initAction();
     }
 
     @Override
     protected void initView() {
+
 
         xiugaimima.setOnClickListener(this);
 
@@ -118,11 +143,115 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         tabMessage.setOnClickListener(this);
         yijian.setOnClickListener(this);
         wodejiuzhenren.setOnClickListener(this);
+        o = new OptsharepreInterface(getActivity());
+        token = o.getPres("token");
+        if (MyApplication.loginFlag) {
+
+
+            queue = Volley.newRequestQueue(getActivity());
+            IStringRequest requset = new IStringRequest(Request.Method.GET,
+                    "http://192.168.1.252:9401/AppointMentServer/api/userinfo/summary?token=" + token,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.i("aaa", response);
+                            parseUser(response);
+
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.i("err", error.toString());
+
+                        }
+                    }
+            );
+
+        }
+
+
+    }
+
+    private void insertdb(String response) {
+        Map<String, Object> object = null;
+        List< Map<String, Object>> data = null;
+        try {
+            object=JsonUtils.getMapObj(response);
+            data = JsonUtils.getListMap(object.get("data").toString());
+            for (int i=0;i<data.size();i++){
+                message.setContext1(data.get(i).get("msg").toString());
+                message.setContext(data.get(i).get("msg").toString());
+                message.setMesid(data.get(i).get("id").toString());
+                message.setMessagetype(data.get(i).get("msgtype").toString());
+                message.setUpdate1(data.get(i).get("updatetime").toString());
+                DataBaseManager db=DataBaseManager.getInstance(getActivity());
+                db.insertData1("m"+ MyApplication.phone,message);
+
+                Log.i("sql",db.getDataCounts("m"+ MyApplication.phone)+"");
+
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void parseUser(String response) {
+        Map<String, Object> object = null;
+        Map<String, Object> data = null;
+        Map<String, Object> user = null;
+
+        try {
+            object = JsonUtils.getMapObj(response);
+            data = JsonUtils.getMapObj(object.get("data").toString());
+            String sum = data.get("myPatientCount").toString();
+            user = JsonUtils.getMapObj(data.get("user").toString());
+            name = user.get("name").toString();
+            Log.i("bbb", name);
+
+            idNo = user.get("idNo").toString();
+            gender = user.get("gender").toString();
+            textView9.setText(sum);
+            usernameText.setText(name);
+
+
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
     }
 
     @Override
     protected void initAction() {
 
+        if (first&&MyApplication.loginFlag) {
+            IStringRequest requset1 = new IStringRequest(Request.Method.GET,
+                    "http://192.168.1.252:9401/AppointMentServer/api/usermessage/unread?token=" + token,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.i("aaa", response);
+                            insertdb(response);
+
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.i("err", error.toString());
+
+                        }
+                    }
+            );
+
+            queue.add(requset1);
+            first=false;
+        }
     }
 
     @Override
@@ -136,13 +265,21 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         ButterKnife.unbind(this);
     }
 
+
     @Override
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
-            case R.id.username_text://个人信息
-                intent = new Intent(getActivity(), PersonalDetail.class);
-                startActivity(intent);
+            case R.id.username_text:                           //个人信息
+                if (MyApplication.loginFlag) {
+                    intent = new Intent(getActivity(), PersonalDetail.class);
+                    intent.putExtra("name", name);
+                    intent.putExtra("idNo", idNo);
+                    intent.putExtra("gender", gender);
+                    startActivity(intent);
+                } else {
+                    ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
+                }
                 break;
             case R.id.dangan:
                 ToastUtil.ToastShow(getActivity(), "点击了健康档案", true);
@@ -154,16 +291,24 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
             case R.id.setaccount:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.wodejiuzhenren:
-                intent = new Intent(getActivity(), MyUserActivity.class);
-                startActivity(intent);
+            case R.id.wodejiuzhenren:                         //我的就诊人
+                if (MyApplication.loginFlag == false) {
+                    ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
+                } else {
+                    intent = new Intent(getActivity(), MyUserActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.func:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.yijian:
-                intent = new Intent(getActivity(), FeedBackActivity.class);
-                startActivity(intent);
+                if (MyApplication.loginFlag == false) {
+                    ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
+                } else {
+                    intent = new Intent(getActivity(), FeedBackActivity.class);//意见反馈
+                    startActivity(intent);
+                }
                 break;
             case R.id.about:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
@@ -173,14 +318,20 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.resiglogin:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
+                MyApplication.loginFlag = false;
+                onResume();
                 break;
             case R.id.jiuyika://我的就医卡
                 intent = new Intent(getActivity(), MyDocCard.class);
                 startActivity(intent);
                 break;
-            case R.id.tab_message:
-                intent = new Intent(getActivity(), UnreadMessagesActivity.class);
-                startActivity(intent);
+            case R.id.tab_message:                         //未读消息
+                if (MyApplication.loginFlag == false) {
+                    ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
+                } else {
+                    intent = new Intent(getActivity(), UnreadMessagesActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.xiugaimima:
                 intent = new Intent(getActivity(), ChangePasswordActivity.class);
@@ -188,4 +339,5 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
+
 }

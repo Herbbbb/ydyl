@@ -2,21 +2,25 @@ package com.zkrkj.peoplehospital.User;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
-import com.zkrkj.peoplehospital.adapter.MessageAdapter;
+import com.zkrkj.peoplehospital.User.adapter.MessageAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import base.BaseActivity;
+import bean.MessageBean;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import db.DataBaseManager;
 import util.TitleBarUtils;
 
 public class UnreadMessagesActivity extends BaseActivity {
+
 
     @Bind(R.id.titleBar)
     TitleBarUtils titleBar;
@@ -28,6 +32,7 @@ public class UnreadMessagesActivity extends BaseActivity {
 
         setContentView(R.layout.activity_unread_messages);
         ButterKnife.bind(this);
+        initTitle();
         super.onCreate(savedInstanceState);
     }
 
@@ -38,11 +43,20 @@ public class UnreadMessagesActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        initTitle();
-        List<String> list=new ArrayList<>();
-        list.add(0,"1");
-        list.add("22");
-        MessageAdapter adapter=new MessageAdapter(list,this);
+
+        DataBaseManager db=DataBaseManager.getInstance(this);
+        List<Map<String,Object>> list1=new ArrayList<>();
+        try {
+            list1=db.queryyy("select * from "+"m"+MyApplication.phone+";",null,new MessageBean());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        MessageAdapter adapter=new MessageAdapter(list1,this);
        //ArrayAdapter adapter=new ArrayAdapter(this,R.layout.item_message,list);
       listView6.setAdapter(adapter);
     }
@@ -62,6 +76,7 @@ public class UnreadMessagesActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+
             }
         });
     }
