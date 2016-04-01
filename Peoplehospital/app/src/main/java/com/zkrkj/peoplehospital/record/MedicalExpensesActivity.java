@@ -66,7 +66,7 @@ public class MedicalExpensesActivity extends BaseActivity {
         pb.show();
         queue = Volley.newRequestQueue(this);
         Log.e(Constants.TAG, share.getPres("token"));
-        String url = "http://192.168.1.252:9401/AppointMentServer/api/medicalRecords-feedata/patient-"+Constants.getPatientId(this)+"?token=" + share.getPres("token");
+        String url =  Constants.SERVER_ADDRESS_BACKUP+"medicalRecords-feedata/patient-"+Constants.getPatientId(this)+"?token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

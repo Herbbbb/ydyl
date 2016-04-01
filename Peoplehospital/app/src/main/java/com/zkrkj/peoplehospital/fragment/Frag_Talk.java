@@ -90,7 +90,7 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         startIndex=(totalCount/Constants.PAGE_SIZE)*Constants.PAGE_SIZE+1;
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         Log.e(Constants.TAG, share.getPres("token"));
-        String url = "http://192.168.1.252:9401/AppointMentServer/api/medicalRecords/patient-"+Constants.getPatientId(getActivity())+"?limit="+Constants.PAGE_SIZE+"&offset="+startIndex+"&token=" + share.getPres("token");
+        String url =  Constants.SERVER_ADDRESS_BACKUP+"medicalRecords/patient-"+Constants.getPatientId(getActivity())+"?limit="+Constants.PAGE_SIZE+"&offset="+startIndex+"&token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
