@@ -78,6 +78,7 @@ public class MyUserActivity extends BaseActivity {
                 intent.putExtra("gender",list1.get(i).get("gender").toString());
                 intent.putExtra("idNo",list1.get(i).get("idNo").toString());
                 intent.putExtra("phone",list1.get(i).get("phone").toString());
+                intent.putExtra("id",list1.get(i).get("id").toString());
                 startActivity(intent);
             }
         });

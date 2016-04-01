@@ -25,6 +25,7 @@
         <activity
             android:name=".activity.WelcomeGuideActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -156,7 +157,10 @@
             android:name=".User.AddUserActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".User.EditUserActivity"></activity>
+        <activity android:name=".User.EditUserActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

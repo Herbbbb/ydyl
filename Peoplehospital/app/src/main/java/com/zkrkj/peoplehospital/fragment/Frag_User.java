@@ -1,6 +1,8 @@
 package com.zkrkj.peoplehospital.fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,6 +94,21 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     private String token;
     boolean first=true;
     private DataBaseManager db;
+    public Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0x123:
+
+                    Log.i("hand","消息是"+msg.arg1);
+                    idSum.setText(msg.arg1+"");
+                    break;
+
+            }
+            super.handleMessage(msg);
+        }
+    };
+
 
 
     @Override
@@ -132,13 +150,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initView() {
 
-        try {
-            Log.i("bbb",db.getDataCounts("m"+ MyApplication.phone)+"");
 
-            idSum.setText(db.getDataCounts("m"+ MyApplication.phone));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         xiugaimima.setOnClickListener(this);
 
         jiuyika.setOnClickListener(this);
@@ -151,6 +163,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         wodejiuzhenren.setOnClickListener(this);
         o = new OptsharepreInterface(getActivity());
         token = o.getPres("token");
+        idSum.setText(o.getPres("unmsg"));
 
         if (MyApplication.loginFlag) {
 
@@ -188,15 +201,24 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         try {
             object=JsonUtils.getMapObj(response);
             data = JsonUtils.getListMap(object.get("data").toString());
+            Message msg=Message.obtain();
+            msg.arg1=data.size();
+            msg.what=0x123;
+            Log.i("sizem",msg.arg1+"");
+            handler.sendMessage(msg);
+
+            Log.i("size",data.size()+"");
+            o.putPres("unmsg",data.size()+"");
+
             for (int i=0;i<data.size();i++){
                 message.setContext1(data.get(i).get("msg").toString());
                 message.setContext(data.get(i).get("msg").toString());
                 message.setMesid(data.get(i).get("id").toString());
                 message.setMessagetype(data.get(i).get("msgtype").toString());
-                message.setUpdate1(data.get(i).get("updatetime").toString());
+                message.setUpdate1(data.get(i).get("createtime").toString());
                   db=DataBaseManager.getInstance(getActivity());
                 db.insertData1("m"+ MyApplication.phone,message);
-
+                db.getDataCounts("m"+ MyApplication.phone);
 
 
 
