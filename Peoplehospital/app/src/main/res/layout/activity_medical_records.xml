@@ -16,7 +16,10 @@
         android:layout_height="match_parent"
         >
 
-
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/sr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
         <ExpandableListView
             android:id="@+id/mrjp_lv"
             android:divider="#00000000"
@@ -27,7 +30,7 @@
             android:groupIndicator="@null"
 
             />
-
+</android.support.v4.widget.SwipeRefreshLayout>
 
     </RelativeLayout>
 

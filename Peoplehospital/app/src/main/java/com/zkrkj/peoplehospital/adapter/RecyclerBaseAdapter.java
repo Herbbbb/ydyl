@@ -1,8 +1,13 @@
 package com.zkrkj.peoplehospital.adapter;
 
+import android.app.ProgressDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.zkrkj.peoplehospital.R;
 
 /**
  * @Description: recyclerview实现上下拉刷新的改装适配器
@@ -23,10 +28,13 @@ public class RecyclerBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    class FooterViewHolder extends RecyclerView.ViewHolder {
-
+    public class FooterViewHolder extends RecyclerView.ViewHolder {
+        public TextView tv_more;
+        public ProgressBar pb;
         public FooterViewHolder(View view) {
             super(view);
+            tv_more= (TextView) view.findViewById(R.id.pull_to_refresh_loadmore_text);
+            pb= (ProgressBar) view.findViewById(R.id.pull_to_refresh_load_progress);
         }
 
     }

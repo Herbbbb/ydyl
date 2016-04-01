@@ -1,5 +1,9 @@
 package util;
 
+import android.content.Context;
+
+import base.OptsharepreInterface;
+
 /**
  * Created by lenovo on 2016/3/17.
  */
@@ -15,9 +19,15 @@ public class Constants {
     /**
      * 默认每页显示的item数量
      */
-    public static final int PAGE_SIZE = 20;
+    public static final int PAGE_SIZE = 10;
     /**
      * 网络请求失败监听
      */
     public static final String VOLLEY_ERROR = "请求失败";
+
+    public static String getPatientId(Context context){
+        OptsharepreInterface share = new OptsharepreInterface(context);
+        share.getPres("PatientId");
+        return "1";
+    }
 }
