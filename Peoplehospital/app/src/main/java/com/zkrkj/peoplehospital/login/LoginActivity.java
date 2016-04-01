@@ -6,24 +6,23 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.DialerFilter;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.activity.MainActivity;
+
 import java.util.Map;
 import base.BaseActivity;
 import base.OptsharepreInterface;
+import util.Constants;
 import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
@@ -126,7 +125,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         pb.show();
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                "http://192.168.1.252:9401/AppointMentServer/api/login?username="+account+"&password="+pwd,
+                Constants.SERVER_ADDRESS_BACKUP+ "login?username="+account+"&password="+pwd,
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -140,7 +139,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.i("err",error.toString());
+                        ToastUtil.ToastShow(getBaseContext(),"服务器好像出了点问题",true);
                      pb.dismiss();
                     }
                 }
@@ -169,9 +168,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 o.putPres("token", token);
                 o.putPres("account", account);
                 o.putPres("password", pwd);
+                MyApplication.loginFlag=true;
                 msg = object.get("msg").toString();
+                MyApplication.phone=account;
                 ToastUtil.ToastShow(getBaseContext(), msg, true);
-                finish();
+                Intent intent=new Intent(getBaseContext(), MainActivity.class);
+                intent.putExtra("postion",0);
+
+
+                startActivity(intent);
             }
 
 

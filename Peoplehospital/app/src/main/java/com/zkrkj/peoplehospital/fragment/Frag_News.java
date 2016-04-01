@@ -15,24 +15,15 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
-
-import com.astuetz.PagerSlidingTabStrip;
-
 import com.zkrkj.peoplehospital.News.NewsFragment;
-
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.activity.MainActivity;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import base.BaseFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import util.Constants;
 import util.TitleBarUtils;
-
 public class Frag_News extends BaseFragment implements ViewPager.OnPageChangeListener {
 
 

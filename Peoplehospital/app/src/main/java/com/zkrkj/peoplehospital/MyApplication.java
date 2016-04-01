@@ -30,7 +30,7 @@ public class MyApplication extends Application {
     String TAG = "MyApplication";
     //判断是否已登陆
     public static boolean loginFlag;
-
+    public static String phone ;
     private static Stack<Activity> activityStack;
     private static MyApplication singleton;
     @Override

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -69,7 +70,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         l3.setOnClickListener(this);
         l4.setOnClickListener(this);
         l5.setOnClickListener(this);
-        select(0);
+
+      if (getIntent().getIntExtra("postion",0)!=0){
+          select(getIntent().getIntExtra("postion",0));
+      }else {
+          select(0);
+      }
+
+
+
 
 
 
@@ -202,7 +211,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case 4:
                 if (mUserFragment == null) {
+
                     mUserFragment = new Frag_User();
+
                     transaction.add(R.id.cccc, mUserFragment);
                 } else {
                     transaction.show(mUserFragment);

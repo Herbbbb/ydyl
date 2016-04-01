@@ -1,16 +1,12 @@
 package com.zkrkj.peoplehospital.User.adapter;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.zkrkj.peoplehospital.R;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,9 +63,8 @@ public class MyUserAdapter extends BaseAdapter {
         holder.textView2.setText(list.get(i).get("gender").toString());
       //  holder.textView3.setText(list.get(i).get("idNo").toString());
         holder.textView4.setText(list.get(i).get("idNo").toString());
+
         holder.textView5.setText(list.get(i).get("phone").toString());
-
-
         return view;
     }
     class ViewHolder{
