@@ -3,8 +3,8 @@
     android:orientation="horizontal"
     android:background="#ffffffff"
     android:weightSum="2"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:layout_marginLeft="@dimen/shouye_border"
+    android:layout_marginRight="@dimen/shouye_border"
     android:layout_width="match_parent"
     android:layout_height="70dp">
     <LinearLayout
@@ -23,16 +23,17 @@
         <TextView
             android:layout_gravity="center"
             android:maxEms="4"
-            android:paddingLeft="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
+            android:gravity="center"
             android:textSize="16sp"
             android:text="药品价格查询"
             />
     </LinearLayout>
     <View
-        android:layout_width="1dp"
+        android:layout_width="2dp"
         android:layout_height="match_parent"
         android:background="#F2F2F2"/>
     <LinearLayout
@@ -52,7 +53,8 @@
         <TextView
             android:layout_gravity="center"
             android:maxEms="4"
-            android:paddingLeft="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"

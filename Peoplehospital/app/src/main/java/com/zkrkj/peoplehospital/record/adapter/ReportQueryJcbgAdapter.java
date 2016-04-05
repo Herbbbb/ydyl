@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import util.DateUtil;
 import util.JsonUtils;
 
 /**
@@ -45,7 +46,7 @@ public class ReportQueryJcbgAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int i) {
         try {
-            listChild = JsonUtils.getListMap(list.get(i).get("fees").toString());
+            listChild = JsonUtils.getListMap(list.get(i).get("checks").toString());
         } catch (Exception e) {
         }
         return listChild.size();
@@ -100,8 +101,7 @@ public class ReportQueryJcbgAdapter extends BaseExpandableListAdapter {
             obj = JsonUtils.getMapObj(list.get(i).get("outpatientRecord").toString());
         } catch (Exception e) {
         }
-
-        holder.tv_date.setText(obj.get("diagDate").toString());
+        holder.tv_date.setText(DateUtil.formatedDateTime("yyyy-MM-dd",Long.parseLong(obj.get("diagDate").toString())));
         holder.tv_title.setText(obj.get("diag").toString());
         holder.tv_hospital.setText(obj.get("hospitalName").toString());
         holder.textView48.setText(obj.get("departmentName").toString());
@@ -152,7 +152,7 @@ public class ReportQueryJcbgAdapter extends BaseExpandableListAdapter {
         if (TextUtils.isEmpty(obj.get("applydate").toString())) {
             holder.tv_date.setText("无");
         } else {
-            holder.tv_date.setText(obj.get("applydate").toString());
+            holder.tv_date.setText(DateUtil.formatedDateTime("yyyy-MM-dd",Long.parseLong(obj.get("applydate").toString())));
         }
         //检查部位
         if (TextUtils.isEmpty(obj.get("checkPartDn").toString())) {

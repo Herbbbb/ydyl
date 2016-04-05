@@ -38,48 +38,29 @@ import util.TitleBarUtils;
  * Created by lenovo on 2016/3/16.
  */
 public class Frag_Home extends BaseFragment implements View.OnClickListener {
-    @Bind(R.id.guahao)
-    TextView guahao;
-    @Bind(R.id.imageView)
-    ImageView imageView;
-    @Bind(R.id.textView2)
-    TextView textView2;
-    @Bind(R.id.textView)
-    TextView textView;
-    @Bind(R.id.imageView2)
-    ImageView imageView2;
-    @Bind(R.id.textView3)
-    TextView textView3;
-    @Bind(R.id.textView4)
-    TextView textView4;
-    @Bind(R.id.finddoc)
-    RelativeLayout finddoc;
-    @Bind(R.id.findhos1)
-    RelativeLayout findhos1;
 
-    @Bind(R.id.tab_hos)
+    LinearLayout finddoc;
+    LinearLayout findhos1;
+
     LinearLayout tabHos;
-    @Bind(R.id.tab_doc)
     LinearLayout tabDoc;
-    @Bind(R.id.imageView3)
-    ImageView imageView3;
-    @Bind(R.id.textView6)
-    TextView textView6;
-    @Bind(R.id.textView7)
-    TextView textView7;
-    @Bind(R.id.frag_home1)
-    LinearLayout fragHome1;
-    @Bind(R.id.ll_yygh)
-    LinearLayout llYygh;
+
     private ListView listView1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_home, null);
-        ButterKnife.bind(this, view);
+        initWidget();
         initView();
         initTitle();
         return view;
+    }
+
+    private void initWidget() {
+        tabHos= (LinearLayout) view.findViewById(R.id.tab_hos);
+        tabDoc= (LinearLayout) view.findViewById(R.id.tab_doc);
+        finddoc=(LinearLayout) view.findViewById(R.id.finddoc);
+        findhos1=(LinearLayout) view.findViewById(R.id.findhos1);
     }
 
     private void initTitle() {

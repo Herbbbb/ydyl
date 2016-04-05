@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import util.DateUtil;
 import util.JsonUtils;
 
 /**
@@ -38,8 +39,11 @@ public class MyExpandableListAdapter1 extends BaseExpandableListAdapter {
     };
     Map<String, Object> obj = null;
     Map<String, Object> objSon = null;
-    TextView tvAdd = null;
 
+
+    LinearLayout ll;
+    LinearLayout.LayoutParams lp, lp1;
+    TextView tv_name, tv_amount, tv_count;
     float reimbursementCost, otherCost, totalCost;
 
     public MyExpandableListAdapter1(Context context, List<Map<String, Object>> lists) {
@@ -111,7 +115,7 @@ public class MyExpandableListAdapter1 extends BaseExpandableListAdapter {
         } catch (Exception e) {
         }
 
-        holder.tv_date.setText(obj.get("diagDate").toString());
+        holder.tv_date.setText(DateUtil.formatedDateTime("yyyy-MM-dd",Long.parseLong(obj.get("diagDate").toString())));
         holder.tv_title.setText(obj.get("diag").toString());
         holder.tv_hospital.setText(obj.get("hospitalName").toString());
         holder.textView48.setText(obj.get("departmentName").toString());
@@ -167,9 +171,6 @@ public class MyExpandableListAdapter1 extends BaseExpandableListAdapter {
         }
         holder.tv_mine_pay.setText("￥"+String.valueOf(totalCost-reimbursementCost-otherCost)+"元");
 
-        LinearLayout ll;
-        LinearLayout.LayoutParams lp, lp1;
-        TextView tv_name, tv_amount, tv_count;
         for(int index=0;index<listChildSon.size();index++){
             objSon=listChildSon.get(index);
 

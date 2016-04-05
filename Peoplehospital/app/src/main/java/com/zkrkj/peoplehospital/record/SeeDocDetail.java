@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import base.OptsharepreInterface;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.Constants;
+import util.DateUtil;
 import util.JsonUtils;
 import util.SerializableMap;
 import util.TitleBarUtils;
@@ -137,7 +139,7 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
         tv_title.setText(tmpmap.getMap().get("diag").toString());
         String content = tmpmap.getMap().get("hospitalName").toString() + "  " + tmpmap.getMap().get("departmentName").toString();
         tvContent.setText(content);
-        tvDate.setText(tmpmap.getMap().get("diagDate").toString());
+        tvDate.setText(DateUtil.formatedDateTime("yyyy-MM-dd",Long.parseLong(tmpmap.getMap().get("diagDate").toString())));
         //检查单
         if ((int) tmpmap.getMap().get("ckReportCount") == 0) {
             tvJcd.setVisibility(View.GONE);
@@ -165,15 +167,16 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
     }
 
     private void initFragment() {
-
         FragmentTransaction trans = mManager.beginTransaction();
         SeeDocDetailDzbl dzbl=new SeeDocDetailDzbl();
         Bundle bundle=new Bundle();
-        Log.e(Constants.TAG,transMap.toString());
         bundle.putSerializable("model",transMap);
         dzbl.setArguments(bundle);
         trans.add(R.id.ll_fragment, dzbl);
         trans.commit();
+        //设置选中状态
+        tvDzbl.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        tvDzbl.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
     }
 
     private void seleFragment(int id) {
@@ -247,6 +250,10 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
         tvFjyd.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         tvFjcd.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         tvFcfd.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        tvDzbl.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+        tvFjyd.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+        tvFjcd.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+        tvFcfd.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         switch (v.getId()) {
             case R.id.tv_dzbl://电子病历
                 seleFragment(0);
@@ -263,6 +270,7 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
         }
         if (v instanceof TextView) {
             ((TextView) v).setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            ((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
         }
     }
 }

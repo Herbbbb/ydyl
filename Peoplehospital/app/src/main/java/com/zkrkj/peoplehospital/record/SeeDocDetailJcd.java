@@ -19,6 +19,7 @@ import java.util.Map;
 import base.BaseFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import util.DateUtil;
 import util.JsonUtils;
 import util.SerializableMap;
 
@@ -86,7 +87,7 @@ public class SeeDocDetailJcd extends BaseFragment {
                 if (TextUtils.isEmpty(list.get(position).get("applydate").toString())) {
                     ((MyHolders) holder).tv_date.setText("无");
                 } else {
-                    ((MyHolders) holder).tv_date.setText(list.get(position).get("applydate").toString());
+                    ((MyHolders) holder).tv_date.setText(DateUtil.formatedDateTime("yyyy-MM-dd",Long.parseLong(list.get(position).get("applydate").toString())));
                 }
                 //检查部位
                 if (TextUtils.isEmpty(list.get(position).get("checkPartDn").toString())) {

@@ -62,6 +62,10 @@ public class SeeDocDetailJyd extends BaseFragment {
 
     class RecyclerFirstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+        LinearLayout ll;
+        LinearLayout.LayoutParams lp, lp1;
+        TextView tv_name, tv_value, tv_unit, tv_ckz;
+
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             MyHolder holder = new MyHolder(LayoutInflater.from(getActivity()).inflate(R.layout.jyd_first_detail_item, parent, false));
@@ -88,9 +92,7 @@ public class SeeDocDetailJyd extends BaseFragment {
                     listSec = JsonUtils.getListMap(object.get("testReportDetails").toString());
                 } catch (Exception e) {
                 }
-                LinearLayout ll;
-                LinearLayout.LayoutParams lp, lp1;
-                TextView tv_name, tv_value, tv_unit, tv_ckz;
+
                 for (int index = 0; index < listSec.size(); index++) {
                     object = listSec.get(index);
                     ll = new LinearLayout(getActivity());

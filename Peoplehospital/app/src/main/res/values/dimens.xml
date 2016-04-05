@@ -12,5 +12,5 @@
     <dimen name="parent_expandable_list_height">46dp</dimen>
     <dimen name="margin">3dip</dimen>
     <dimen name="list_below">15sp</dimen>
-
+    <dimen name="shouye_border">5dp</dimen>
 </resources>

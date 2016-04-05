@@ -81,6 +81,9 @@ public class SeeDocDetailCfd extends BaseFragment {
     class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         List<Map<String, Object>> listChild = new ArrayList<>();
 
+        LinearLayout ll,ll1;
+        LinearLayout.LayoutParams lp, lp1;
+        TextView tv_name, gui_ge, tv_count, tv_method;
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             MyHolder holder = new MyHolder(LayoutInflater.from(getActivity()).inflate(R.layout.cfd_detail_item, parent, false));
@@ -106,9 +109,7 @@ public class SeeDocDetailCfd extends BaseFragment {
                     listChild=JsonUtils.getListMap(list.get(position).get("prescribeDetails").toString());
                 } catch (Exception e) {
                 }
-                LinearLayout ll,ll1;
-                LinearLayout.LayoutParams lp, lp1;
-                TextView tv_name, gui_ge, tv_count, tv_method;
+
                 for(int index=0;index<listChild.size();index++){
                     object=listChild.get(index);
                     ll = new LinearLayout(getActivity());
