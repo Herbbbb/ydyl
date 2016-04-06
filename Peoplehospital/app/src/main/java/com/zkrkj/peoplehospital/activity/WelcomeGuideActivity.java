@@ -79,16 +79,16 @@ public class WelcomeGuideActivity extends BaseActivity{
 	{
 		list=new ArrayList<View>();
 		ImageView iv=new ImageView(this);
-		iv.setImageResource(R.drawable.guide_01);
+		iv.setImageResource(R.mipmap.page_1);
 		iv.setScaleType(ImageView.ScaleType.FIT_XY);
 		list.add(iv);
 		ImageView iv1=new ImageView(this);
-		iv1.setImageResource(R.drawable.guide_02);
+		iv1.setImageResource(R.mipmap.page_2);
 		iv1.setScaleType(ImageView.ScaleType.FIT_XY);
 		list.add(iv1);
 		ImageView iv2=new ImageView(this);
 		iv2.setScaleType(ImageView.ScaleType.FIT_XY);
-		iv2.setImageResource(R.drawable.guide_03);
+		iv2.setImageResource(R.mipmap.page_3);
 		list.add(iv2);
 		pager.setAdapter(new MyViewPagerAdapter());
 

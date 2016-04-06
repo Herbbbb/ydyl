@@ -51,6 +51,7 @@
         <item name="android:text">预约</item>
     </style>
 
+
     <style name="table_col_border">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">40dp</item>
@@ -58,6 +59,10 @@
         <item name="android:background">@drawable/table_border</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="btn_afternoon">
+
+    </style>
+
     <style name="loading_dialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>

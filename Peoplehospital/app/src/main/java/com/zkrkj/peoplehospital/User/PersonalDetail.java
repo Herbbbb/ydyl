@@ -147,10 +147,6 @@ public class PersonalDetail extends BaseActivity {
                             object = JsonUtils.getMapObj(response);
                             if("1".equals(object.get("success").toString())){
                                 ToastUtil.ToastShow(getBaseContext(),"保存成功",true);
-                                SharedPreferenceUtil.writeString(getBaseContext(),s4+"name",s1);
-                                SharedPreferenceUtil.writeString(getBaseContext(),s4+"gender",s2);
-                                SharedPreferenceUtil.writeString(getBaseContext(),s4+"idNo",s3);
-
                                 Intent intent=new Intent(getBaseContext(), MainActivity.class);
                                 intent.putExtra("postion",4);
 

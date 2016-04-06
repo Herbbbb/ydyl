@@ -58,6 +58,8 @@ public class MyUserAdapter extends BaseAdapter {
         }
         if (list.get(i).get("gender").toString().equals("男")){
             holder.imageView1.setImageResource(R.drawable.man);
+        }else {
+            holder.imageView1.setImageResource(R.drawable.girl);
         }
         holder.textView1.setText(list.get(i).get("name").toString());
         holder.textView2.setText(list.get(i).get("gender").toString());
@@ -66,6 +68,7 @@ public class MyUserAdapter extends BaseAdapter {
 
         holder.textView5.setText(list.get(i).get("phone").toString());
         return view;
+
     }
     class ViewHolder{
         ImageView imageView1;

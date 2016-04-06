@@ -99,7 +99,6 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 0x123:
-
                     Log.i("hand","消息是"+msg.arg1);
                     idSum.setText(msg.arg1+"");
                     break;
@@ -237,16 +236,22 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
         try {
             object = JsonUtils.getMapObj(response);
-            data = JsonUtils.getMapObj(object.get("data").toString());
-            String sum = data.get("myPatientCount").toString();
-            user = JsonUtils.getMapObj(data.get("user").toString());
-            name = user.get("name").toString();
-            Log.i("bbb", name);
+            if (object.get("success").toString()=="1") {
+                data = JsonUtils.getMapObj(object.get("data").toString());
+                String sum = data.get("myPatientCount").toString();
+                user = JsonUtils.getMapObj(data.get("user").toString());
+                name = user.get("name").toString();
+                Log.i("bbb", name);
 
-            idNo = user.get("idNo").toString();
-            gender = user.get("gender").toString();
-            textView9.setText(sum);
-            usernameText.setText(name);
+                idNo = user.get("idNo").toString();
+                gender = user.get("gender").toString();
+                textView9.setText(sum);
+                if (name==null){
+                    usernameText.setText("请设置用户名");
+                }else {
+                    usernameText.setText(name);
+                }
+            }
 
 
         } catch (Exception e1) {
@@ -326,6 +331,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                     ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
                 } else {
                     intent = new Intent(getActivity(), MyUserActivity.class);
+                    intent.putExtra("type","0");
                     startActivity(intent);
                 }
                 break;

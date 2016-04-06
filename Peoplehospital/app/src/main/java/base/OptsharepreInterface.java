@@ -72,7 +72,7 @@ public class OptsharepreInterface {
 			values = settings.getString("name", "");
 		} else if (optName.equals("total")) {// 就诊人的数量
 			values = settings.getString("total", "0");
-		} else if (optName.equals("id")) {// 就诊人的数量
+		} else if (optName.equals("id")) {// 就诊人的id
 			values = settings.getString("id", "");
 		}else if (optName.equals("phonenumber")) {// 手机号
 			values = settings.getString("phonenumber", "0");

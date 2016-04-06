@@ -89,7 +89,7 @@ public class FeedBackActivity extends BaseActivity implements TextWatcher {
                             @Override
                             public void onResponse(String response) {
                                 ToastUtil.ToastShow(getBaseContext(),"意见反馈成功",true);
-
+                                finish();
                                // parseuser(response);
 
 
@@ -98,7 +98,8 @@ public class FeedBackActivity extends BaseActivity implements TextWatcher {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                               // ToastUtil.ToastShow(getBaseContext(),error.toString(),true);
+
+                               ToastUtil.ToastShow(getBaseContext(),"服务器好像出错误了",true);
 
                             }
                         }

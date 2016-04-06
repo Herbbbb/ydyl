@@ -31,7 +31,7 @@ public class Constants {
     /**
      * 服务器备用地址
      */
-    public static final String SERVER_ADDRESS_BACKUP = "http://192.168.1.254:9096/AppointMentServer/api/";
+    public static final String SERVER_ADDRESS_BACKUP = "http://192.168.1.252:9401/AppointMentServer/api/";
 
     public static String getPatientId(Context context){
         OptsharepreInterface share = new OptsharepreInterface(context);
