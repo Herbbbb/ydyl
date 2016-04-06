@@ -168,6 +168,10 @@
             android:name=".xzqh.ProcinceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.TimeSecActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            />
 
     </application>
 

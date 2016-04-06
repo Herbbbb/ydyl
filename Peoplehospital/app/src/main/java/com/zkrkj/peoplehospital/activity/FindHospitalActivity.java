@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -82,6 +83,7 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
         tv3.setOnClickListener(this);
+
 
     }
 
@@ -170,8 +172,8 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
         // popupWindow.setAnimationStyle(R.style.PopMenuAnimation);
         ListView listview = (ListView) popView.findViewById(R.id.listView8);
         List<String> l1 = new ArrayList<>();
-        List<String> l2 = new ArrayList<>();
-        List<String> l3 = new ArrayList<>();
+        final List<String> l2 = new ArrayList<>();
+        final List<String> l3 = new ArrayList<>();
         l2.add("全部");
         l2.add("三级甲等");
         l2.add("三级乙等");
@@ -192,10 +194,29 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
 
         if (x==1){
             listview.setAdapter(new PupAdapter(this, l1));
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                 tv2.setText(l2.get(i).toString());
+                }
+            });
         }else if(x==2){
             listview.setAdapter(new PupAdapter(this, l2));
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    tv2.setText(l2.get(i).toString());
+
+                }
+            });
         }else {
             listview.setAdapter(new PupAdapter(this, l3));
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    tv3.setText(l3.get(i).toString());
+                }
+            });
         }
 
 

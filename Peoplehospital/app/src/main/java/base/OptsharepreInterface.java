@@ -33,7 +33,10 @@ public class OptsharepreInterface {
 			editor.putString("account", values);// 登录账号
 		} else if (optName.equals("name")) {
 			editor.putString("name", values);// 登录用户名
-		} else if (optName.equals("password")) {
+		} else if (optName.equals("loginFlag")) {
+			editor.putString("loginFlag", values);// 登录状态
+		}
+		else if (optName.equals("password")) {
 			editor.putString("password", values);// 登录密码
 		} else if (optName.equals("phonenumber")) {
 			editor.putString("phonenumber", values);// 手机号
@@ -79,6 +82,8 @@ public class OptsharepreInterface {
 			values = settings.getString("phonenumber", "0");
 		}else if (optName.equals("unmsg")) {// 手机号
 			values = settings.getString("", "0");
+		}else if (optName.equals("loginFlag")) {// 手机号
+			values = settings.getString("loginFlag", "false");
 		}
 		else if (optName.equals("token")) {// 登录成功后返回token值
 			values = settings.getString("token", "");
