@@ -90,7 +90,7 @@ public class AddUserActivity extends BaseActivity {
         String token = o.getPres("token");
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP+"patient/add?gender="+s1+"&idNo="+s3+"&name="+s2+"&phone="+s4+"&token="+token,
+                Constants.SERVER_ADDRESS+"patient/add?gender="+s1+"&idNo="+s3+"&name="+s2+"&phone="+s4+"&token="+token,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

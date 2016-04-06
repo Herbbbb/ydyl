@@ -66,7 +66,7 @@ public class OutpatientPrescriptionsActivity extends BaseActivity {
         pb.show();
         queue = Volley.newRequestQueue(this);
         Log.e(Constants.TAG, share.getPres("token"));
-        String url = Constants.SERVER_ADDRESS_BACKUP+ "medicalRecords-prescribedata/patient-"+Constants.getPatientId(this)+"?token=" + share.getPres("token");
+        String url = Constants.SERVER_ADDRESS+ "medicalRecords-prescribedata/patient-"+Constants.getPatientId(this)+"?token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -2,11 +2,9 @@ package com.zkrkj.peoplehospital.registered;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
@@ -15,45 +13,31 @@ import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
-/**
-* Describe:     预约挂号页
-* User:         LF
-* Date:         2016/3/23 15:28
-*/
-public class RegisteredDetail extends BaseActivity implements View.OnClickListener {
+
+public class RegisteredSuccess extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.tv_hospital)
-    TextView tvHospital;//医院
-    @Bind(R.id.tv_department)
-    TextView tvDepartment;//科室
-    @Bind(R.id.tv_doc_date)
-    TextView tvDocDate;//就诊日期
-    @Bind(R.id.tv_outpatient_type)
-    TextView tvOutpatientType;//门诊类型
-    @Bind(R.id.tv_price)
-    TextView tvPrice;//门诊价格
-    @Bind(R.id.tv_name)
-    TextView tvName;//就诊人
-    @Bind(R.id.tv_sex)
-    TextView tvSex;//性别
-    @Bind(R.id.tv_phone)
-    TextView tvPhone;//手机号
-    @Bind(R.id.tv_idcard)
-    TextView tvIdcard;//身份证号
-    @Bind(R.id.iv_head)
-    ImageView ivHead;//头像
-    @Bind(R.id.btn_submit)
-    Button btnSubmit;//预约
+    TextView tvHospital;
+    @Bind(R.id.tv_date)
+    TextView tvDate;
+    @Bind(R.id.tv_doc)
+    TextView tvDoc;
+    @Bind(R.id.tv_name_age)
+    TextView tvNameAge;
+    @Bind(R.id.tv_deal_state)
+    TextView tvDealState;
+    @Bind(R.id.btn_deal_detail)
+    Button btnDealDetail;
+    @Bind(R.id.btn_back_num)
+    Button btnBackNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registered_detail);
+        setContentView(R.layout.activity_registered_success);
         ButterKnife.bind(this);
         init();
     }
-
-
 
     private void init() {
         initTitle();
@@ -61,7 +45,7 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
     }
 
     private void initListener() {
-        btnSubmit.setOnClickListener(this);
+        btnDealDetail.setOnClickListener(this);
     }
 
     private void initTitle() {
@@ -79,12 +63,15 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_submit:
-                Intent intent=new Intent(this,RegisteredSuccess.class);
+            case R.id.btn_deal_detail:
+                Intent intent=new Intent(this,DealDetail.class);
                 startActivity(intent);
                 break;
         }
     }
+
+
+
 
 
 

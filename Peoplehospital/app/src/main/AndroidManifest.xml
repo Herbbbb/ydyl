@@ -156,11 +156,19 @@
             android:name=".User.AddUserActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".User.EditUserActivity"></activity>
+        <activity android:name=".User.EditUserActivity" />
         <activity
             android:name=".xzqh.ProcinceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".registered.RegisteredSuccess"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.GuidOne" />
+        <activity android:name=".activity.GuidTwo" />
+        <activity android:name=".activity.GuidThree" />
+        <activity android:name=".record.PatientInfo"></activity>
     </application>
 
 </manifest>

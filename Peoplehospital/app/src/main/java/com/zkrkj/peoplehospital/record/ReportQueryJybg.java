@@ -65,7 +65,7 @@ public class ReportQueryJybg extends BaseFragment {
         pb.show();
         queue = Volley.newRequestQueue(getActivity());
         Log.e(Constants.TAG, share.getPres("token"));
-        String url = Constants.SERVER_ADDRESS_BACKUP + "medicalRecords-testreportdata/patient-" + Constants.getPatientId(getActivity()) + "?token=" + share.getPres("token");
+        String url = Constants.SERVER_ADDRESS + "medicalRecords-testreportdata/patient-" + Constants.getPatientId(getActivity()) + "?token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

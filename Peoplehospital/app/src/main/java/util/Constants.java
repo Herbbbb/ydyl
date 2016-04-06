@@ -25,13 +25,9 @@ public class Constants {
      */
     public static final String VOLLEY_ERROR = "请求失败";
     /**
-     * 服务器原地址
+     * 服务器地址
      */
-    public static final String SERVER_ADDRESS_BACKUP = "http://192.168.1.252:9401/AppointMentServer/api/";
-    /**
-     * 服务器备用地址
-     */
-    public static final String SERVER_ADDRESS = "http://192.168.1.254:9096/AppointMentServer/api/";
+    public static final String SERVER_ADDRESS = "http://192.168.1.252:9401/AppointMentServer/api/";
     /**
      * 网络请求失败监听
      */
@@ -42,4 +38,5 @@ public class Constants {
         share.getPres("PatientId");
         return "1";
     }
+
 }

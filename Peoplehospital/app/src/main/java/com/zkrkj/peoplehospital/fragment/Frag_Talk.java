@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.User.AddUserActivity;
+import com.zkrkj.peoplehospital.User.PersonalDetail;
 import com.zkrkj.peoplehospital.login.LoginActivity;
 import com.zkrkj.peoplehospital.record.MedicalExpensesActivity;
 import com.zkrkj.peoplehospital.record.OutpatientPrescriptionsActivity;
+import com.zkrkj.peoplehospital.record.PatientInfo;
 import com.zkrkj.peoplehospital.record.ReportQuery;
 import com.zkrkj.peoplehospital.record.SeeDocDetail;
 
@@ -68,12 +73,21 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
     LinearLayout tabMenzhenchufang;
     LinearLayout tabYiliaofeiyong;
     LinearLayout llBgcx;
+    SerializableMap transMap;
 
+    RequestQueue queue;
+    Map<String, Object> object = null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_talk, null);
-        init();
-        ButterKnife.bind(this, view);
+        if (MyApplication.loginFlag) {
+            init();
+        } else {
+            ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
         return view;
     }
 
@@ -81,17 +95,73 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         ButterKnife.bind(this, view);
         share = new OptsharepreInterface(getActivity());
         initWidget();
-        initData();
+        initPatient();
         initView();
     }
-
+    /**
+    * Describe:     获取就诊人信息
+    * User:         LF
+    * Date:         2016/4/6 11:06
+    */
+    private void initPatient(){
+        queue = Volley.newRequestQueue(getActivity());
+        String url =  Constants.SERVER_ADDRESS+"patient/1?token=" + share.getPres("token");
+        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadPatient(response);
+                pb.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ToastUtil.ToastShow(getActivity(), Constants.VOLLEY_ERROR, true);
+                pb.dismiss();
+            }
+        });
+        queue.add(request);
+    }
+    /**
+    * Describe:     格式化就诊人信息
+    * User:         LF
+    * Date:         2016/4/6 11:06
+    */
+    private void loadPatient(String json){
+        String success = "";
+        try {
+            object = JsonUtils.getMapObj(json);
+            success = object.get("success").toString();
+            if (success.equals("0")) {
+                ToastUtil.ToastShow(getActivity(), object.get("msg").toString(), true);
+            } else if (success.equals("1")) {
+                if(TextUtils.isEmpty(object.get("data").toString())){//未设置我的就诊人
+                    ToastUtil.ToastShow(getActivity(), "未添加就诊人", true);
+                    Intent intent=new Intent(getActivity(), AddUserActivity.class);
+                    startActivity(intent);
+                }else{
+                    object = JsonUtils.getMapObj(object.get("data").toString());
+                    initData();
+                }
+            } else {
+                ToastUtil.ToastShow(getActivity(), "登录过期", true);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        } catch (Exception e) {}
+    }
+    /**
+    * Describe:     获取就诊人诊断列表
+    * User:         LF
+    * Date:         2016/4/6 11:07
+    */
     private void initData() {
         pb = ProgressDialogStyle.createLoadingDialog(getActivity(), "请求中...");
         pb.show();
         startIndex=(totalCount/Constants.PAGE_SIZE)*Constants.PAGE_SIZE+1;
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
+
         Log.e(Constants.TAG, share.getPres("token"));
-        String url =  Constants.SERVER_ADDRESS_BACKUP+"medicalRecords/patient-"+Constants.getPatientId(getActivity())+"?limit="+Constants.PAGE_SIZE+"&offset="+startIndex+"&token=" + share.getPres("token");
+        String url =  Constants.SERVER_ADDRESS+"medicalRecords/patient-"+Constants.getPatientId(getActivity())+"?limit="+Constants.PAGE_SIZE+"&offset="+startIndex+"&token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -108,15 +178,52 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         queue.add(request);
     }
 
+    /**
+     * Describe:     格式化就诊人信息列表
+     * User:         LF
+     * Date:         2016/4/6 11:07
+     */
+    private void loadData(String json) {
+        Map<String, Object> object = null;
+        String success = "";
+        try {
+            object = JsonUtils.getMapObj(json);
+            success = object.get("success").toString();
+            if (success.equals("0")) {
+                ToastUtil.ToastShow(getActivity(), object.get("msg").toString(), true);
+            } else if (success.equals("1")) {
+                if (lists.size() > 0) {
+                    lists.addAll(JsonUtils.getListMap(object.get("data").toString()));
+                    adapter.notifyDataSetChanged();
+                } else {
+                    lists.addAll(JsonUtils.getListMap(object.get("data").toString()));
+                    adapter = new MyAdapter();
+                    listview.setAdapter(adapter);
+                }
+                totalCount = lists.size();
+            } else {
+                ToastUtil.ToastShow(getActivity(), "登录过期", true);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
     private void initWidget() {
         listview = (ListView) view.findViewById(R.id.lv);
         swipRefresh = (RefreshLayout) view.findViewById(R.id.rl);
-
+        //初始化头部信息
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.frag_talk_head_vew, null);
+
+
         listview.addHeaderView(headView);
 
         ivPhoto= (ImageView) headView.findViewById(R.id.iv_photo);
         tvName= (TextView) headView.findViewById(R.id.tv_name);
+        tvName.setText(object.get("name").toString());
         tabMenzhenchufang= (LinearLayout) headView.findViewById(R.id.tab_menzhenchufang);
         tabYiliaofeiyong= (LinearLayout) headView.findViewById(R.id.tab_yiliaofeiyong);
         llBgcx= (LinearLayout) headView.findViewById(R.id.ll_bgcx);
@@ -154,43 +261,30 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         });
 
         llBgcx.setOnClickListener(this);
+        ivPhoto.setOnClickListener(this);
+        tvName.setOnClickListener(this);
     }
-
-    private void loadData(String json) {
-        Map<String, Object> object = null;
-        String success = "";
-        try {
-            object = JsonUtils.getMapObj(json);
-            success = object.get("success").toString();
-            if (success.equals("0")) {
-                ToastUtil.ToastShow(getActivity(), object.get("msg").toString(), true);
-            } else if (success.equals("1")) {
-                if (lists.size() > 0) {
-                    lists.addAll(JsonUtils.getListMap(object.get("data").toString()));
-                    adapter.notifyDataSetChanged();
-                } else {
-                    lists.addAll(JsonUtils.getListMap(object.get("data").toString()));
-                    adapter = new MyAdapter();
-                    listview.setAdapter(adapter);
-                }
-                totalCount = lists.size();
-            } else {
-                ToastUtil.ToastShow(getActivity(), "登录过期", true);
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        } catch (Exception e) {
-
-        }
-    }
-
 
     @Override
     public void onClick(View v) {
+        Intent intent=null;
         switch (v.getId()) {
             case R.id.ll_bgcx:
-                Intent intent = new Intent(getActivity(), ReportQuery.class);
+                intent = new Intent(getActivity(), ReportQuery.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_name://
+                intent = new Intent(getActivity(), PatientInfo.class);
+                transMap=new SerializableMap();
+                transMap.setMap(object);
+                intent.putExtra("patientData",transMap);
+                startActivity(intent);
+                break;
+            case R.id.iv_photo:
+                intent = new Intent(getActivity(), PatientInfo.class);
+                transMap=new SerializableMap();
+                transMap.setMap(object);
+                intent.putExtra("patientData",transMap);
                 startActivity(intent);
                 break;
         }
