@@ -9,7 +9,11 @@ import com.zkrkj.peoplehospital.R;
 
 import base.BaseActivity;
 import util.TitleBarUtils;
-
+/**
+* Describe:     订单详情--预约单
+* User:         LF
+* Date:         2016/4/5 14:39
+*/
 public class DealDetail extends BaseActivity {
 
     @Override

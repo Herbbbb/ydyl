@@ -23,7 +23,11 @@ import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
-
+/**
+* Describe:     科室选择
+* User:         LF
+* Date:         2016/4/5 14:40
+*/
 public class DepartmentRegistered extends BaseActivity {
 
     @Bind(R.id.department_one)

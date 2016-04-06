@@ -137,7 +137,7 @@ public class PersonalDetail extends BaseActivity {
     private void save() {
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP+"userinfo/edit?gender="+s2+"&idNo="+s3+"&name="+s1+"&token="+token,
+                Constants.SERVER_ADDRESS+"userinfo/edit?gender="+s2+"&idNo="+s3+"&name="+s1+"&token="+token,
         new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
