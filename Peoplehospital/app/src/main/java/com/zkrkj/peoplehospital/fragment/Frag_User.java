@@ -236,8 +236,11 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
         try {
             object = JsonUtils.getMapObj(response);
-            if (object.get("success").toString()=="1") {
+
                 data = JsonUtils.getMapObj(object.get("data").toString());
+            if (data.size()==0){
+
+            }else {
                 String sum = data.get("myPatientCount").toString();
                 user = JsonUtils.getMapObj(data.get("user").toString());
                 name = user.get("name").toString();
@@ -246,12 +249,13 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 idNo = user.get("idNo").toString();
                 gender = user.get("gender").toString();
                 textView9.setText(sum);
-                if (name==null){
+                if (name.length()==0) {
                     usernameText.setText("请设置用户名");
-                }else {
+                } else {
                     usernameText.setText(name);
                 }
             }
+
 
 
         } catch (Exception e1) {
@@ -331,7 +335,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                     ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
                 } else {
                     intent = new Intent(getActivity(), MyUserActivity.class);
-                    intent.putExtra("type","0");
+                    intent.putExtra("type",0);
                     startActivity(intent);
                 }
                 break;

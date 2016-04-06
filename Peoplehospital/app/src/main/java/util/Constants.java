@@ -34,7 +34,7 @@ public class Constants {
 
     public static final String SERVER_ADDRESS_BACKUP = "http://192.168.1.252:9401/AppointMentServer/api/";
 
-    public static final String SERVER_ADDRESS = "http://192.168.1.254:9096/AppointMentServer/api/";
+
     /**
      * 网络请求失败监听
      */
