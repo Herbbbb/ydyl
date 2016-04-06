@@ -169,7 +169,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
             queue = Volley.newRequestQueue(getActivity());
             IStringRequest requset = new IStringRequest(Request.Method.GET,
-                    Constants.SERVER_ADDRESS_BACKUP+"userinfo/summary?token=" + token,
+                    Constants.SERVER_ADDRESS+"userinfo/summary?token=" + token,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -269,7 +269,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
         if (first&&MyApplication.loginFlag) {
             IStringRequest requset1 = new IStringRequest(Request.Method.GET,
-                    Constants.SERVER_ADDRESS_BACKUP+"usermessage/unread?token=" + token,
+                    Constants.SERVER_ADDRESS+"usermessage/unread?token=" + token,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

@@ -104,7 +104,7 @@ public class MyUserActivity extends BaseActivity {
                 }
         );
         IStringRequest requset1 = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP+ "patient/current?token="+token,
+                Constants.SERVER_ADDRESS+ "patient/current?token="+token,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

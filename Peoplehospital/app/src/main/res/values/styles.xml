@@ -88,4 +88,9 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- PopupWindow左右弹出的效果 -->
+    <style name="popupWindowAnimationFade">
+        <item name="android:windowEnterAnimation">@anim/fade_in_down</item>
+        <item name="android:windowExitAnimation">@anim/fade_out_up</item>
+    </style>
 </resources>

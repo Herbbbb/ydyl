@@ -147,7 +147,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void register() {
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP+ "register?phone="+account+"&password="+pwd_sure+"&verifyCode="+yzm,
+                Constants.SERVER_ADDRESS+ "register?phone="+account+"&password="+pwd_sure+"&verifyCode="+yzm,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

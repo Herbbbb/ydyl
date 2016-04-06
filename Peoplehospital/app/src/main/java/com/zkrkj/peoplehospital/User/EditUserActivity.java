@@ -118,7 +118,7 @@ public class EditUserActivity extends BaseActivity {
     private void save() {
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP+"patient/edit?name="+name+
+                Constants.SERVER_ADDRESS+"patient/edit?name="+name+
                         "&gender="+gender+"&phone="+phone+"&idNo="+idNo+"&id="+id+"&token="+token,
                 new Response.Listener<String>() {
                     @Override
