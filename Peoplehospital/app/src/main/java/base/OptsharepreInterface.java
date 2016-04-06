@@ -23,7 +23,7 @@ public class OptsharepreInterface {
     public SharedPreferences.Editor getEditor() {
         return settings.edit();
     }
-    
+
     public void putPres(String optName, String values) {
         SharedPreferences.Editor editor = settings.edit();
         if (optName.equals("guid")) {
