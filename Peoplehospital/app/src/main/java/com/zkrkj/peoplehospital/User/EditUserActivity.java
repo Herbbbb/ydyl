@@ -2,15 +2,30 @@ package com.zkrkj.peoplehospital.User;
 
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
 
+import java.util.Map;
+
 import base.BaseActivity;
+import base.OptsharepreInterface;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import util.Constants;
+import util.IStringRequest;
+import util.JsonUtils;
 import util.TitleBarUtils;
+import util.ToastUtil;
 
 public class EditUserActivity extends BaseActivity {
 
@@ -30,6 +45,8 @@ public class EditUserActivity extends BaseActivity {
     Button btnSubmit;
     @Bind(R.id.btn_del)
     Button btnDel;
+    private String name,gender,idNo,phone,id;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +63,21 @@ public class EditUserActivity extends BaseActivity {
 
     @Override
     public void initView() {
-      String name=getIntent().getStringExtra("name");
-        String gender=getIntent().getStringExtra("gender");
-        String idNo=getIntent().getStringExtra("idNo");
-        String phone=getIntent().getStringExtra("phone");
+        initTitle();
+        o=new OptsharepreInterface(this);
+        token=o.getPres("token");
+
+
+     name=getIntent().getStringExtra("name");
+      gender=getIntent().getStringExtra("gender");
+        idNo=getIntent().getStringExtra("idNo");
+        phone=getIntent().getStringExtra("phone");
+
+
+
+         id=getIntent().getStringExtra("id");
+
+
         if (gender.equals("男")){
             spinner1.setSelection(0);
         }else
@@ -59,13 +87,88 @@ public class EditUserActivity extends BaseActivity {
         ed1.setText(name);
         ed2.setText(idNo);
         ed3.setText(phone);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                gender=spinner1.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                name=ed1.getText().toString();
+                idNo=ed2.getText().toString();
+                phone=ed3.getText().toString();
+
+                save();
+            }
+        });
 
 
 
     }
 
+    private void save() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        IStringRequest requset = new IStringRequest(Request.Method.GET,
+                Constants.SERVER_ADDRESS_BACKUP+"patient/edit?name="+name+
+                        "&gender="+gender+"&phone="+phone+"&idNo="+idNo+"&id="+id+"&token="+token,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Map<String,Object> object=null;
+                        Map<String,Object> data=null;
+
+                            try {
+                                object= JsonUtils.getMapObj(response);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            String success=object.get("success").toString();
+
+                            if (success.equals("0")){
+                                String msg = object.get("msg").toString();
+                                ToastUtil.ToastShow(getBaseContext(),msg, true);
+                            }else if(success.equals("1")) {
+                                ToastUtil.ToastShow(getBaseContext(),"保存成功", true);
+                                finish();
+                            }
+
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("aaa",error.toString());
+
+                    }
+                }
+        );
+        queue.add(requset);
+    }
+
     @Override
     public void initAction() {
 
+    }
+    private void initTitle() {
+        TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
+        titleBarUtils.setTitle("编辑就诊人");
+        titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

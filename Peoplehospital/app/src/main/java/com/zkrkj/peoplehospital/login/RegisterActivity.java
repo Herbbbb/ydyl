@@ -171,6 +171,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void parseRegister(String response) {
         Map<String,Object> object=null;
+        Map<String,Object> data=null;
         try {
             object= JsonUtils.getMapObj(response);
             String success=object.get("success").toString();
@@ -179,7 +180,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String msg = object.get("msg").toString();
                 ToastUtil.ToastShow(getBaseContext(),msg, true);
             }else if(success.equals("1")){
-                String token=object.get("data").toString();
+                data=JsonUtils.getMapObj(object.get("data").toString());
+                String token=data.get("token").toString();
                 o=new OptsharepreInterface(this);
                 o.putPres("token",token);
                 MyApplication.loginFlag=true;

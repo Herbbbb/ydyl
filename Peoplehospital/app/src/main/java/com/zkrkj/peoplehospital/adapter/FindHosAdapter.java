@@ -16,22 +16,22 @@ import java.util.Map;
 
 public class FindHosAdapter extends BaseAdapter{
     private List<Map<String,Object>> list1=new ArrayList<>();
-    List<String> list=new ArrayList<>();
+
     private Context context;
 
-    public FindHosAdapter(List<String> list, Context context) {
-        this.list = list;
+    public FindHosAdapter(List<Map<String, Object>> list1, Context context) {
+        this.list1 = list1;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return list1.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return list.get(i);
+        return list1.get(i);
     }
 
     @Override
@@ -41,16 +41,27 @@ public class FindHosAdapter extends BaseAdapter{
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        ViewHolder holder;
         if (view==null){
             view=View.inflate(context, R.layout.item_findhos,null);
-
-
+            holder=new ViewHolder();
+            holder.textView1= (TextView) view.findViewById(R.id.textView21);
+            holder.textView2= (TextView) view.findViewById(R.id.textView22);
+            holder.textView3= (TextView) view.findViewById(R.id.textView25);
+            holder.textView4= (TextView) view.findViewById(R.id.textView26);
+            view.setTag(holder);
+            }else {
+            holder= (ViewHolder) view.getTag();
         }
+        holder.textView1.setText(list1.get(i).get("hosOrgName").toString());
+       // holder.textView2.setText(list1.get(i).get("hosOrgName").toString());
+      //  holder.textView3.setText(list1.get(i).get("hosOrgName").toString());
+      //  holder.textView4.setText(list1.get(i).get("hosOrgName").toString());
         return view;
     }
     class ViewHolder{
         TextView textView1,textView2,textView3,textView4;
-        Button button1;
+
 
     }
 }

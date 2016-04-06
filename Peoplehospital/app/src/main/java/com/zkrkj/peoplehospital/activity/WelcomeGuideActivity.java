@@ -75,6 +75,7 @@ public class WelcomeGuideActivity extends BaseActivity{
 		list.add(three);
 		pager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
 
+
 	}
 
 	class MyViewPagerAdapter extends FragmentPagerAdapter {

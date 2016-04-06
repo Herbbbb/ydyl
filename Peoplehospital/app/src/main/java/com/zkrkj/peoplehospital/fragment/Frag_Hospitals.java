@@ -1,12 +1,15 @@
 package com.zkrkj.peoplehospital.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,7 +21,11 @@ import com.zkrkj.peoplehospital.hospital.MedicalNavigationActivity;
 import com.zkrkj.peoplehospital.hospital.PriceSearchActivity;
 import com.zkrkj.peoplehospital.hospital.SpecialDepartmentActivity;
 import com.zkrkj.peoplehospital.hospital.TrackingStationActivity;
+import com.zkrkj.peoplehospital.hospital.adapter.PupAdapter;
 import com.zkrkj.peoplehospital.registered.DepartmentRegistered;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import base.BaseFragment;
 import butterknife.Bind;
@@ -26,7 +33,6 @@ import butterknife.ButterKnife;
 import util.TitleBarUtils;
 
 /**
- *
  * Created by miao on 2016/3/16.
  */
 public class Frag_Hospitals extends BaseFragment implements View.OnClickListener {
@@ -110,6 +116,9 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
     LinearLayout tabZhuanjiajieshao;
     @Bind(R.id.tab_yiyuandaohang)
     LinearLayout tabYiyuandaohang;
+    @Bind(R.id.pup)
+    RelativeLayout pup;
+    private PopupWindow popupWindow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -142,7 +151,7 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
         tabJiuyidaohang.setOnClickListener(this);
         tabJiagechaxun.setOnClickListener(this);
         tabYuyueguahao.setOnClickListener(this);
-
+        textView15.setOnClickListener(this);
     }
 
     @Override
@@ -186,6 +195,10 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                 intent = new Intent(getActivity(), PriceSearchActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.textView15:
+                initPopWindow();
+                showPop(view, 50, 50, 20);
+                break;
 
 
         }
@@ -195,5 +208,40 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    private void initPopWindow() {
+        View popView = View.inflate(getActivity(), R.layout.pup_listview, null);
+        popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0));
+        //设置popwindow出现和消失动画
+        // popupWindow.setAnimationStyle(R.style.PopMenuAnimation);
+        ListView listview = (ListView) popView.findViewById(R.id.listView8);
+        List<String> l = new ArrayList<>();
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        listview.setAdapter(new PupAdapter(getActivity(), l));
+
+
+    }
+
+    public void showPop(View parent, int x, int y, int postion) {
+        //设置popwindow显示位置
+       // popupWindow.showAtLocation(parent, 0, x, y);
+       // popupWindow.showAtLocation(view,5,0,10);
+        popupWindow.showAsDropDown(titleBar);
+        //获取popwindow焦点
+        popupWindow.setFocusable(true);
+        //设置popwindow如果点击外面区域，便关闭。
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.update();
+        if (popupWindow.isShowing()) {
+
+        }
+
     }
 }

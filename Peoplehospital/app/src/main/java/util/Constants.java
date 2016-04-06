@@ -33,6 +33,7 @@ public class Constants {
      */
     public static final String XZQH_CODE = "xzqh_code";
 
+
     public static String getPatientId(Context context){
         OptsharepreInterface share = new OptsharepreInterface(context);
         share.getPres("PatientId");

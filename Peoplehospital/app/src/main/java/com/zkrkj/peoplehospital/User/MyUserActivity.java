@@ -1,5 +1,4 @@
 package com.zkrkj.peoplehospital.User;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,10 +14,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.User.adapter.MyUserAdapter;
-
 import java.util.List;
 import java.util.Map;
-
 import base.BaseActivity;
 import base.OptsharepreInterface;
 import butterknife.Bind;
@@ -28,8 +24,8 @@ import util.Constants;
 import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
+import util.ToastUtil;
 import widget.RefreshLayout;
-
 public class MyUserActivity extends BaseActivity {
     List<Map<String, Object>> list1 = null;
 
@@ -44,12 +40,11 @@ public class MyUserActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         setContentView(R.layout.activity_my_user);
         ButterKnife.bind(this);
         initTitle();
         View v = View.inflate(this, R.layout.tianjiajiuzhenren, null);
-      button3= (Button) v.findViewById(R.id.button3);
+        button3= (Button) v.findViewById(R.id.button3);
         listView7.addFooterView(v);
         super.onCreate(savedInstanceState);
         button3.setOnClickListener(new View.OnClickListener() {
@@ -72,19 +67,21 @@ public class MyUserActivity extends BaseActivity {
         listView7.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-             Intent intent=new Intent(getBaseContext(),EditUserActivity.class);
-                intent.putExtra("name",list1.get(i).get("name").toString());
-                intent.putExtra("gender",list1.get(i).get("gender").toString());
-                intent.putExtra("idNo",list1.get(i).get("idNo").toString());
-                intent.putExtra("phone",list1.get(i).get("phone").toString());
-                startActivity(intent);
+                if (getIntent().getIntExtra("type",0)==0) {
+                    Intent intent = new Intent(getBaseContext(), EditUserActivity.class);
+                    intent.putExtra("name", list1.get(i).get("name").toString());
+                    intent.putExtra("gender", list1.get(i).get("gender").toString());
+                    intent.putExtra("idNo", list1.get(i).get("idNo").toString());
+                    intent.putExtra("phone", list1.get(i).get("phone").toString());
+                    intent.putExtra("id", list1.get(i).get("id").toString());
+                    startActivity(intent);
+                }else {
+                     o.putPres("id",list1.get(i).get("id").toString());
+                     finish();
+                }
             }
         });
-
-
-
-         o = new OptsharepreInterface(this);
+        o = new OptsharepreInterface(this);
         String token = o.getPres("token");
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
@@ -106,6 +103,38 @@ public class MyUserActivity extends BaseActivity {
                     }
                 }
         );
+        IStringRequest requset1 = new IStringRequest(Request.Method.GET,
+                Constants.SERVER_ADDRESS_BACKUP+ "patient/current?token="+token,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("aaa", response);
+                        Map<String, Object> object = null;
+                        Map<String, Object> data = null;
+                        try {
+                            object = JsonUtils.getMapObj(response);
+                            data=JsonUtils.getMapObj(object.get("data").toString());
+                            String id=data.get("id").toString();
+                            o.putPres("id",id);
+                            ToastUtil.ToastShow(getBaseContext(),  o.getPres("id").toString(),true);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("err", error.toString());
+
+                    }
+                }
+        );
+        queue.add(requset1);
         queue.add(requset);
 
 

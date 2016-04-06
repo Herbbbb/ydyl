@@ -100,6 +100,7 @@ public class AddUserActivity extends BaseActivity {
                             object = JsonUtils.getMapObj(response);
                             if("1".equals(object.get("success").toString())){
                                 ToastUtil.ToastShow(getBaseContext(),"添加成功",true);
+                                finish();
                             }else{
                                 ToastUtil.ToastShow(getBaseContext(),"添加失败",false);
                             }
@@ -116,6 +117,7 @@ public class AddUserActivity extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i("err", error.toString());
+                        ToastUtil.ToastShow(getBaseContext(),"服务器好像出了点问题",true);
 
                     }
                 }

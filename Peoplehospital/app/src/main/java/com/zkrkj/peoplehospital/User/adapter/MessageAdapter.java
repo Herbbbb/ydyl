@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,12 +59,20 @@ public class MessageAdapter extends BaseAdapter {
         }else {
             holder= (ViewHolder) view.getTag();
         }
-
+        getStrToDate(list.get(i).get("update1").toString());
+       // long l=Long.parseLong(list.get(i).get("update1").toString());
       holder.textView1.setText(list.get(i).get("context1").toString());
-      holder.textView2.setText(list.get(i).get("update1").toString());
+      holder.textView2.setText(getStrToDate(list.get(i).get("update1").toString()));
         holder.textView3.setText(list.get(i).get("messagetype").toString());
 
+
         return view;
+    }
+    public static String getStrToDate(String lo){
+        long time = Long.parseLong(lo);
+        Date date = new Date(time);
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy年-MM月-dd日    HH:mm");
+        return sd.format(date);
     }
     class ViewHolder{
 
