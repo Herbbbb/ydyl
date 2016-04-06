@@ -97,6 +97,7 @@ public class ReportQueryJcbg extends BaseFragment {
                 ToastUtil.ToastShow(getActivity(), "登录过期", true);
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         } catch (Exception e) {
 

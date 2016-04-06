@@ -1,6 +1,8 @@
 package com.zkrkj.peoplehospital.fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,59 +29,53 @@ import com.zkrkj.peoplehospital.registered.RegisteredMain;
 
 
 import base.BaseFragment;
+import base.OptsharepreInterface;
+import bean.DataAddDataBase;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import util.IStringRequest;
 import util.LogUtil;
 import util.TitleBarUtils;
+import util.ToastUtil;
+import widget.ProgressDialogStyle;
 
 /**
  * Created by lenovo on 2016/3/16.
  */
 public class Frag_Home extends BaseFragment implements View.OnClickListener {
-    @Bind(R.id.guahao)
-    TextView guahao;
-    @Bind(R.id.imageView)
-    ImageView imageView;
-    @Bind(R.id.textView2)
-    TextView textView2;
-    @Bind(R.id.textView)
-    TextView textView;
-    @Bind(R.id.imageView2)
-    ImageView imageView2;
-    @Bind(R.id.textView3)
-    TextView textView3;
-    @Bind(R.id.textView4)
-    TextView textView4;
-    @Bind(R.id.finddoc)
-    RelativeLayout finddoc;
-    @Bind(R.id.findhos1)
-    RelativeLayout findhos1;
 
-    @Bind(R.id.tab_hos)
+    LinearLayout finddoc;
+    LinearLayout findhos1;
+
     LinearLayout tabHos;
-    @Bind(R.id.tab_doc)
     LinearLayout tabDoc;
-    @Bind(R.id.imageView3)
-    ImageView imageView3;
-    @Bind(R.id.textView6)
-    TextView textView6;
-    @Bind(R.id.textView7)
-    TextView textView7;
-    @Bind(R.id.frag_home1)
-    LinearLayout fragHome1;
-    @Bind(R.id.ll_yygh)
-    LinearLayout llYygh;
-    private ListView listView1;
+    LinearLayout ll_yygh;
+
+    private OptsharepreInterface share;
+    private Dialog pb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_home, null);
-        ButterKnife.bind(this, view);
-        initView();
-        initTitle();
+        share=new OptsharepreInterface(getActivity());
+        if(share.getPres("isFirstSavaXzqh").equals("0")){
+            new MyTask().execute();//加载行政区划数据
+        }else{
+            initWidget();
+            initView();
+            initTitle();
+        }
         return view;
+    }
+
+    private void initWidget() {
+        tabHos= (LinearLayout) view.findViewById(R.id.tab_hos);
+        tabDoc= (LinearLayout) view.findViewById(R.id.tab_doc);
+        finddoc=(LinearLayout) view.findViewById(R.id.finddoc);
+        findhos1=(LinearLayout) view.findViewById(R.id.findhos1);
+        ll_yygh=(LinearLayout) view.findViewById(R.id.ll_yygh);
+
     }
 
     private void initTitle() {
@@ -101,11 +97,10 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initView() {
         finddoc.setOnClickListener(this);
-
         findhos1.setOnClickListener(this);
         tabHos.setOnClickListener(this);
         tabDoc.setOnClickListener(this);
-
+        ll_yygh.setOnClickListener(this);
 
 
     }
@@ -114,12 +109,10 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
     protected void initAction() {
 
     }
-
     @Override
     public int getViewId() {
         return 0;
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -134,7 +127,6 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), FindDocActivity.class);
                 startActivity(intent);
                 break;
-
             case R.id.findhos1:
                 Intent intent1 =new Intent(getActivity(),FindHospitalActivity.class);
                 startActivity(intent1);
@@ -147,13 +139,46 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
                 Intent intent3 =new Intent(getActivity(),ServicePriceActivity.class);
                 startActivity(intent3);
                 break;
+            case R.id.ll_yygh:
+                Intent intent4 = new Intent(getActivity(), RegisteredMain.class);
+                startActivity(intent4);
+                break;
 
         }
     }
 
-    @OnClick(R.id.ll_yygh)
-    public void onClick() {
-        Intent intent = new Intent(getActivity(), RegisteredMain.class);
-        startActivity(intent);
+    class MyTask extends AsyncTask<Void,Void,Integer>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pb = ProgressDialogStyle.createLoadingDialog(getActivity(), "首次启动，初始化中...");
+            pb.show();
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            try{
+                DataAddDataBase.setProvinceData(getActivity());
+                return 1;
+            }catch (Exception e){
+                return 0;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Integer aVoid) {
+            super.onPostExecute(aVoid);
+            if(aVoid==0){
+                pb.dismiss();
+                ToastUtil.ToastShow(getActivity(),"数据加载失败",true);
+            }else{
+                pb.dismiss();
+                share.putPres("isFirstSavaXzqh","1");
+                initWidget();
+                initView();
+                initTitle();
+            }
+        }
     }
 }

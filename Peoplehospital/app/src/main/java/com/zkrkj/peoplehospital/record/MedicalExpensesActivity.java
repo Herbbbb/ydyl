@@ -32,9 +32,10 @@ import util.TitleBarUtils;
 import util.ToastUtil;
 import widget.ProgressDialogStyle;
 
-/*
-* 医疗费用Activity
-* 苗坤
+/**
+* Describe:     医疗费用
+* User:         LF
+* Date:         2016/4/1 14:35
 */
 public class MedicalExpensesActivity extends BaseActivity {
 

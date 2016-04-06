@@ -21,27 +21,27 @@ import java.util.List;
 import java.util.Map;
 
 import util.Constants;
+import util.DateUtil;
 import util.JsonUtils;
 
 
 /**
- * Created by lenovo on 2016/3/25.
- */
-
+* Describe:     门诊处方适配器
+* User:         LF
+* Date:         2016/4/1 14:34
+*/
 public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     Context context;
     List<Map<String, Object>> list = new ArrayList<>();
     List<Map<String, Object>> listChild = new ArrayList<>();
     List<Map<String, Object>> listChildSon = new ArrayList<>();
-    public String[] groups = {"我的好友", "新疆同学", "亲戚", "同事", "亲戚"};
-    public String[][] children = {
-            {"胡算林", "张俊峰", "王志军", "二人"},
-            {"李秀婷", "蔡乔", "别高", "余音"},
-            {"摊派新", "张爱明"},
-            {"马超", "司道光"}
-    };
+
     Map<String, Object> obj = null;
     Map<String, Object> objSon = null;
+
+    LinearLayout ll, ll1;
+    LinearLayout.LayoutParams lp, lp1;
+    TextView tv_name, gui_ge, tv_count, tv_method;
 
     public MyExpandableListAdapter(Context context, List<Map<String, Object>> lists) {
         this.context = context;
@@ -113,7 +113,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         } catch (Exception e) {
         }
 
-        holder.tv_date.setText(obj.get("diagDate").toString());
+        holder.tv_date.setText(DateUtil.formatedDateTime("yyyy-MM-dd",Long.parseLong(obj.get("diagDate").toString())));
         holder.tv_title.setText(obj.get("diag").toString());
         holder.tv_hospital.setText(obj.get("hospitalName").toString());
         holder.textView48.setText(obj.get("departmentName").toString());
@@ -162,9 +162,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
             holder.medicines_num.setText(listChild.get(i1).get("prescribeNo").toString());
         }
         holder.ll_contain.removeAllViewsInLayout();//展开之前移除之前添加的素有view,viewgroup;
-        LinearLayout ll, ll1;
-        LinearLayout.LayoutParams lp, lp1;
-        TextView tv_name, gui_ge, tv_count, tv_method;
+
         for (int index = 0; index < listChildSon.size(); index++) {
             objSon = listChildSon.get(index);
             ll = new LinearLayout(context);

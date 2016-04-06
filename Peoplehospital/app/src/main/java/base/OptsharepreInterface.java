@@ -6,23 +6,24 @@ import android.content.SharedPreferences;
 import util.Constants;
 
 /**
-* Describe:     sharepreference属性存储
-* User:         LF
-* Date:         2016/3/18 16:32
-*/
+ * Describe:     sharepreference属性存储
+ * User:         LF
+ * Date:         2016/3/18 16:32
+ */
 public class OptsharepreInterface {
 
-	private SharedPreferences settings; // static
+    private SharedPreferences settings; // static
 
-	public OptsharepreInterface(Context context) {
-		// 载入配置文件
-		settings = context.getSharedPreferences(Constants.SHARE_FILES,
-				Context.MODE_PRIVATE);
-	}
+    public OptsharepreInterface(Context context) {
+        // 载入配置文件
+        settings = context.getSharedPreferences(Constants.SHARE_FILES,
+                Context.MODE_PRIVATE);
+    }
 
-	public SharedPreferences.Editor getEditor() {
-		return settings.edit();
-	}
+    public SharedPreferences.Editor getEditor() {
+        return settings.edit();
+    }
+
 
 	public void putPres(String optName, String values) {
 		SharedPreferences.Editor editor = settings.edit();
@@ -89,14 +90,18 @@ public class OptsharepreInterface {
 		return values;
 	}
 
-	public boolean existResult(String result) {
-		return settings.contains(result);
-	}
 
-	public void removePre(String preName) {
-		// 必须马上提交，否则就删不了？？！
-		settings.edit().remove(preName).commit(); // .commit()
-		// settings.edit().commit();
-	}
+
+
+
+    public boolean existResult(String result) {
+        return settings.contains(result);
+    }
+
+    public void removePre(String preName) {
+        // 必须马上提交，否则就删不了？？！
+        settings.edit().remove(preName).commit(); // .commit()
+        // settings.edit().commit();
+    }
 
 }

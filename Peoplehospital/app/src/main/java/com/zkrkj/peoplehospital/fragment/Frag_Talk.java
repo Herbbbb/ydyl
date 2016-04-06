@@ -36,6 +36,7 @@ import base.OptsharepreInterface;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.Constants;
+import util.DateUtil;
 import util.JsonUtils;
 import util.SerializableMap;
 import util.ToastUtil;
@@ -238,29 +239,33 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
             holder.tv_title.setText(lists.get(position).get("diag").toString());
             String content = lists.get(position).get("hospitalName").toString() + "  " + lists.get(position).get("departmentName").toString();
             holder.tv_content.setText(content);
-            holder.tv_date.setText(lists.get(position).get("diagDate").toString());
+            holder.tv_date.setText(DateUtil.formatedDateTime("yyyy-MM-dd",Long.parseLong(lists.get(position).get("diagDate").toString())));
             //检查单
             if ((int) lists.get(position).get("ckReportCount") == 0) {
                 holder.tv_jcd.setVisibility(View.GONE);
             } else {
+                holder.tv_jcd.setVisibility(View.VISIBLE);
                 holder.tv_jcd.setText("检查单" + lists.get(position).get("ckReportCount").toString());
             }
             //检验单
             if ((int) lists.get(position).get("ttTestCount") == 0) {
                 holder.tv_jyd.setVisibility(View.GONE);
             } else {
+                holder.tv_jyd.setVisibility(View.VISIBLE);
                 holder.tv_jyd.setText("检验单" + lists.get(position).get("ttTestCount").toString());
             }
             //费用单
             if ((int) lists.get(position).get("feeCount") == 0) {
                 holder.tv_fyd.setVisibility(View.GONE);
             } else {
+                holder.tv_fyd.setVisibility(View.VISIBLE);
                 holder.tv_fyd.setText("费用单" + lists.get(position).get("feeCount").toString());
             }
             //处方单
             if ((int) lists.get(position).get("ttPCount") == 0) {
                 holder.tv_cfd.setVisibility(View.GONE);
             } else {
+                holder.tv_cfd.setVisibility(View.VISIBLE);
                 holder.tv_cfd.setText("处方单" + lists.get(position).get("ttPCount").toString());
             }
             convertView.setOnClickListener(new View.OnClickListener() {

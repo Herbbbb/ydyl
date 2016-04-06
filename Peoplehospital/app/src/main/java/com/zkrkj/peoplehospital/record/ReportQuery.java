@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,14 +18,22 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
 
+/**
+ * Describe:     报告查询
+ * User:         LF
+ * Date:         2016/4/1 14:35
+ */
 public class ReportQuery extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.tv_jybg)
     TextView tvJybg;
     @Bind(R.id.tv_jcbg)
     TextView tvJcbg;
-    @Bind(R.id.ll_fragment)
-    LinearLayout llFragment;
+    @Bind(R.id.lv_jybg)
+    LinearLayout lvJybg;
+    @Bind(R.id.lv_jcbg)
+    LinearLayout lvJcbg;
+
     private FragmentManager mManager;
     private Fragment mJybg;
     private Fragment mJcbg;
@@ -43,17 +53,21 @@ public class ReportQuery extends BaseActivity implements View.OnClickListener {
     }
 
     private void initFragment() {
-        mJybg=new ReportQueryJybg();
-        mJcbg=new ReportQueryJcbg();
+        mJybg = new ReportQueryJybg();
+        mJcbg = new ReportQueryJcbg();
         mManager = getSupportFragmentManager();
+        //设置检验报告被选中
+        setScaleAnim(lvJybg);
+        tvJybg.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
         FragmentTransaction trans = mManager.beginTransaction();
         trans.add(R.id.ll_fragment, mJybg);
         trans.commit();
     }
 
-    private void seleFragment(int id){
+    private void seleFragment(int id) {
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-        switch (id){
+        switch (id) {
             case 0:
                 trans.replace(R.id.ll_fragment, mJybg);
                 break;
@@ -66,13 +80,13 @@ public class ReportQuery extends BaseActivity implements View.OnClickListener {
     }
 
     private void initWidget() {
-        tvJybg.setOnClickListener(this);
-        tvJcbg.setOnClickListener(this);
+        lvJybg.setOnClickListener(this);
+        lvJcbg.setOnClickListener(this);
     }
 
     private void initTitle() {
         TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("就诊明细");
+        titleBarUtils.setTitle("报告信息");
         titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
 
             @Override
@@ -81,31 +95,48 @@ public class ReportQuery extends BaseActivity implements View.OnClickListener {
             }
         });
     }
+
     @Override
     public void onClick(View v) {
         tvJybg.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         tvJcbg.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-        switch (v.getId()){
-            case R.id.tv_jybg://检验报告
+        tvJybg.clearAnimation();
+        tvJcbg.clearAnimation();
+        switch (v.getId()) {
+            case R.id.lv_jybg://检验报告
                 seleFragment(0);
                 break;
-            case R.id.tv_jcbg://检查报告
+            case R.id.lv_jcbg://检查报告
                 seleFragment(1);
                 break;
         }
-        if(v instanceof TextView){
-            ((TextView) v).setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        if (v instanceof LinearLayout) {
+            ((TextView)((LinearLayout) v).getChildAt(0)).setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            setScaleAnim(v);
         }
+    }
+
+    private void setScaleAnim(View v){
+        ScaleAnimation animation = new ScaleAnimation(1.0f, 1.1f, 1.0f,
+                1.1f, Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setDuration(500);
+        animation.setFillAfter(true);
+        ((LinearLayout) v).getChildAt(0).clearAnimation();
+        ((LinearLayout) v).getChildAt(0).setAnimation(animation);
+        animation.start();
     }
 
     @Override
     public int getLayoutId() {
         return 0;
     }
+
     @Override
     public void initView() {
 
     }
+
     @Override
     public void initAction() {
 

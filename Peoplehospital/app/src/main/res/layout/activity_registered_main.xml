@@ -26,6 +26,7 @@
                 android:src="@mipmap/registered_loc" />
 
             <TextView
+                android:id="@+id/tv_loc"
                 style="@style/personalRelativeLayoutTvSetting"
                 android:layout_toRightOf="@+id/iv_loc"
                 android:text="北京市" />
@@ -47,6 +48,7 @@
                 android:src="@mipmap/registered_home" />
 
             <TextView
+                android:id="@+id/tv_hospital"
                 style="@style/personalRelativeLayoutTvSetting"
                 android:layout_toRightOf="@+id/iv_hospital"
                 android:text="北京市天坛医院" />
@@ -67,6 +69,7 @@
                 android:src="@mipmap/registered_sjwk" />
 
             <TextView
+                android:id="@+id/tv_sjwk"
                 style="@style/personalRelativeLayoutTvSetting"
                 android:layout_toRightOf="@+id/iv_sjwk"
                 android:text="神经外科" />
@@ -87,6 +90,7 @@
                 android:src="@mipmap/registered_date" />
 
             <TextView
+                android:id="@+id/tv_date"
                 style="@style/personalRelativeLayoutTvSetting"
                 android:layout_toRightOf="@+id/iv_date"
                 android:text="2015年10月25日上午" />
@@ -107,6 +111,7 @@
                 android:src="@mipmap/registered_ptmz" />
 
             <TextView
+                android:id="@+id/tv_ptmz"
                 style="@style/personalRelativeLayoutTvSetting"
                 android:layout_toRightOf="@+id/iv_ptmz"
                 android:text="普通门诊" />

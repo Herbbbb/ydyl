@@ -34,10 +34,11 @@ import util.ToastUtil;
 import widget.ProgressDialogStyle;
 import widget.RefreshLayout;
 
-/*
-门诊处方
-苗坤
- */
+/**
+* Describe:     门诊处方
+* User:         LF
+* Date:         2016/4/1 14:34
+*/
 public class OutpatientPrescriptionsActivity extends BaseActivity {
 
 

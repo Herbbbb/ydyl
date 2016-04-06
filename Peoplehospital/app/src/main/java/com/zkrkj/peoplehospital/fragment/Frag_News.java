@@ -24,6 +24,8 @@ import base.BaseFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.TitleBarUtils;
+import util.ToastUtil;
+
 public class Frag_News extends BaseFragment implements ViewPager.OnPageChangeListener {
 
 
@@ -45,6 +47,17 @@ public class Frag_News extends BaseFragment implements ViewPager.OnPageChangeLis
         initTitle();
         initFragment();
         initViewPager();
+        initListener();
+    }
+
+    private void initListener() {
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                seleVp(checkedId-1);
+                vp.setCurrentItem(checkedId-1);
+            }
+        });
     }
 
     private void initViewPager() {
@@ -82,6 +95,10 @@ public class Frag_News extends BaseFragment implements ViewPager.OnPageChangeLis
 
     @Override
     public void onPageSelected(int position) {
+        seleVp(position);
+    }
+
+    private void seleVp(int position){
         View view=null;
         switch (position){
             case 0:
@@ -101,20 +118,24 @@ public class Frag_News extends BaseFragment implements ViewPager.OnPageChangeLis
             for(int i=0;i<rg.getChildCount();i++){
                 if(rg.getChildAt(i) instanceof RadioButton){
                     if(view.getId()==rg.getChildAt(i).getId()){
-                        ScaleAnimation animation = new ScaleAnimation(1.0f, 1.2f, 1.0f,
-                                1.2f, Animation.RELATIVE_TO_SELF, 0.5f,
-                                Animation.RELATIVE_TO_SELF, 0.5f);
-                        animation.setDuration(500);
-                        animation.setFillAfter(true);
-                        view.clearAnimation();
-                        view.setAnimation(animation);
-                        animation.start();
+                        setScaleAnim(view);
                     }else{
                         rg.getChildAt(i).clearAnimation();
                     }
                 }
             }
         }
+    }
+
+    private void setScaleAnim(View view){
+        ScaleAnimation animation = new ScaleAnimation(1.0f, 1.2f, 1.0f,
+                1.2f, Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setDuration(500);
+        animation.setFillAfter(true);
+        view.clearAnimation();
+        view.setAnimation(animation);
+        animation.start();
     }
 
     @Override
@@ -134,6 +155,9 @@ public class Frag_News extends BaseFragment implements ViewPager.OnPageChangeLis
 
         @Override
         public Fragment getItem(int position) {
+            if(position==0){
+                setScaleAnim(rg.getChildAt(0));
+            }
             return listFragment.get(position);
         }
 

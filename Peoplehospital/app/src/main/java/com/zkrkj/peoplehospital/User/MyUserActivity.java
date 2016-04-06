@@ -75,8 +75,7 @@ public class MyUserActivity extends BaseActivity {
                     intent.putExtra("id", list1.get(i).get("id").toString());
                     startActivity(intent);
                 }else {
-                    o=new OptsharepreInterface(getBaseContext());
-                    o.putPres("id",list1.get(i).get("id").toString());
+                     o.putPres("id",list1.get(i).get("id").toString());
                     finish();
                 }
             }
