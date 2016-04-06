@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import java.io.File;
 import java.util.Stack;
 
+import base.OptsharepreInterface;
 import util.LogUtil;
 import util.NetUtil;
 import util.SharedPreferenceUtil;
@@ -33,34 +34,23 @@ public class MyApplication extends Application {
     public static String phone ;
     private static Stack<Activity> activityStack;
     private static MyApplication singleton;
+    private OptsharepreInterface o;
+
     @Override
     public void onCreate() {
         super.onCreate();
         singleton = this;
         //读取配置信息 确认是否已登陆
-        String flag = SharedPreferenceUtil.readString(getApplicationContext(), "loginFlag", "false");
-
+       // String flag = SharedPreferenceUtil.readString(getApplicationContext(), "loginFlag", "false");
+        o=new OptsharepreInterface(getApplicationContext());
+        String flag=o.getPres("loginFlag");
         loginFlag = Boolean.parseBoolean(flag);
         //获取user对象
-        getUser();
+
         initImageLoaderConfig();
 
     }
-    public void getUser() {
-        if (loginFlag && NetUtil.isNetWork()) {
-            //已登录则获取user信息
-            String phone = SharedPreferenceUtil.readString(getApplicationContext(), "phone", "18103856693");
-            String pwd = SharedPreferenceUtil.readString(getApplicationContext(), "pwd", "zxm18103856693");
-//            UIHelper.Login(phone, pwd, new CallString() {
-//                @Override
-//                public void getString(String data) {
-//                    LogInBean logInBean = JsonParser.getLogInInfo(data);
-//                    user = logInBean.getUser();
-//                    SharedPreferenceUtil.writeString(getApplicationContext(), "access_token", logInBean.getAccess_token());
-//                }
-//            });
-        }
-    }
+
 
     private void initImageLoaderConfig() {
         /**

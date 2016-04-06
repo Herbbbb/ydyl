@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.activity.TimeSecActivity;
 import com.zkrkj.peoplehospital.xzqh.ProcinceActivity;
 
 import base.BaseActivity;
@@ -70,6 +71,8 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
         btn_submit.setOnClickListener(this);
         rl_wdjzr.setOnClickListener(this);
         min_city.setOnClickListener(this);
+        minDate.setOnClickListener(this);
+        minPtmz.setOnClickListener(this);
     }
 
     private void initTitle() {
@@ -107,6 +110,14 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
             case R.id.min_city://地区选择
                 Intent intent4 = new Intent(this, ProcinceActivity.class);
                 startActivityForResult(intent4, 4);
+                break;
+            case R.id.min_date://地区选择
+                Intent intent5 = new Intent(this, TimeSecActivity.class);
+                startActivityForResult(intent5, 5);
+                break;
+            case R.id.min_ptmz://地区选择
+                Intent intent6 = new Intent(this, TimeSecActivity.class);
+                startActivityForResult(intent6, 6);
                 break;
         }
     }

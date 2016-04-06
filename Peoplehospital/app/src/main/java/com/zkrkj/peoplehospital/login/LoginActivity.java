@@ -164,10 +164,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Log.i("aaa", success);
 
                 token = data.get("token").toString();
+                String userId=data.get("userId").toString();
                 OptsharepreInterface o = new OptsharepreInterface(this);
                 o.putPres("token", token);
                 o.putPres("account", account);
                 o.putPres("password", pwd);
+                o.putPres("guid",userId);
                 MyApplication.loginFlag=true;
                 msg = object.get("msg").toString();
                 MyApplication.phone=account;

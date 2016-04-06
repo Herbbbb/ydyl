@@ -166,11 +166,19 @@
             android:name=".xzqh.ProcinceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.TimeSecActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            />
+
+
         <activity
             android:name=".registered.RegisteredSuccess"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity android:name=".record.PatientInfo"></activity>
+>>>>>>> 4a5d59d7513f2af89edd44f09a8d76eae34dbad5
     </application>
 
 </manifest>
