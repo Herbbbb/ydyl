@@ -2,27 +2,43 @@ package com.zkrkj.peoplehospital.registered;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.login.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import base.BaseActivity;
+import base.OptsharepreInterface;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import util.Constants;
+import util.JsonUtils;
 import util.TitleBarUtils;
+import util.ToastUtil;
+import widget.ProgressDialogStyle;
+
 /**
 * Describe:     科室选择
 * User:         LF
@@ -32,11 +48,11 @@ public class DepartmentRegistered extends BaseActivity {
 
     @Bind(R.id.department_one)
     RecyclerView departmentOne;
-    @Bind(R.id.department_two)
-    RecyclerView departmentTwo;
 
-    List<String> listsOne=new ArrayList<String>();
-    List<String> listsTwo=new ArrayList<String>();
+    List<Map<String, Object>> listsOne=new ArrayList<Map<String, Object>>();
+//    List<String> listsTwo=new ArrayList<String>();
+    Map<String, Object> object = null;
+    private Dialog pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +67,54 @@ public class DepartmentRegistered extends BaseActivity {
     private void init() {
         initTitle();
         initData();
-        initWidget();
     }
-
+    /**
+    * Describe:     获取所有科室
+    * User:         LF
+    * Date:         2016/4/7 10:28
+    */
     private void initData() {
-        listsOne.add("特色科室");
-        listsOne.add("内科");
-        listsOne.add("外科");
-        listsOne.add("妇产科");
-        listsOne.add("耳鼻喉科");
-        listsOne.add("中医科");
-        listsOne.add("神经科");
-        listsOne.add("全科");
-        listsOne.add("精神心理科");
+        pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+        pb.show();
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Constants.SERVER_ADDRESS+"department?hosId=1";
+        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadData(response);
+                pb.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ToastUtil.ToastShow(DepartmentRegistered.this, "网络错误", true);
+                pb.dismiss();
+            }
+        });
+        queue.add(request);
+    }
+    /**
+    * Describe:     格式化科室数据
+    * User:         LF
+    * Date:         2016/4/7 10:28
+    */
+    private void loadData(String json) {
+        try {
+            object = JsonUtils.getMapObj(json);
+            if (object.get("success").toString().equals("0")) {
+                ToastUtil.ToastShow(this, object.get("msg").toString(), true);
+            } else if (object.get("success").toString().equals("1")) {
+                object=JsonUtils.getMapObj(object.get("data").toString());
+                listsOne=JsonUtils.getListMap(object.get("departments").toString());
+                initWidget();
+            } else {
+                ToastUtil.ToastShow(this, "登录过期", true);
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        } catch (Exception e) {
+        }
     }
 
     private void initWidget() {
@@ -107,7 +158,7 @@ public class DepartmentRegistered extends BaseActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if(holder instanceof  MyViewHolderOne){
-                ((MyViewHolderOne) holder).tv_department_name.setText(listsOne.get(position));
+                ((MyViewHolderOne) holder).tv_department_name.setText(listsOne.get(position).get("deptName").toString());
             }
         }
 
@@ -140,7 +191,6 @@ public class DepartmentRegistered extends BaseActivity {
                           holder.itemView.setBackground(getResources().getDrawable(R.drawable.department_item_one_false));
                       }
                   }
-                  bindRecyclerviewTwoData(listsOne.get(getPosition()));
             }
 
             public View getItemView() {
@@ -153,7 +203,7 @@ public class DepartmentRegistered extends BaseActivity {
         }
     }
 
-    private void bindRecyclerviewTwoData(String seleData){
+    /*private void bindRecyclerviewTwoData(String seleData){
         listsTwo.clear();
         for(int i=0;i<10;i++){
             listsTwo.add(seleData+i);
@@ -198,7 +248,7 @@ public class DepartmentRegistered extends BaseActivity {
                 Toast.makeText(DepartmentRegistered.this,listsTwo.get(getPosition()),Toast.LENGTH_SHORT);
             }
         }
-    }
+    }*/
 
 
     @Override

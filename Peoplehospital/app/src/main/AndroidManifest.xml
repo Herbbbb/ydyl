@@ -157,28 +157,30 @@
             android:name=".User.AddUserActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".User.EditUserActivity"
+        <activity
+            android:name=".User.EditUserActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".xzqh.ProcinceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.TimeSecActivity"
+        <activity
+            android:name=".activity.TimeSecActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            />
-
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".registered.RegisteredSuccess"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".record.PatientInfo"></activity>
->>>>>>> 4a5d59d7513f2af89edd44f09a8d76eae34dbad5
+        <activity android:name=".record.PatientInfo"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".User.AboutUs"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

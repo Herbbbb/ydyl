@@ -116,7 +116,6 @@ public class MyUserActivity extends BaseActivity {
                             data=JsonUtils.getMapObj(object.get("data").toString());
                             String id=data.get("id").toString();
                             o.putPres("id",id);
-                            ToastUtil.ToastShow(getBaseContext(),  o.getPres("id").toString(),true);
 
                         } catch (Exception e) {
                             e.printStackTrace();

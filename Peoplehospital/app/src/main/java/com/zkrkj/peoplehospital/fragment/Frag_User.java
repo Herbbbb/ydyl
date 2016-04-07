@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.User.AboutUs;
 import com.zkrkj.peoplehospital.User.ChangePasswordActivity;
 import com.zkrkj.peoplehospital.User.FeedBackActivity;
 import com.zkrkj.peoplehospital.User.MyDocCard;
@@ -153,7 +154,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         xiugaimima.setOnClickListener(this);
 
         jiuyika.setOnClickListener(this);
-
+        about.setOnClickListener(this);
         usernameText.setOnClickListener(this);
         resiglogin.setOnClickListener(this);
         dangan.setOnClickListener(this);
@@ -351,7 +352,8 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.about:
-                Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getActivity(), AboutUs.class);//意见反馈
+                startActivity(intent);
                 break;
             case R.id.update:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
