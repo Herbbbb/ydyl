@@ -26,6 +26,8 @@ public class OptsharepreInterface {
     }
 
 
+
+
 	public void putPres(String optName, String values) {
 		SharedPreferences.Editor editor = settings.edit();
 		if (optName.equals("guid")) {
@@ -98,6 +100,8 @@ public class OptsharepreInterface {
 
 
 
+
+    
 
 
     public boolean existResult(String result) {

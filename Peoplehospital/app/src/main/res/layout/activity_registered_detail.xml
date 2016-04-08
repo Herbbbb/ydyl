@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:scrollbars="none">
         <LinearLayout
+            android:id="@+id/ll_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#fbfbfb"
@@ -79,6 +80,7 @@
                     android:text="2015-09-22 周二 上午"
                     android:textSize="16sp"
                     android:layout_marginLeft="10dp"
+                    android:textColor="#0000ff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -98,6 +100,7 @@
                 <TextView
                     android:id="@+id/tv_outpatient_type"
                     android:text="主任医师 张云志"
+                    android:textColor="#0000ff"
                     android:textSize="16sp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
@@ -235,9 +238,11 @@
 
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ll_change_patient"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
                     <ImageView
                         android:id="@+id/iv_head"
@@ -245,6 +250,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
                         android:background="@mipmap/people_head_mini"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textSize="18sp"
+                        android:text="▼"/>
                 </LinearLayout>
 
 

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zkrkj.peoplehospital">
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -174,10 +175,21 @@
             android:name=".registered.RegisteredSuccess"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".record.PatientInfo"></activity>
+
+
         <activity android:name=".hospital.DepartmentInformationActivity"></activity>
         <activity android:name=".Search.TFSearchActivity"/>
         <service android:name="base.PushSmsService"/>
+
+        <activity android:name=".record.PatientInfo"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".User.AboutUs"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

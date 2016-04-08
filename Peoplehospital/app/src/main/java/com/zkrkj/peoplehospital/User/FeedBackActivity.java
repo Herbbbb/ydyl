@@ -84,7 +84,7 @@ public class FeedBackActivity extends BaseActivity implements TextWatcher {
                 final String token = o.getPres("token");
                 RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                 IStringRequest requset = new IStringRequest(Request.Method.POST,
-                        Constants.SERVER_ADDRESS_BACKUP+"useropinion/add?",
+                        Constants.SERVER_ADDRESS+"useropinion/add?",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {

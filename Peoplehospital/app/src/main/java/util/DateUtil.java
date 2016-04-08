@@ -4,11 +4,12 @@ import android.content.Context;
 import android.text.format.Time;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
- * @Description:    时间工具类
- * @author:         LF
+ * @Description: 时间工具类
+ * @author: LF
  */
 public class DateUtil {
     public static String formatedDateTime(String pattern, long dateTime) {
@@ -18,6 +19,7 @@ public class DateUtil {
 
     /**
      * 显示时间格式为今天、昨天、yyyy/MM/dd hh:mm
+     *
      * @param context
      * @param when
      * @return String
@@ -55,6 +57,7 @@ public class DateUtil {
 
     /**
      * 是否同一天
+     *
      * @param date1
      * @param date2
      * @return
@@ -63,5 +66,33 @@ public class DateUtil {
         long days1 = date1 / (1000 * 60 * 60 * 24);
         long days2 = date2 / (1000 * 60 * 60 * 24);
         return days1 == days2;
+    }
+
+
+    public static String[] WEEK = {
+            "星期日",
+            "星期一",
+            "星期二",
+            "星期三",
+            "星期四",
+            "星期五",
+            "星期六",
+    };
+    public static final int WEEKDAYS = 7;
+
+    /**
+     * 日期变量转成对应的星期字符串
+     *
+     * @param date
+     * @return
+     */
+    public static String DateToWeek(long dateTime) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(dateTime + 0));
+        int dayIndex = calendar.get(Calendar.DAY_OF_WEEK);
+        if (dayIndex < 1 || dayIndex > WEEKDAYS) {
+            return null;
+        }
+        return WEEK[dayIndex - 1];
     }
 }

@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.User.MyUserActivity;
 import com.zkrkj.peoplehospital.activity.TimeSecActivity;
 import com.zkrkj.peoplehospital.xzqh.ProcinceActivity;
 
@@ -89,10 +90,11 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-
+        Intent intent;
         switch (v.getId()) {
             case R.id.rl_wdjzr://我的就诊人
-                Intent intent = new Intent(this, MyOutpatients.class);
+                intent = new Intent(this, MyUserActivity.class);
+                intent.putExtra("type", 0);
                 startActivity(intent);
                 break;
             case R.id.btn_submit://预约详情
@@ -103,7 +105,7 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
                 Intent intent2 = new Intent(this, RegisteredHistory.class);
                 startActivity(intent2);
                 break;
-            case R.id.min_sjwk:
+            case R.id.min_sjwk://科室选择
                 Intent intent3 = new Intent(this, DepartmentRegistered.class);
                 startActivity(intent3);
                 break;
@@ -111,11 +113,11 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
                 Intent intent4 = new Intent(this, ProcinceActivity.class);
                 startActivityForResult(intent4, 4);
                 break;
-            case R.id.min_date://地区选择
+            case R.id.min_date://时间选择
                 Intent intent5 = new Intent(this, TimeSecActivity.class);
                 startActivityForResult(intent5, 5);
                 break;
-            case R.id.min_ptmz://地区选择
+            case R.id.min_ptmz://普通门诊
                 Intent intent6 = new Intent(this, TimeSecActivity.class);
                 startActivityForResult(intent6, 6);
                 break;

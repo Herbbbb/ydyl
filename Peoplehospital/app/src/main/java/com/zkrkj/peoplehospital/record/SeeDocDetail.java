@@ -128,6 +128,7 @@ public class SeeDocDetail extends BaseActivity implements View.OnClickListener {
                 ToastUtil.ToastShow(this, "登录过期", true);
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         } catch (Exception e) {
 

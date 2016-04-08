@@ -16,7 +16,12 @@ import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.SerializableMap;
-
+import util.TitleBarUtils;
+/**
+* Describe:     就诊人信息
+* User:         LF
+* Date:         2016/4/6 15:01
+*/
 public class PatientInfo extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.tv_name)
@@ -40,8 +45,21 @@ public class PatientInfo extends BaseActivity implements View.OnClickListener {
     }
 
     private void init() {
+        initTitle();
         initData();
         initListener();
+    }
+
+    private void initTitle() {
+        TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
+        titleBarUtils.setTitle("就诊人信息");
+        titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initListener() {

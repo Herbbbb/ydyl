@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.User.AboutUs;
 import com.zkrkj.peoplehospital.User.ChangePasswordActivity;
 import com.zkrkj.peoplehospital.User.FeedBackActivity;
 import com.zkrkj.peoplehospital.User.MyDocCard;
@@ -28,6 +29,7 @@ import com.zkrkj.peoplehospital.User.MyUserActivity;
 import com.zkrkj.peoplehospital.User.PersonalDetail;
 import com.zkrkj.peoplehospital.User.UnreadMessagesActivity;
 import com.zkrkj.peoplehospital.activity.MainActivity;
+import com.zkrkj.peoplehospital.registered.RegisteredHistory;
 
 import java.util.List;
 import java.util.Map;
@@ -153,7 +155,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         xiugaimima.setOnClickListener(this);
 
         jiuyika.setOnClickListener(this);
-
+        about.setOnClickListener(this);
         usernameText.setOnClickListener(this);
         resiglogin.setOnClickListener(this);
         dangan.setOnClickListener(this);
@@ -169,7 +171,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
             queue = Volley.newRequestQueue(getActivity());
             IStringRequest requset = new IStringRequest(Request.Method.GET,
-                    Constants.SERVER_ADDRESS_BACKUP+"userinfo/summary?token=" + token,
+                    Constants.SERVER_ADDRESS+"userinfo/summary?token=" + token,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -269,7 +271,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
         if (first&&MyApplication.loginFlag) {
             IStringRequest requset1 = new IStringRequest(Request.Method.GET,
-                    Constants.SERVER_ADDRESS_BACKUP+"usermessage/unread?token=" + token,
+                    Constants.SERVER_ADDRESS+"usermessage/unread?token=" + token,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -325,7 +327,8 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 // Toast.makeText(getActivity(),"点击了健康档案",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.yuyue:
-                Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getActivity(), RegisteredHistory.class);
+                startActivity(intent);
                 break;
             case R.id.setaccount:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
@@ -351,7 +354,8 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.about:
-                Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getActivity(), AboutUs.class);//意见反馈
+                startActivity(intent);
                 break;
             case R.id.update:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();

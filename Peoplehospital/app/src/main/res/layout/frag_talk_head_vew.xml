@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@drawable/record_people_bg">
+        android:background="@mipmap/record_head">
 
         <LinearLayout
             android:layout_width="100dp"
@@ -31,7 +31,7 @@
                 android:gravity="center"
                 android:text="刘敏"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -41,13 +41,14 @@
             android:layout_alignParentRight="true">
 
             <TextView
+                android:id="@+id/tv_change_patient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="10dp"
-                android:text="切换就诊者》"
+                android:text="切换就诊者>>"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -58,6 +59,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/ll_yyjl"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -125,7 +125,7 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
     public void hoslist() {
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP + "hospital",
+                Constants.SERVER_ADDRESS + "hospital",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

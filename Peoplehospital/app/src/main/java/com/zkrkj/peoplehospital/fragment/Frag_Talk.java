@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.User.AddUserActivity;
+import com.zkrkj.peoplehospital.User.MyUserActivity;
 import com.zkrkj.peoplehospital.User.PersonalDetail;
 import com.zkrkj.peoplehospital.login.LoginActivity;
 import com.zkrkj.peoplehospital.record.MedicalExpensesActivity;
@@ -31,6 +32,7 @@ import com.zkrkj.peoplehospital.record.OutpatientPrescriptionsActivity;
 import com.zkrkj.peoplehospital.record.PatientInfo;
 import com.zkrkj.peoplehospital.record.ReportQuery;
 import com.zkrkj.peoplehospital.record.SeeDocDetail;
+import com.zkrkj.peoplehospital.registered.RegisteredHistory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,19 +70,26 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
     private int totalCount = 0;
     private int startIndex = 1;
 
-    ImageView ivPhoto;
-    TextView tvName;
-    LinearLayout tabMenzhenchufang;
-    LinearLayout tabYiliaofeiyong;
-    LinearLayout llBgcx;
+    View headView;
+    HeadViewHolder holder;
     SerializableMap transMap;
 
     RequestQueue queue;
-    Map<String, Object> object = null;
+    Map<String, Object> patientObj = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_talk, null);
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         if (MyApplication.loginFlag) {
+            lists.clear();
+            totalCount = 0;
+            startIndex = 1;
             init();
         } else {
             ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
@@ -88,7 +97,6 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
             startActivity(intent);
             getActivity().finish();
         }
-        return view;
     }
 
     private void init() {
@@ -98,14 +106,17 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         initPatient();
         initView();
     }
+
     /**
-    * Describe:     获取就诊人信息
-    * User:         LF
-    * Date:         2016/4/6 11:06
-    */
-    private void initPatient(){
+     * Describe:     获取就诊人信息
+     * User:         LF
+     * Date:         2016/4/6 11:06
+     */
+    private void initPatient() {
+        pb = ProgressDialogStyle.createLoadingDialog(getActivity(), "请求中...");
+        pb.show();
         queue = Volley.newRequestQueue(getActivity());
-        String url =  Constants.SERVER_ADDRESS+"patient/1?token=" + share.getPres("token");
+        String url = Constants.SERVER_ADDRESS + "patient/" + share.getPres("id") + "?token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -121,25 +132,27 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         });
         queue.add(request);
     }
+
     /**
-    * Describe:     格式化就诊人信息
-    * User:         LF
-    * Date:         2016/4/6 11:06
-    */
-    private void loadPatient(String json){
+     * Describe:     格式化就诊人信息
+     * User:         LF
+     * Date:         2016/4/6 11:06
+     */
+    private void loadPatient(String json) {
         String success = "";
         try {
-            object = JsonUtils.getMapObj(json);
-            success = object.get("success").toString();
+            patientObj = JsonUtils.getMapObj(json);
+            success = patientObj.get("success").toString();
             if (success.equals("0")) {
-                ToastUtil.ToastShow(getActivity(), object.get("msg").toString(), true);
+                ToastUtil.ToastShow(getActivity(), patientObj.get("msg").toString(), true);
             } else if (success.equals("1")) {
-                if(TextUtils.isEmpty(object.get("data").toString())){//未设置我的就诊人
+                if (TextUtils.isEmpty(patientObj.get("data").toString())) {//未设置我的就诊人
                     ToastUtil.ToastShow(getActivity(), "未添加就诊人", true);
-                    Intent intent=new Intent(getActivity(), AddUserActivity.class);
+                    Intent intent = new Intent(getActivity(), AddUserActivity.class);
                     startActivity(intent);
-                }else{
-                    object = JsonUtils.getMapObj(object.get("data").toString());
+                } else {
+                    patientObj = JsonUtils.getMapObj(patientObj.get("data").toString());
+                    holder.tvName.setText(patientObj.get("name").toString());
                     initData();
                 }
             } else {
@@ -148,20 +161,19 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 getActivity().finish();
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
-    /**
-    * Describe:     获取就诊人诊断列表
-    * User:         LF
-    * Date:         2016/4/6 11:07
-    */
-    private void initData() {
-        pb = ProgressDialogStyle.createLoadingDialog(getActivity(), "请求中...");
-        pb.show();
-        startIndex=(totalCount/Constants.PAGE_SIZE)*Constants.PAGE_SIZE+1;
 
+    /**
+     * Describe:     获取就诊人诊断列表
+     * User:         LF
+     * Date:         2016/4/6 11:07
+     */
+    private void initData() {
+        startIndex = totalCount + 1;
         Log.e(Constants.TAG, share.getPres("token"));
-        String url =  Constants.SERVER_ADDRESS+"medicalRecords/patient-"+Constants.getPatientId(getActivity())+"?limit="+Constants.PAGE_SIZE+"&offset="+startIndex+"&token=" + share.getPres("token");
+        String url = Constants.SERVER_ADDRESS + "medicalRecords/patient-" + share.getPres("id") + "?limit=" + Constants.PAGE_SIZE + "&offset=" + startIndex + "&token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -215,19 +227,6 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
     private void initWidget() {
         listview = (ListView) view.findViewById(R.id.lv);
         swipRefresh = (RefreshLayout) view.findViewById(R.id.rl);
-        //初始化头部信息
-        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.frag_talk_head_vew, null);
-
-
-        listview.addHeaderView(headView);
-
-        ivPhoto= (ImageView) headView.findViewById(R.id.iv_photo);
-        tvName= (TextView) headView.findViewById(R.id.tv_name);
-        tvName.setText(object.get("name").toString());
-        tabMenzhenchufang= (LinearLayout) headView.findViewById(R.id.tab_menzhenchufang);
-        tabYiliaofeiyong= (LinearLayout) headView.findViewById(R.id.tab_yiliaofeiyong);
-        llBgcx= (LinearLayout) headView.findViewById(R.id.ll_bgcx);
-
         // 设置下拉刷新时的颜色值,颜色值需要定义在xml中
         swipRefresh.setColorSchemeResources(R.color.switch_thumb_disabled_material_dark,
                 R.color.switch_thumb_normal_material_dark, R.color.switch_thumb_normal_material_light,
@@ -238,8 +237,8 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
 
             @Override
             public void onRefresh() {
-                totalCount=0;
-                startIndex = 0;
+                totalCount = 0;
+                startIndex = 1;
                 lists.clear();
                 initData();
                 swipRefresh.setRefreshing(false);
@@ -250,43 +249,88 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         swipRefresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                if(totalCount!=0&&totalCount%Constants.PAGE_SIZE!=0){
+                if (totalCount != 0 && totalCount % Constants.PAGE_SIZE != 0) {
                     swipRefresh.setLoading(false);
-                    ToastUtil.ToastShow(getActivity(),"没有更多",false);
-                }else{
+                    ToastUtil.ToastShow(getActivity(), "没有更多", false);
+                } else {
                     initData();
                     swipRefresh.setLoading(false);
                 }
             }
         });
 
-        llBgcx.setOnClickListener(this);
-        ivPhoto.setOnClickListener(this);
-        tvName.setOnClickListener(this);
+        //初始化头部信息
+        if(headView==null){
+            holder=new HeadViewHolder();
+            headView = LayoutInflater.from(getActivity()).inflate(R.layout.frag_talk_head_vew, null);
+            holder.ivPhoto = (ImageView) headView.findViewById(R.id.iv_photo);
+            holder.tvName = (TextView) headView.findViewById(R.id.tv_name);
+            holder.tvChangePatient = (TextView) headView.findViewById(R.id.tv_change_patient);
+            holder.tabMenzhenchufang = (LinearLayout) headView.findViewById(R.id.tab_menzhenchufang);
+            holder.tabYiliaofeiyong = (LinearLayout) headView.findViewById(R.id.tab_yiliaofeiyong);
+            holder.llBgcx = (LinearLayout) headView.findViewById(R.id.ll_bgcx);
+            holder.llYyjlu = (LinearLayout) headView.findViewById(R.id.ll_yyjl);
+            headView.setTag(holder);
+        }else{
+            holder= (HeadViewHolder) headView.getTag();
+        }
+        if(listview.getHeaderViewsCount()>0){
+
+        }else{
+            listview.addHeaderView(headView);
+        }
+        holder.llBgcx.setOnClickListener(this);
+        holder.ivPhoto.setOnClickListener(this);
+        holder.tvName.setOnClickListener(this);
+        holder.tvChangePatient.setOnClickListener(this);
+        holder.llYyjlu.setOnClickListener(this);
+    }
+
+    /**
+    * Describe:     listview的headview holder
+    * User:         LF
+    * Date:         2016/4/6 15:38
+    */
+    class HeadViewHolder {
+        ImageView ivPhoto;
+        TextView tvName, tvChangePatient;
+        LinearLayout tabMenzhenchufang;
+        LinearLayout tabYiliaofeiyong;
+        LinearLayout llBgcx,llYyjlu;
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent=null;
+        Intent intent = null;
         switch (v.getId()) {
-            case R.id.ll_bgcx:
+            case R.id.ll_yyjl://预约记录
+                intent = new Intent(getActivity(), RegisteredHistory.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_bgcx://报告查询
                 intent = new Intent(getActivity(), ReportQuery.class);
                 startActivity(intent);
                 break;
-            case R.id.tv_name://
+            case R.id.tv_name://就诊人信息
                 intent = new Intent(getActivity(), PatientInfo.class);
-                transMap=new SerializableMap();
-                transMap.setMap(object);
-                intent.putExtra("patientData",transMap);
+                transMap = new SerializableMap();
+                transMap.setMap(patientObj);
+                intent.putExtra("patientData", transMap);
                 startActivity(intent);
                 break;
-            case R.id.iv_photo:
+            case R.id.iv_photo://就诊人信息
                 intent = new Intent(getActivity(), PatientInfo.class);
-                transMap=new SerializableMap();
-                transMap.setMap(object);
-                intent.putExtra("patientData",transMap);
+                transMap = new SerializableMap();
+                transMap.setMap(patientObj);
+                intent.putExtra("patientData", transMap);
                 startActivity(intent);
                 break;
+            case R.id.tv_change_patient://切换就诊者
+                intent = new Intent(getActivity(), MyUserActivity.class);
+                intent.putExtra("type", 1);
+                startActivity(intent);
+                break;
+
         }
     }
 
@@ -333,7 +377,7 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
             holder.tv_title.setText(lists.get(position).get("diag").toString());
             String content = lists.get(position).get("hospitalName").toString() + "  " + lists.get(position).get("departmentName").toString();
             holder.tv_content.setText(content);
-            holder.tv_date.setText(DateUtil.formatedDateTime("yyyy-MM-dd",Long.parseLong(lists.get(position).get("diagDate").toString())));
+            holder.tv_date.setText(DateUtil.formatedDateTime("yyyy-MM-dd", Long.parseLong(lists.get(position).get("diagDate").toString())));
             //检查单
             if ((int) lists.get(position).get("ckReportCount") == 0) {
                 holder.tv_jcd.setVisibility(View.GONE);
@@ -383,14 +427,14 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initView() {
-        tabMenzhenchufang.setOnClickListener(new View.OnClickListener() {
+        holder.tabMenzhenchufang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 intent = new Intent(getActivity(), OutpatientPrescriptionsActivity.class);
                 startActivity(intent);
             }
         });
-        tabYiliaofeiyong.setOnClickListener(new View.OnClickListener() {
+        holder.tabYiliaofeiyong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 intent = new Intent(getActivity(), MedicalExpensesActivity.class);

@@ -91,7 +91,7 @@ public class ChangePasswordActivity extends BaseActivity {
         String token=o.getPres("token");
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-             Constants.SERVER_ADDRESS_BACKUP+"userinfo/editpwd?oldPwd="+s1+"&newPwd="+s2+"&dupNewPwd="+s3+"&token="+token,
+             Constants.SERVER_ADDRESS+"userinfo/editpwd?oldPwd="+s1+"&newPwd="+s2+"&dupNewPwd="+s3+"&token="+token,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

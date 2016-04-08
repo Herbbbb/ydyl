@@ -125,7 +125,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         pb.show();
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP+ "login?username="+account+"&password="+pwd,
+                Constants.SERVER_ADDRESS+ "login?username="+account+"&password="+pwd,
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

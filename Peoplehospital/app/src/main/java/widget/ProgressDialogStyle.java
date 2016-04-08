@@ -35,8 +35,6 @@ public class ProgressDialogStyle extends Dialog{
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View v = inflater.inflate(R.layout.loading_page, null);// 得到加载view
 		LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_view);// 加载布局
-		GifView myproBar = (GifView) v.findViewById(R.id.gif);
-		myproBar.setMovieResource(R.raw.progress_loading);
 		TextView tipTextView = (TextView) v.findViewById(R.id.tipTextView);// 提示文字
 		if(!TextUtils.isEmpty(msg)){
 			tipTextView.setText(msg);// 设置加载信息
