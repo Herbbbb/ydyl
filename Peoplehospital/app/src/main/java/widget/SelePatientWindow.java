@@ -2,6 +2,7 @@ package widget;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import myinterface.IMyItemClick;
+import util.Constants;
 import util.ConvertDpAndPx;
 
 /**

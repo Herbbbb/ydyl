@@ -32,6 +32,7 @@ import com.zkrkj.peoplehospital.record.OutpatientPrescriptionsActivity;
 import com.zkrkj.peoplehospital.record.PatientInfo;
 import com.zkrkj.peoplehospital.record.ReportQuery;
 import com.zkrkj.peoplehospital.record.SeeDocDetail;
+import com.zkrkj.peoplehospital.registered.RegisteredHistory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -268,6 +269,7 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
             holder.tabMenzhenchufang = (LinearLayout) headView.findViewById(R.id.tab_menzhenchufang);
             holder.tabYiliaofeiyong = (LinearLayout) headView.findViewById(R.id.tab_yiliaofeiyong);
             holder.llBgcx = (LinearLayout) headView.findViewById(R.id.ll_bgcx);
+            holder.llYyjlu = (LinearLayout) headView.findViewById(R.id.ll_yyjl);
             headView.setTag(holder);
         }else{
             holder= (HeadViewHolder) headView.getTag();
@@ -281,6 +283,7 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         holder.ivPhoto.setOnClickListener(this);
         holder.tvName.setOnClickListener(this);
         holder.tvChangePatient.setOnClickListener(this);
+        holder.llYyjlu.setOnClickListener(this);
     }
 
     /**
@@ -293,14 +296,18 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
         TextView tvName, tvChangePatient;
         LinearLayout tabMenzhenchufang;
         LinearLayout tabYiliaofeiyong;
-        LinearLayout llBgcx;
+        LinearLayout llBgcx,llYyjlu;
     }
 
     @Override
     public void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
-            case R.id.ll_bgcx:
+            case R.id.ll_yyjl://预约记录
+                intent = new Intent(getActivity(), RegisteredHistory.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_bgcx://报告查询
                 intent = new Intent(getActivity(), ReportQuery.class);
                 startActivity(intent);
                 break;
@@ -323,6 +330,7 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
                 intent.putExtra("type", 1);
                 startActivity(intent);
                 break;
+
         }
     }
 

@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import myinterface.IMyItemClick;
 import util.Constants;
 import util.JsonUtils;
+import util.SerializableMap;
 import util.TitleBarUtils;
 import util.ToastUtil;
 import widget.ProgressDialogStyle;
@@ -76,8 +77,10 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
 
     Map<String, Object> patientObj = null;
     Map<String, Object> object = null;
+    Map<String, Object> submitObject = null;
     private List<Map<String, Object>> mLists;//所有就诊人列表
     SelePatientWindow popupwindow;
+    SerializableMap transMap=new SerializableMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,16 +202,62 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_submit://下一步：预约
-                Intent intent = new Intent(this, RegisteredSuccess.class);
-                startActivity(intent);
+            case R.id.btn_submit://下一步：提交预约信息
+                registeredSubmit();
                 break;
             case R.id.ll_change_patient://切换就诊人
                 getAllPatient();
                 break;
         }
     }
-
+    /**
+    * Describe:     提交预约信息
+    * User:         LF
+    * Date:         2016/4/8 10:19
+    */
+    private void registeredSubmit() {
+        pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+        pb.show();
+        queue = Volley.newRequestQueue(this);
+        String url = Constants.SERVER_ADDRESS + "appoinment/add?patientId=28&arrayJobId=1&token=" + share.getPres("token");
+        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadRegisteredData(response);
+                pb.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ToastUtil.ToastShow(RegisteredDetail.this, Constants.VOLLEY_ERROR, true);
+                pb.dismiss();
+            }
+        });
+        queue.add(request);
+    }
+    /**
+    * Describe:     格式化预约返回的信息
+    * User:         LF
+    * Date:         2016/4/8 10:32
+    */
+    private void loadRegisteredData(String json){
+        try {
+            submitObject = JsonUtils.getMapObj(json);
+            if (submitObject.get("success").toString().equals("0")) {
+                ToastUtil.ToastShow(this, submitObject.get("msg").toString(), true);
+            } else if (submitObject.get("success").toString().equals("1")) {
+                transMap.setMap(submitObject);
+                Intent intent = new Intent(this, RegisteredSuccess.class);
+                intent.putExtra("order",transMap);
+                startActivity(intent);
+            } else {
+                ToastUtil.ToastShow(this, "登录过期", true);
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        } catch (Exception e) {}
+    }
     /**
      * Describe:     获取所有就诊人信息
      * User:         LF
@@ -218,7 +267,7 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
         pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
         pb.show();
         queue = Volley.newRequestQueue(this);
-        String url = Constants.SERVER_ADDRESS + "patients?token=" + share.getPres("token");
+        String url = Constants.SERVER_ADDRESS + "patients?token=" + share.getPres("token")+"&limit=30&offset=1";
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

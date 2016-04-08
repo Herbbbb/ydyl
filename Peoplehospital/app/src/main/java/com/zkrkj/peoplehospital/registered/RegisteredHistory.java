@@ -89,8 +89,10 @@ public class RegisteredHistory extends BaseActivity {
      */
     private void initData() {
         startIndex = totalCount  + 1;
-        pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
-        pb.show();
+        if(pb==null){
+            pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+            pb.show();
+        }
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Constants.SERVER_ADDRESS + "appoinment/list?token=" + share.getPres("token")+ "&limit=" + Constants.PAGE_SIZE + "&offset=" + startIndex;
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
@@ -342,6 +344,7 @@ public class RegisteredHistory extends BaseActivity {
                         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
+                                backupNum(lists.get(getPosition()).get("id").toString(),lists.get(getPosition()).get("state").toString());
                             }
                         });
                         builder.setNegativeButton("取消",
@@ -357,18 +360,67 @@ public class RegisteredHistory extends BaseActivity {
             }
         }
     }
-
+    /**
+    * Describe:     退号
+    * User:         LF
+    * Date:         2016/4/8 15:15
+    */
+    private void backupNum(String id,String state){
+        if(pb==null){
+            pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+        }
+        pb.show();
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Constants.SERVER_ADDRESS + "appoinment/back?id=" + id+ "&state=" + state + "&token=" + share.getPres("token");
+        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadBackupData(response);
+                pb.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ToastUtil.ToastShow(RegisteredHistory.this, "网络错误", true);
+                pb.dismiss();
+            }
+        });
+        queue.add(request);
+    }
+    /**
+    * Describe:     获取退号数据
+    * User:         LF
+    * Date:         2016/4/8 15:34
+    */
+    private void loadBackupData(String json){
+        try {
+            object = JsonUtils.getMapObj(json);
+            if (object.get("success").toString().equals("0")) {
+                ToastUtil.ToastShow(this, object.get("msg").toString(), true);
+            } else if (object.get("success").toString().equals("1")) {
+                totalCount = 0;
+                startIndex = 1;
+                lists.clear();
+                init();
+                ToastUtil.ToastShow(this, "已退号", true);
+            } else {
+                ToastUtil.ToastShow(this, "登录过期", true);
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        } catch (Exception e) {
+        }
+    }
 
     @Override
     public int getLayoutId() {
         return 0;
     }
-
     @Override
     public void initView() {
 
     }
-
     @Override
     public void initAction() {
 

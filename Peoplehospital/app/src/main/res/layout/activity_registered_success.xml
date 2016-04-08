@@ -33,6 +33,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"/>
                 <TextView
+                    android:id="@+id/register_pwd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="98087756"
@@ -140,15 +141,15 @@
                     android:layout_marginBottom="5dp"
                     android:text="王明明  女  23岁"/>
                 <TextView
-                    android:id="@+id/tv_deal_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="交易成功"/>
+                android:id="@+id/tv_deal_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="交易成功"/>
             </RelativeLayout>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -157,22 +158,20 @@
 
                 <Button
                     android:id="@+id/btn_deal_detail"
-                    android:layout_width="0dp"
+                    android:layout_width="150dp"
                     android:layout_height="35dp"
-                    android:layout_weight="1"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/deal_detail_btn_style"
                     android:text="订单详情"/>
 
                 <Button
                     android:id="@+id/btn_back_num"
-                    android:layout_width="0dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_width="150dp"
                     android:background="@drawable/back_num_btn_style"
                     android:layout_height="35dp"
-                    android:layout_weight="1"
+                    android:layout_alignParentRight="true"
                     android:text="退号"/>
-            </LinearLayout>
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"

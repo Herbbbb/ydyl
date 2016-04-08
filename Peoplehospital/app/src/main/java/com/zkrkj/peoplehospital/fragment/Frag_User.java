@@ -29,6 +29,7 @@ import com.zkrkj.peoplehospital.User.MyUserActivity;
 import com.zkrkj.peoplehospital.User.PersonalDetail;
 import com.zkrkj.peoplehospital.User.UnreadMessagesActivity;
 import com.zkrkj.peoplehospital.activity.MainActivity;
+import com.zkrkj.peoplehospital.registered.RegisteredHistory;
 
 import java.util.List;
 import java.util.Map;
@@ -326,7 +327,8 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 // Toast.makeText(getActivity(),"点击了健康档案",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.yuyue:
-                Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getActivity(), RegisteredHistory.class);
+                startActivity(intent);
                 break;
             case R.id.setaccount:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();

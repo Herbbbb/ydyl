@@ -80,6 +80,7 @@
                     android:text="2015-09-22 周二 上午"
                     android:textSize="16sp"
                     android:layout_marginLeft="10dp"
+                    android:textColor="#0000ff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -99,6 +100,7 @@
                 <TextView
                     android:id="@+id/tv_outpatient_type"
                     android:text="主任医师 张云志"
+                    android:textColor="#0000ff"
                     android:textSize="16sp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
