@@ -1,4 +1,5 @@
 package com.zkrkj.peoplehospital.activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -22,6 +23,7 @@ import com.zkrkj.peoplehospital.fragment.Frag_Talk;
 import com.zkrkj.peoplehospital.fragment.Frag_User;
 
 import base.BaseActivity;
+import base.PushSmsService;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -70,12 +72,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         l3.setOnClickListener(this);
         l4.setOnClickListener(this);
         l5.setOnClickListener(this);
-
+        select(0);
       if (getIntent().getIntExtra("postion",0)!=0){
           select(getIntent().getIntExtra("postion",0));
-      }else {
-          select(0);
+      }else if(getIntent().getIntExtra("postion",1)==0){
+              select(0);
+          open();
       }
+
 
 
 
@@ -227,6 +231,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         // 提交事务
         transaction.commit();
     }
+    public void open() {
+
+        Intent intent = new Intent(this, PushSmsService.class);
+
+        // 启动服务
+
+        startService(intent);
+
+    }
+
+
+
     private void changeStatus(int position) {
 
         // 重置所有图片

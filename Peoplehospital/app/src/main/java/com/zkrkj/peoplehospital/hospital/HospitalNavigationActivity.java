@@ -1,16 +1,28 @@
 package com.zkrkj.peoplehospital.hospital;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
+
+import java.util.List;
+import java.util.Map;
 
 import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import util.Constants;
+import util.IStringRequest;
+import util.JsonUtils;
 import util.TitleBarUtils;
 
 /**
@@ -34,6 +46,9 @@ public class HospitalNavigationActivity extends BaseActivity {
     TextView textView40;
     @Bind(R.id.button2)
     Button button2;
+    String hosId, hosname;
+    @Bind(R.id.texx)
+    TextView texx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +65,11 @@ public class HospitalNavigationActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        hosname = getIntent().getStringExtra("hosname");
+        texx.setText(hosname);
+        hosId = getIntent().getStringExtra("hosId");
         initTitle();
+        network();
     }
 
     @Override
@@ -68,5 +87,41 @@ public class HospitalNavigationActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    public void network() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        IStringRequest requset = new IStringRequest(Request.Method.GET,
+                Constants.SERVER_ADDRESS_BACKUP + "hospital/" + hosId,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Map<String, Object> object = null;
+                        Map<String, Object> data = null;
+                        List<Map<String, Object>> hospitalSimples = null;
+                        try {
+                            object = JsonUtils.getMapObj(response);
+                            data = JsonUtils.getMapObj(object.get("data").toString());
+
+                            String hosAddr = data.get("hosAddr").toString() + "ceshi";
+                            String hosTel = data.get("hosTel").toString() + "ceshi";
+                            textView39.setText("地址：" + hosAddr);
+                            textView40.setText(hosTel);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("aaa", error.toString());
+
+                    }
+                }
+        );
+        queue.add(requset);
     }
 }

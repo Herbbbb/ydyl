@@ -1,24 +1,17 @@
 package com.zkrkj.peoplehospital.fragment;
-
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.activity.DrugPriceActivity;
 import com.zkrkj.peoplehospital.activity.FindDocActivity;
@@ -51,9 +44,11 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
     LinearLayout tabHos;
     LinearLayout tabDoc;
     LinearLayout ll_yygh;
+    TextView text1;
 
     private OptsharepreInterface share;
     private Dialog pb;
+    private MyReceiver dataReceiver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,10 +61,21 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
             initView();
             initTitle();
         }
+        dataReceiver = new MyReceiver();//动态注册广播
+        IntentFilter filter = new IntentFilter();// 创建IntentFilter对象
+        filter.addAction("android.intent.action.test");
+        getActivity().registerReceiver(dataReceiver, filter);// 注册Broadcast Receiver
+        super.onStart();
         return view;
     }
 
+
+
+
     private void initWidget() {
+        text1= (TextView) view.findViewById(R.id.msg);
+        TextPaint tp = text1.getPaint();
+        tp.setFakeBoldText(true);
         tabHos= (LinearLayout) view.findViewById(R.id.tab_hos);
         tabDoc= (LinearLayout) view.findViewById(R.id.tab_doc);
         finddoc=(LinearLayout) view.findViewById(R.id.finddoc);
@@ -85,11 +91,16 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
         titleBarUtils.setRightImageOne(R.mipmap.email);
 
         titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(), LoginActivity.class);
                 getActivity().startActivity(intent);
+            }
+        });
+        titleBarUtils.setRightButtonOneClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                text1.setText("等待新消息");
             }
         });
     }
@@ -181,4 +192,44 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
             }
         }
     }
+
+
+
+    public class MyReceiver extends BroadcastReceiver {
+
+        //自定义一个广播接收器
+
+        @Override
+
+        public void onReceive(Context context, Intent intent) {
+
+            // TODO Auto-generated method stub
+
+            System.out.println("OnReceiver");
+
+            Bundle bundle=intent.getExtras();
+
+            int a=bundle.getInt("i");
+            String mag=bundle.getString("msg");
+            text1.setText("    "+mag);
+            o=new OptsharepreInterface(getActivity());
+            o.putPres("unmsg",a+"");
+         
+
+            //处理接收到的内容
+
+
+
+        }
+
+        public MyReceiver(){
+
+            System.out.println("MyReceiver");
+
+            //构造函数，做一些初始化工作，本例中无任何作用
+
+        }
+
+    }
+
 }

@@ -53,15 +53,7 @@
             android:text="类型▼"
             />
     </LinearLayout>
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView1"
-        android:layout_gravity="center_horizontal"
 
-                >
-
-    </ListView>
 
     <ListView
         android:layout_width="match_parent"

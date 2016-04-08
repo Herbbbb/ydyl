@@ -23,7 +23,7 @@
         android:textColor="#000000"
         android:text="北京大学第三医院"
 
-        />
+        android:id="@+id/texx" />
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
@@ -83,6 +83,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="010-010"
+            android:autoLink="email|phone|web"
             android:layout_marginLeft="10dp"
             android:textSize="15sp"
             android:textColor="#666666"

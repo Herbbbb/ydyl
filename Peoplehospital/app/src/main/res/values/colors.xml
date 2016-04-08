@@ -13,6 +13,37 @@
     <color name="bg_title">#2ec075</color>
     <!--通用layout隔断浅灰背景色-->
     <color name="bg_layout_line">#f2f2f2</color>
+    <color name="back">#333333</color>
+
+    <color name="layout_info">#402b22</color>
+
+    <color name="layout_left_menu">#39251d</color>
+
+    <color name="white">#ffffff</color>
+
+    <color name="search_edit">#4d2914</color>
+
+    <color name="lv_search_result_bg">#f2f2f2</color>
+
+    <color name="divider">#999999</color>
+
+
+
+    <color name="gray2">#999999</color>
+
+    <color name="gray3">#CCCCCC</color>
+
+    <color name="gray4">#EEEEEE</color>
+
+    <color name="gray5">#a5a5a5</color>
+
+    <color name="gray6">#878787</color>
+
+    <color name="actionsheet_gray">#8F8F8F</color>
+
+    <color name="actionsheet_blue">#037BFF</color>
+
+    <color name="actionsheet_red">#FD4A2E</color>
 
 
     <!--视频详情页顶部Bar颜色-->
@@ -64,7 +95,7 @@
     <color name="login_error_dialog_down">#36353d</color>
     <color name="home_page_bg">#64706c</color>
 
-    <color name="white">#FFFFFF</color>
+
     <!-- 白色 -->
     <color name="ivory">#FFFFF0</color>
     <!-- 象牙色 -->

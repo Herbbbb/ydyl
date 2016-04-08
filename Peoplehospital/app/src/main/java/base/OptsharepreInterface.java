@@ -15,6 +15,7 @@ public class OptsharepreInterface {
     private SharedPreferences settings; // static
 
     public OptsharepreInterface(Context context) {
+
         // 载入配置文件
         settings = context.getSharedPreferences(Constants.SHARE_FILES,
                 Context.MODE_PRIVATE);
@@ -81,7 +82,7 @@ public class OptsharepreInterface {
 		}else if (optName.equals("phonenumber")) {// 手机号
 			values = settings.getString("phonenumber", "0");
 		}else if (optName.equals("unmsg")) {// 手机号
-			values = settings.getString("", "0");
+			values = settings.getString("unmsg", "0");
 		}else if (optName.equals("loginFlag")) {// 手机号
 			values = settings.getString("loginFlag", "false");
 		}

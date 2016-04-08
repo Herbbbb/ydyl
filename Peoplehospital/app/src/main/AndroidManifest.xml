@@ -3,6 +3,7 @@
     package="com.zkrkj.peoplehospital">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -157,28 +158,26 @@
             android:name=".User.AddUserActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".User.EditUserActivity"
+        <activity
+            android:name=".User.EditUserActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".xzqh.ProcinceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.TimeSecActivity"
+        <activity
+            android:name=".activity.TimeSecActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            />
-
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".registered.RegisteredSuccess"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity android:name=".record.PatientInfo"></activity>
->>>>>>> 4a5d59d7513f2af89edd44f09a8d76eae34dbad5
+        <activity android:name=".hospital.DepartmentInformationActivity"></activity>
+        <activity android:name=".Search.TFSearchActivity"/>
+        <service android:name="base.PushSmsService"/>
     </application>
 
 </manifest>

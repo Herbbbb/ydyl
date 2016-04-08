@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import base.BaseActivity;
+import base.OptsharepreInterface;
 import bean.MessageBean;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,8 +34,13 @@ public class UnreadMessagesActivity extends BaseActivity {
         setContentView(R.layout.activity_unread_messages);
         ButterKnife.bind(this);
         initTitle();
+        o=new OptsharepreInterface(this);
+        o.putPres("unmsg",0+"");
+
         super.onCreate(savedInstanceState);
     }
+
+
 
     @Override
     public int getLayoutId() {
@@ -80,4 +86,5 @@ public class UnreadMessagesActivity extends BaseActivity {
             }
         });
     }
+
 }

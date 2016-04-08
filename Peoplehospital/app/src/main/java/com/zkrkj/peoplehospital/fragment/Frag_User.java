@@ -274,7 +274,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                         @Override
                         public void onResponse(String response) {
                             Log.i("aaa", response);
-                            insertdb(response);
+                           // insertdb(response);
 
 
                         }
@@ -288,7 +288,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                     }
             );
 
-            queue.add(requset1);
+            //queue.add(requset1);
             first=false;
         }
     }

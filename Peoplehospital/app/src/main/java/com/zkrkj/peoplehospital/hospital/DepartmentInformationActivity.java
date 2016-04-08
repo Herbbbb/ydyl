@@ -1,26 +1,21 @@
 package com.zkrkj.peoplehospital.hospital;
-//特色科室Activity
-//miao
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
-import com.zkrkj.peoplehospital.hospital.adapter.SpecialAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,21 +24,26 @@ import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
 
-public class SpecialDepartmentActivity extends BaseActivity {
-    List<Map<String, Object>> departments = new ArrayList<>();
+public class DepartmentInformationActivity extends BaseActivity {
 
     @Bind(R.id.titleBar)
     TitleBarUtils titleBar;
-    @Bind(R.id.hosname)
+
     TextView hosname;
-    @Bind(R.id.listView5)
-    ListView listView5;
-    String hosId, hosname1;
+
+    TextView keshi;
+
+    TextView keshixiangxi;
+
+
+    @Bind(R.id.listView9)
+    ListView listView9;
+    private String hosname1="",hosId="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setContentView(R.layout.activity_special_department);
+        setContentView(R.layout.activity_department_information);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
     }
@@ -56,31 +56,39 @@ public class SpecialDepartmentActivity extends BaseActivity {
     @Override
     public void initView() {
         hosname1 = getIntent().getStringExtra("hosname");
-        hosname.setText(hosname1);
+        String keshi1=getIntent().getStringExtra("keshi");
         hosId = getIntent().getStringExtra("hosId");
-        initTitle();
-        network();
-        listView5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(getBaseContext(),DepartmentInformationActivity.class);
+          initTitle();
+        View v= LayoutInflater.from(this).inflate(R.layout.it_keshixinxi,null);
+        hosname= (TextView) v.findViewById(R.id.hosname);
+        keshi= (TextView) v.findViewById(R.id.keshi);
+        keshixiangxi= (TextView) v.findViewById(R.id.keshixiangxi);
+        hosname.setText(hosname1);
+        keshi.setText(keshi1);
+        listView9.addHeaderView(v);
+        List<String> l=new ArrayList<>();
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        l.add("2");
+        listView9.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_expandable_list_item_1,l));
 
-                intent.putExtra("keshi",departments.get(i).get("deptName").toString());
-                intent.putExtra("hosId",hosId);
-                intent.putExtra("hosname",hosname1);
-                startActivity(intent);
-            }
-        });
+
     }
 
     @Override
     public void initAction() {
 
     }
-
     private void initTitle() {
         TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("特色科室");
+        titleBarUtils.setTitle("科室信息");
         titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
 
             @Override
@@ -88,12 +96,6 @@ public class SpecialDepartmentActivity extends BaseActivity {
                 finish();
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
     public void network() {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -108,10 +110,7 @@ public class SpecialDepartmentActivity extends BaseActivity {
                         try {
                             object = JsonUtils.getMapObj(response);
                             data = JsonUtils.getMapObj(object.get("data").toString());
-                            departments=JsonUtils.getListMap(data.get("departments").toString());
 
-                            Log.i("spec",departments.size()+"");
-                            listView5.setAdapter(new SpecialAdapter(getBaseContext(),departments));
 
 
                         } catch (Exception e) {

@@ -32,6 +32,7 @@ public class MyApplication extends Application {
     //判断是否已登陆
     public static boolean loginFlag;
     public static String phone ;
+    public static String token ;
     private static Stack<Activity> activityStack;
     private static MyApplication singleton;
     private OptsharepreInterface o;

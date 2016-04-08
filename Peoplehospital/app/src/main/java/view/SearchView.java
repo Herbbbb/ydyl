@@ -1,5 +1,6 @@
 package view;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.Search.TFSearchActivity;
 
 import util.ToastUtil;
 
@@ -196,7 +198,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 //                lvTips.setVisibility(VISIBLE);
 //                break;
             case R.id.search_in:
-                ToastUtil.ToastShow(getContext(),"搜索",true);
+                //ToastUtil.ToastShow(getContext(),"搜索",true);
+                Intent intent=new Intent(mContext, TFSearchActivity.class);
+                mContext.startActivity(intent);
                 break;
         }
     }

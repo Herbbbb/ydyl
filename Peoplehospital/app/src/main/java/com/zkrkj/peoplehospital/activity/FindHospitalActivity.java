@@ -1,5 +1,5 @@
 package com.zkrkj.peoplehospital.activity;
-
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,9 +9,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -44,8 +42,7 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
     SearchView finddoc;
     @Bind(R.id.listView)
     ListView listView;
-    @Bind(R.id.listView1)
-    ListView listView1;
+
     @Bind(R.id.titleBar)
     TitleBarUtils titleBar;
 
@@ -58,6 +55,8 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
     @Bind(R.id.l1)
     LinearLayout l1;
     private PopupWindow popupWindow;
+    private String hosid;
+    List<Map<String, Object>> list=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +79,21 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
 
 
         hoslist();
+
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
         tv3.setOnClickListener(this);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(getBaseContext(),MainActivity.class);
+                intent.putExtra("postion",1);
+                intent.putExtra("hosOrgName",list.get(i).get("hosOrgName").toString());
+                intent.putExtra("hosOrgCode",list.get(i).get("hosOrgCode").toString());
+                intent.putExtra("hosId",list.get(i).get("hosId").toString());
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -125,6 +136,7 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
                             object = JsonUtils.getMapObj(response);
                             data = JsonUtils.getMapObj(object.get("data").toString());
                             hospitalSimples = JsonUtils.getListMap(data.get("hospitalSimples").toString());
+                            list=hospitalSimples;
                             listView.setAdapter(new FindHosAdapter(hospitalSimples, getBaseContext()
                             ));
                         } catch (Exception e) {
@@ -197,7 +209,8 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                 tv2.setText(l2.get(i).toString());
+                 //tv2.setText(l2.get(i).toString());
+                    popupWindow.dismiss();
                 }
             });
         }else if(x==2){
@@ -205,7 +218,8 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    tv2.setText(l2.get(i).toString());
+                    tv2.setText(l2.get(i).toString()+"▼");
+                    popupWindow.dismiss();
 
                 }
             });
@@ -214,7 +228,8 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    tv3.setText(l3.get(i).toString());
+                    tv3.setText(l3.get(i).toString()+"▼");
+                    popupWindow.dismiss();
                 }
             });
         }

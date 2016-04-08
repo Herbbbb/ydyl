@@ -3,9 +3,11 @@ package com.zkrkj.peoplehospital.fragment;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -13,24 +15,36 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.activity.MainActivity;
+
 import com.zkrkj.peoplehospital.hospital.ExpertIntroductionActivity;
 import com.zkrkj.peoplehospital.hospital.HospitalNavigationActivity;
 import com.zkrkj.peoplehospital.hospital.MedicalNavigationActivity;
 import com.zkrkj.peoplehospital.hospital.PriceSearchActivity;
 import com.zkrkj.peoplehospital.hospital.SpecialDepartmentActivity;
 import com.zkrkj.peoplehospital.hospital.TrackingStationActivity;
-import com.zkrkj.peoplehospital.hospital.adapter.PupAdapter;
+
+import com.zkrkj.peoplehospital.hospital.adapter.PupAdapter1;
 import com.zkrkj.peoplehospital.registered.DepartmentRegistered;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import base.BaseFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import util.Constants;
+import util.IStringRequest;
+import util.JsonUtils;
 import util.TitleBarUtils;
+import util.ToastUtil;
 
 /**
  * Created by miao on 2016/3/16.
@@ -119,12 +133,18 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
     @Bind(R.id.pup)
     RelativeLayout pup;
     private PopupWindow popupWindow;
+    private List<Map<String, Object>> hospitalSimples=new ArrayList<>();
+    private String hosId;
+    private String hosname;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_hospitals, null);
         initTitle();
         ButterKnife.bind(this, view);
+        hosname=getActivity().getIntent().getStringExtra("hosOrgName");
+        hosId=getActivity().getIntent().getStringExtra("hosId");
+        textView11.setText(hosname);
         initView();
         return view;
     }
@@ -144,6 +164,7 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void initView() {
+        hoslist();
         tabJiaohaogenzong.setOnClickListener(this);
         tabTesekeshi.setOnClickListener(this);
         tabZhuanjiajieshao.setOnClickListener(this);
@@ -152,6 +173,7 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
         tabJiagechaxun.setOnClickListener(this);
         tabYuyueguahao.setOnClickListener(this);
         textView15.setOnClickListener(this);
+        hosname=textView11.getText().toString();
     }
 
     @Override
@@ -177,6 +199,9 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.tab_tesekeshi:
                 intent = new Intent(getActivity(), SpecialDepartmentActivity.class);
+                intent.putExtra("hosId",hosId);
+                intent.putExtra("hosname",hosname);
+
                 startActivity(intent);
                 break;
             case R.id.tab_zhuanjiajieshao:
@@ -185,6 +210,8 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.tab_yiyuandaohang:
                 intent = new Intent(getActivity(), HospitalNavigationActivity.class);
+                intent.putExtra("hosId",hosId);
+                intent.putExtra("hosname",hosname);
                 startActivity(intent);
                 break;
             case R.id.tab_jiaohaogenzong:
@@ -196,6 +223,7 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.textView15:
+                ToastUtil.ToastShow(getActivity() ,"切换",false);
                 initPopWindow();
                 showPop(view, 50, 50, 20);
                 break;
@@ -209,6 +237,40 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+    public void hoslist() {
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        IStringRequest requset = new IStringRequest(Request.Method.GET,
+                Constants.SERVER_ADDRESS_BACKUP + "hospital",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("hos",response);
+                        Map<String, Object> object = null;
+                        Map<String, Object> data = null;
+
+                        try {
+                            object = JsonUtils.getMapObj(response);
+                            data = JsonUtils.getMapObj(object.get("data").toString());
+                            hospitalSimples = JsonUtils.getListMap(data.get("hospitalSimples").toString());
+                            //listView.setAdapter(new FindHosAdapter(hospitalSimples, getBaseContext()
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("aaa", error.toString());
+
+                    }
+                }
+        );
+        queue.add(requset);
+    }
 
     private void initPopWindow() {
         View popView = View.inflate(getActivity(), R.layout.pup_listview, null);
@@ -217,14 +279,18 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
         //设置popwindow出现和消失动画
         // popupWindow.setAnimationStyle(R.style.PopMenuAnimation);
         ListView listview = (ListView) popView.findViewById(R.id.listView8);
-        List<String> l = new ArrayList<>();
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        listview.setAdapter(new PupAdapter(getActivity(), l));
+
+        listview.setAdapter(new PupAdapter1(getActivity(), hospitalSimples));
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                hosname=hospitalSimples.get(i).get("hosOrgName").toString();
+                hosId=hospitalSimples.get(i).get("hosId").toString();
+                textView11.setText(hosname);
+                popupWindow.dismiss();
+
+            }
+        });
 
 
     }

@@ -35,10 +35,17 @@
                 android:layout_height="40dp"
                 android:visibility="gone" />
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/shouye_border"
-                android:background="#F2F2F2" />
+                android:layout_height="40dp"
+                android:background="#F2F2F2"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:drawableLeft="@mipmap/dot"
+                android:textColor="@color/black"
+                android:paddingLeft="5dp"
+                android:text="    新消息"
+                android:id="@+id/msg" />
 
             <include layout="@layout/index_home_list4" />
 

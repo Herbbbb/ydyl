@@ -7,6 +7,7 @@
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bigButtonHeight" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -37,6 +38,23 @@
         >
         <LinearLayout
             style="@style/table_col_border"
+
+            >
+            <TextView
+
+                android:layout_margin="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:focusable="true"
+                android:background="#C2E8D4"
+                android:text="周四 9-24"
+                android:textColor="#333333"
+                android:id="@+id/text1" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/table_col_border"
             >
             <TextView
                 android:layout_margin="1dp"
@@ -44,75 +62,90 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:background="#C2E8D4"
+                android:focusable="true"
+
                 android:text="周四 9-24"
-                android:textColor="@color/black"
-                />
-        </LinearLayout>
-        <LinearLayout
-            style="@style/table_col_border"
-            >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textSize="12sp"
-                android:text="周四09-24" >
+                android:textColor="#333333"
+                android:id="@+id/text2">
             </TextView>
         </LinearLayout>
         <LinearLayout
             style="@style/table_col_border"
             >
             <TextView
+                android:layout_margin="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:text="周四09-24" >
+                android:focusable="true"
+
+                android:text="周四 9-24"
+                android:textColor="#333333"
+                android:id="@+id/text3">
             </TextView>
         </LinearLayout>
         <LinearLayout
             style="@style/table_col_border"
             >
             <TextView
+                android:layout_margin="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:text="周四09-24" >
+                android:focusable="true"
+
+                android:text="周四 9-24"
+                android:textColor="#333333"
+                android:id="@+id/text4">
             </TextView>
         </LinearLayout>
         <LinearLayout
             style="@style/table_col_border"
             >
             <TextView
+                android:layout_margin="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:text="周四09-24" >
+                android:focusable="true"
+
+                android:text="周四 9-24"
+                android:textColor="#333333"
+                android:id="@+id/text5">
             </TextView>
         </LinearLayout>
         <LinearLayout
             style="@style/table_col_border"
             >
             <TextView
+                android:layout_margin="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:text="周四09-24" >
+                android:focusable="true"
+
+                android:text="周四 9-24"
+                android:textColor="#333333"
+                android:id="@+id/text6">
             </TextView>
         </LinearLayout>
         <LinearLayout
             style="@style/table_col_border"
             >
             <TextView
+                android:layout_margin="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:text="周四09-24" >
+                android:focusable="true"
+                android:text="周四 9-24"
+                android:textColor="#333333"
+                android:id="@+id/text7">
             </TextView>
         </LinearLayout>
 
@@ -120,53 +153,17 @@
     </TableRow>
 
 </TableLayout>
-    <Button
-        android:layout_width="60dp"
-        android:layout_height="30dp"
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:text="上午"
-        android:background="#FFCC00"
-        />
-
-            <LinearLayout
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:orientation="horizontal"
-                android:background="#F4FFFE"
-                android:weightSum="3"
-                >
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:maxEms="4"
-                    android:layout_height="match_parent"
-                    android:text="普通门诊预约>"
-                    android:layout_gravity="center"
-
-
-                    />
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:text="1"
-                    />
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:text="1"
-                    />
-
-            </LinearLayout>
-
-
-
-
-
-
-
+        android:divider="@color/white"
+        android:dividerHeight="3dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/listView10"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>
