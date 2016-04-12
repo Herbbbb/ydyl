@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -200,6 +201,8 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             case R.id.search_in:
                 //ToastUtil.ToastShow(getContext(),"搜索",true);
                 Intent intent=new Intent(mContext, TFSearchActivity.class);
+                Log.i("sousuo",etInput.getText().toString());
+                intent.putExtra("con",etInput.getText().toString());
                 mContext.startActivity(intent);
                 break;
         }

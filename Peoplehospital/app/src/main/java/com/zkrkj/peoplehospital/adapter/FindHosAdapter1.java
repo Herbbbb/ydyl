@@ -1,11 +1,13 @@
 package com.zkrkj.peoplehospital.adapter;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
+
 import com.zkrkj.peoplehospital.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +16,23 @@ import java.util.Map;
  * Created by lenovo on 2016/3/22.
  */
 
-public class FindHosAdapter extends BaseAdapter{
+public class FindHosAdapter1 extends BaseAdapter{
     private List<Map<String,Object>> list1=new ArrayList<>();
 
     private Context context;
 
-    public FindHosAdapter(List<Map<String, Object>> list1, Context context) {
+    public FindHosAdapter1(List<Map<String, Object>> list1, Context context) {
         this.list1 = list1;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return list1.size();
+        if (list1.size()>=2){
+            return 2;
+        }else {
+            return list1.size();
+        }
     }
 
     @Override

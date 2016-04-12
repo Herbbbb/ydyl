@@ -25,8 +25,8 @@ public class FindDocAdapter extends BaseAdapter {
     List<String> list=new ArrayList<>();
     private Context context;
 
-    public FindDocAdapter(List<String> list, Context context) {
-        this.list = list;
+    public FindDocAdapter(List<Map<String,Object>> list1, Context context) {
+        this.list1 = list1;
         this.context = context;
     }
 

@@ -9,7 +9,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="距离7.9km"
             android:id="@+id/button"
             android:textColor="#333333"
             android:layout_marginRight="36dp"

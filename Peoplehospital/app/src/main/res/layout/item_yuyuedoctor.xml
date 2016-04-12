@@ -24,6 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/gridView1"
+        android:horizontalSpacing="10dp"
+
         android:background="#F4FFFE"
         android:verticalSpacing="10dp"
         android:cacheColorHint="#00000000"

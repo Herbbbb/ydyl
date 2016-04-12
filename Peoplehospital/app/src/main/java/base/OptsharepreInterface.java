@@ -88,7 +88,7 @@ public class OptsharepreInterface {
 		}else if (optName.equals("loginFlag")) {// 手机号
 			values = settings.getString("loginFlag", "false");
 		}
-		else if (optName.equals("token")) {// 登录成功后返回token值
+		else if (optName.equals("token")) {//登录成功后返回token值
 			values = settings.getString("token", "");
 		}
 			else{
@@ -101,7 +101,7 @@ public class OptsharepreInterface {
 
 
 
-    
+
 
 
     public boolean existResult(String result) {
