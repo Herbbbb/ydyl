@@ -54,7 +54,6 @@ public class OptsharepreInterface {
             editor.putString(optName, values);
         }
 
-
         editor.commit();
     }
 
@@ -80,7 +79,7 @@ public class OptsharepreInterface {
             values = settings.getString("unmsg", "0");
         } else if (optName.equals("loginFlag")) {// 手机号
             values = settings.getString("loginFlag", "false");
-        } else if (optName.equals("token")) {// 登录成功后返回token值
+        } else if (optName.equals("token")) {//登录成功后返回token值
             values = settings.getString("token", "");
         } else {
             values = settings.getString(optName, "");

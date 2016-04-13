@@ -25,12 +25,11 @@ import com.zkrkj.peoplehospital.registered.RegisteredMain;
 import base.BaseFragment;
 import base.OptsharepreInterface;
 import bean.DataAddDataBase;
-import butterknife.Bind;
+
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import util.Constants;
-import util.IStringRequest;
-import util.LogUtil;
+
 import util.TitleBarUtils;
 import util.ToastUtil;
 import widget.ProgressDialogStyle;
@@ -56,7 +55,7 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_home, null);
         share=new OptsharepreInterface(getActivity());
-        Log.e(Constants.TAG,"行政区划状态："+share.getPres("isFirstSavaXzqh"));
+        Log.e(Constants.TAG,"行政区划状态："+share.getPres("isFirst SavaXzqh"));
         if(share.getPres("isFirstSavaXzqh").equals("0")){
             new MyTask().execute();//加载行政区划数据
         }else{

@@ -8,7 +8,9 @@ import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.adapter.FindDocAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import base.BaseActivity;
 import butterknife.Bind;
@@ -48,8 +50,7 @@ public class FindDocActivity extends BaseActivity {
     public void initView() {
         initTitle();
         finddoc.setHint(this,"医生");
-        List<String> list = new ArrayList<>();
-        list.add("hahaha");
+       List<Map<String,Object>> list=new ArrayList<>();        list.add(1,new HashMap<String, Object>());
         FindDocAdapter adapter = new FindDocAdapter(list, this);
         listView.setAdapter(adapter);
 

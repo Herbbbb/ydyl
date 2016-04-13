@@ -195,7 +195,7 @@ public class SearchAutoAdapter extends BaseAdapter {
 			int i;
 			for (i = 0; i < history.size(); i++) {
 				if (data.equals(history.get(i))) {
-					Log.i("data.equals(history.get(i))", "ok");
+					Log.i("data.equals(history.get(i))"+"", "ok");
 					history.remove(i);
 					break;
 				}
