@@ -65,7 +65,6 @@ public class ProcinceActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_province);
-
 		init();
 	}
 

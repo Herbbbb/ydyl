@@ -173,6 +173,7 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
     private void initData() {
         startIndex = totalCount + 1;
         Log.e(Constants.TAG, share.getPres("token"));
+        Log.e(Constants.TAG, share.getPres("id") );
         String url = Constants.SERVER_ADDRESS + "medicalRecords/patient-" + share.getPres("id") + "?limit=" + Constants.PAGE_SIZE + "&offset=" + startIndex + "&token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override

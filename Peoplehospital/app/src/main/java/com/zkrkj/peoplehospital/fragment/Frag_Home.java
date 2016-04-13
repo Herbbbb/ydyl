@@ -237,4 +237,9 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(dataReceiver);
+    }
 }
