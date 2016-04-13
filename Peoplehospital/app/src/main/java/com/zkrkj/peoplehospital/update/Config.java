@@ -6,16 +6,28 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
+/**
+* Describe:     版本更新参数
+* User:         LF
+* Date:         2016/4/12 11:10
+*/
 public class Config {
+
+	public static final  String UPDATE_SERVER = "http://192.168.1.252:9401/";//服务器下载地址
+	public static final  String SERVER_APP_NAME = "peohosp.apk";//服务器下载的app名称
+	public static final  String LOCAl_PACKAGE_NAME = "com.zkrkj.peoplehospital";//包名
+	//sd/PeoHosp/njztc_normal.apk
+	public static final  String SD_FILE_NAME = "PeoHosp";//sd卡下载的文件夹名称
+	public static final  String APP_NAME = "百姓医院";//服务器下载的app名称
 	/**
-	 * AndroidManifest.xml
+	 * 获取版本号（PS：1）
 	 * @param context
 	 * @return
 	 */
-	public static int getVerCode(Context context, String PACKAGE_NAME) {
+	public static int getVerCode(Context context) {
 		int verCode = -1;
 		try {
-			verCode = context.getPackageManager().getPackageInfo(PACKAGE_NAME,
+			verCode = context.getPackageManager().getPackageInfo(LOCAl_PACKAGE_NAME,
 					0).versionCode;
 		} catch (NameNotFoundException e) {
 		}
@@ -23,26 +35,20 @@ public class Config {
 	}
 
 	/**
-	 * AndroidManifest.xml
+	 * 获取版本名称（PS：1.0.2）
 	 * @param context
 	 * @return
 	 */
-	public static String getVerName(Context context,String PACKAGE_NAME) {
+	public static String getVerName(Context context) {
 		String verName = "";
 		try {
-			verName = context.getPackageManager().getPackageInfo(PACKAGE_NAME,
+			verName = context.getPackageManager().getPackageInfo(LOCAl_PACKAGE_NAME,
 					0).versionName;
 		} catch (NameNotFoundException e) {
 		}
 		return verName;
 
 	}
-	
-	
-	/**
-	 * ver.json
-	 * [{"verCode":"2","verName":"ver2"}]
-	 */
 
 	/**
 	 * strings.xml

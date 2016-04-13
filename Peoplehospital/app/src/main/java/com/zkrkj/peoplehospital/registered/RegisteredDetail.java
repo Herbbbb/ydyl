@@ -30,6 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import myinterface.IMyItemClick;
 import util.Constants;
+import util.DateUtil;
 import util.JsonUtils;
 import util.SerializableMap;
 import util.TitleBarUtils;
@@ -80,7 +81,8 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
     Map<String, Object> submitObject = null;
     private List<Map<String, Object>> mLists;//所有就诊人列表
     SelePatientWindow popupwindow;
-    SerializableMap transMap=new SerializableMap();
+    SerializableMap transMap=new SerializableMap();//提交预约前封装map
+    SerializableMap arrayJobMap=new SerializableMap();//获取提交过来的号源信息
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,14 +90,46 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_registered_detail);
         ButterKnife.bind(this);
         share = new OptsharepreInterface(this);
+        arrayJobMap= (SerializableMap) getIntent().getSerializableExtra("arrayJob");
         init();
     }
-
 
     private void init() {
         initTitle();
         initPatient();
         initListener();
+        initSetData();
+    }
+
+    /**
+    * Describe:     设置号源信息
+    * User:         LF
+    * Date:         2016/4/12 17:19
+    */
+    private void initSetData() {
+        tvHospital.setText(arrayJobMap.getMap().get("hosOrgName").toString());//医院
+        tvDepartment.setText(arrayJobMap.getMap().get("deptName").toString());//科室
+        String date;
+        if(TextUtils.isEmpty(arrayJobMap.getMap().get("arrayjobDate").toString())){//时间
+            date="无";
+        }else{
+            date= DateUtil.formatedDateTime("yyyy年MM月dd日",Long.parseLong(arrayJobMap.getMap().get("arrayjobDate").toString()));
+        }
+        if(!TextUtils.isEmpty(arrayJobMap.getMap().get("regisrationPeriodDn").toString())){//上午下午或晚上
+            date+="     "+arrayJobMap.getMap().get("regisrationPeriodDn").toString();
+        }
+        tvDocDate.setText(date);
+        String mzlx;
+        if(TextUtils.isEmpty(arrayJobMap.getMap().get("clinicName").toString())){
+            mzlx="无";
+        }else{
+            mzlx= arrayJobMap.getMap().get("clinicName").toString();
+        }
+        if(!TextUtils.isEmpty(arrayJobMap.getMap().get("expName").toString())){
+            mzlx+="     "+arrayJobMap.getMap().get("expName").toString();
+        }
+        tvOutpatientType.setText(mzlx);//门诊类型
+        tvPrice.setText(arrayJobMap.getMap().get("reFee").toString());//挂号费
     }
 
     /**
@@ -118,6 +152,7 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError error) {
                 ToastUtil.ToastShow(RegisteredDetail.this, Constants.VOLLEY_ERROR, true);
+                finish();
                 pb.dismiss();
             }
         });
@@ -155,6 +190,11 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
         }
     }
 
+    /**
+    * Describe:     设置就诊人信息
+    * User:         LF
+    * Date:         2016/4/12 17:20
+    */
     private void setPatientData() {
         //名字
         if (TextUtils.isEmpty(patientObj.get("name").toString())) {
@@ -219,7 +259,8 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
         pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
         pb.show();
         queue = Volley.newRequestQueue(this);
-        String url = Constants.SERVER_ADDRESS + "appoinment/add?patientId=28&arrayJobId=1&token=" + share.getPres("token");
+        //就诊人id     号源id        token
+        String url = Constants.SERVER_ADDRESS + "appoinment/add?patientId="+share.getPres("id")+"&arrayJobId="+arrayJobMap.getMap().get("id").toString()+"&token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -230,6 +271,7 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError error) {
                 ToastUtil.ToastShow(RegisteredDetail.this, Constants.VOLLEY_ERROR, true);
+                finish();
                 pb.dismiss();
             }
         });
@@ -309,6 +351,7 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
                         @Override
                         public void myItemOnClick(int position) {
                             patientObj=mLists.get(position);
+                            share.putPres("id",patientObj.get("id").toString());//保存就诊人id
                             setPatientData();
                             popupwindow.dismiss();
                         }

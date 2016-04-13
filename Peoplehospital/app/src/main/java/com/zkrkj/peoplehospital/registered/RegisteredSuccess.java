@@ -53,6 +53,7 @@ public class RegisteredSuccess extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registered_success);
         transMap= (SerializableMap) getIntent().getSerializableExtra("order");
+        share=new OptsharepreInterface(this);
         init();
     }
 

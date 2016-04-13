@@ -10,6 +10,11 @@ import com.zkrkj.peoplehospital.R;
 import base.BaseActivity;
 import util.TitleBarUtils;
 
+/**
+* Describe:     关于我们
+* User:         LF
+* Date:         2016/4/12 11:38
+*/
 public class AboutUs extends BaseActivity {
 
     @Override

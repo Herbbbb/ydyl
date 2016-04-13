@@ -4,12 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.zkrkj.peoplehospital.hospital.PriceSearchActivity">
+    tools:context="com.zkrkj.peoplehospital.hospital.MedicalNaviDetail">
 
     <util.TitleBarUtils
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/bigButtonHeight"/>
+        android:layout_height="@dimen/bigButtonHeight" />
+
+
+    <view.VerticalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,10 +43,32 @@
                     android:background="#F2F2F2" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="10dp"
+                    android:src="@mipmap/main_yiyuan"/>
+                <TextView
+                    android:id="@+id/tv_navi_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="收费处"/>
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/wv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+    </view.VerticalScrollView>
 </LinearLayout>
