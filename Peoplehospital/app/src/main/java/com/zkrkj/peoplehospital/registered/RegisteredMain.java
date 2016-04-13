@@ -21,6 +21,7 @@ import com.zkrkj.peoplehospital.User.MyUserActivity;
 import com.zkrkj.peoplehospital.activity.FindHospitalActivity;
 import com.zkrkj.peoplehospital.activity.TimeSecActivity;
 import com.zkrkj.peoplehospital.login.LoginActivity;
+import com.zkrkj.peoplehospital.xzqh.NewProcinceActivity;
 import com.zkrkj.peoplehospital.xzqh.ProcinceActivity;
 
 import java.util.ArrayList;
@@ -235,8 +236,8 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.min_city://地区选择
-                Intent intent4 = new Intent(this, ProcinceActivity.class);
-                startActivityForResult(intent4, 4);
+                intent = new Intent(this, NewProcinceActivity.class);
+                startActivity(intent);
                 break;
             case R.id.min_date://时间选择
                 Intent intent5 = new Intent(this, TimeSecActivity.class);
