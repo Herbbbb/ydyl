@@ -3,6 +3,7 @@ package com.zkrkj.peoplehospital.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,11 +12,13 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.registered.RegisteredDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import util.SerializableMap;
 import util.ToastUtil;
 
 /**
@@ -84,15 +87,14 @@ public class MyAdapter extends BaseAdapter {
                 holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent=new Intent();
+                        Intent intent=new Intent(context, RegisteredDetail.class);
+                        Map<String,Object> data=list2.get(i);
+                        SerializableMap tmpmap=new SerializableMap();
+                        tmpmap.setMap(data);
 
+                        intent.putExtra("arrayJob",tmpmap);
 
-
-                        intent.putExtra("docId",list2.get(i).get("docId").toString());
-
-
-
-                        ToastUtil.ToastShow(context,"预约跳转界面",false);
+                        context.startActivity(intent);
                     }
                 });
 
@@ -102,11 +104,17 @@ public class MyAdapter extends BaseAdapter {
                 holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent=new Intent();
-                        intent.putExtra("docId",list3.get(i).get("docId").toString());
+                        Intent intent=new Intent(context, RegisteredDetail.class);
+                        Map<String,Object> data=list3.get(i);
+                        SerializableMap tmpmap=new SerializableMap();
+                        tmpmap.setMap(data);
+
+                        intent.putExtra("arrayJob",tmpmap);
+
+                        context.startActivity(intent);
 
 
-                        ToastUtil.ToastShow(context,"预约跳转界面",false);
+                      //  ToastUtil.ToastShow(context,"预约跳转界面",false);
 
 
                     }
@@ -117,17 +125,24 @@ public class MyAdapter extends BaseAdapter {
                 holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent=new Intent();
-                        intent.putExtra("docId",list4.get(i).get("docId").toString());
+                        Intent intent=new Intent(context, RegisteredDetail.class);
+                      //  intent.putExtra("docId",list4.get(i).get("docId").toString());
 
+                        Map<String,Object> data=list4.get(i);
+                        SerializableMap tmpmap=new SerializableMap();
+                        tmpmap.setMap(data);
 
-                        ToastUtil.ToastShow(context,"预约跳转界面",false);
+                        intent.putExtra("arrayJob",tmpmap);
+
+                        context.startActivity(intent);
+                      //  ToastUtil.ToastShow(context,"预约跳转界面",false);
 
 
 
                     }
                 });
                 holder.gridView.setAdapter(new MyAdapter1(context, list4));
+
                 view.setTag(holder);
             }
 
@@ -207,7 +222,6 @@ public class MyAdapter extends BaseAdapter {
                        hold.textView3.setText("约满");
                        viewGroup.setEnabled(false);
                        view.setBackgroundColor(Color.parseColor("#E0E6E5"));
-
                    }
                    break;
                case "3":

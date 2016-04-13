@@ -1,10 +1,12 @@
 package com.zkrkj.peoplehospital.hospital;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +17,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.adapter.FindDocAdapter;
+import com.zkrkj.peoplehospital.adapter.FindDocAdapter1;
+import com.zkrkj.peoplehospital.findDoc.FindDocDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +54,9 @@ public class DepartmentInformationActivity extends BaseActivity {
     ListView listView9;
     private String hosname1 = "", hosId = "", deptCode = "";
     private int totalCount,startIndex;
+    private RequestQueue queue;
+    private String hosOrgCode="";
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +73,12 @@ public class DepartmentInformationActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        queue = Volley.newRequestQueue(this);
         hosname1 = getIntent().getStringExtra("hosname");
         String keshi1 = getIntent().getStringExtra("keshi");
         hosId = getIntent().getStringExtra("hosId");
         deptCode = getIntent().getStringExtra("deptCode");
+        hosOrgCode=getIntent().getStringExtra("hosOrgCode");
         initTitle();
         View v = LayoutInflater.from(this).inflate(R.layout.it_keshixinxi, null);
         hosname = (TextView) v.findViewById(R.id.hosname);
@@ -76,11 +86,22 @@ public class DepartmentInformationActivity extends BaseActivity {
         keshixiangxi = (TextView) v.findViewById(R.id.keshixiangxi);
         hosname.setText(hosname1);
         keshi.setText(keshi1);
+
         listView9.addHeaderView(v);
-        initData();
-        totalCount=l.size();
-        listView9.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, l));
-        network();
+        listView9.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i > 0) {
+                    Intent intent = new Intent(getBaseContext(), FindDocDetail.class);
+                    id = list.get(i - 1).get("id").toString();
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            }
+        });
+
+         //listView9.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, l));
+       network();
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -100,7 +121,7 @@ public class DepartmentInformationActivity extends BaseActivity {
                     refresh.setLoading(false);
                     ToastUtil.ToastShow(getBaseContext(), "没有更多", false);
                 } else {
-                     initData();
+                     //initData();
                     refresh.setLoading(false);
                 }
             }
@@ -110,22 +131,6 @@ public class DepartmentInformationActivity extends BaseActivity {
     }
     private void initData(){
 
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
-        l.add("2");
 
     }
 
@@ -147,19 +152,21 @@ public class DepartmentInformationActivity extends BaseActivity {
     }
 
     public void network() {
-        RequestQueue queue = Volley.newRequestQueue(this);
+        
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP + "department/?hosId=" + hosId + "&deptCode=" + deptCode,
+                Constants.SERVER_ADDRESS_BACKUP + "doctor/recommend?hosOrgCode="+hosOrgCode,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.i("KESHIXINXI",response);
                         Map<String, Object> object = null;
                         Map<String, Object> data = null;
 
                         try {
                             object = JsonUtils.getMapObj(response);
                             data = JsonUtils.getMapObj(object.get("data").toString());
-                            list = JsonUtils.getListMap(data.get("departments").toString());
+                            list = JsonUtils.getListMap(data.get("doctors").toString());
+                            listView9.setAdapter(new FindDocAdapter(list,getBaseContext()));
                             Log.i("tese", list.size() + "");
 
 

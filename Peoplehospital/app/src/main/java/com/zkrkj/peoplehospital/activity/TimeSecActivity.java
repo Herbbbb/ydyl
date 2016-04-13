@@ -237,8 +237,8 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
                 //在这里设置需要post的参数
                 Map<String, String> map = new HashMap<String, String>();
 
-                map.put("hosId","1");
-                map.put("deptCode","");
+               // map.put("hosId","1");
+             //   map.put("deptCode","");
                 switch (postion){
                     case 1:
                         mtime=riqi1(date0);
@@ -271,8 +271,8 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
 
 
                 }
-                map.put("dateStart","");
-                map.put("dateEnd","");
+               map.put("dateStart","2016-01-01");
+               // map.put("dateEnd","");
                 return map;
 
             }

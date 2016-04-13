@@ -59,7 +59,7 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
     LinearLayout l1;
     private PopupWindow popupWindow;
     private List<Map<String, Object>> list1=new ArrayList<>();
-
+    private String id="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_find_doc);
@@ -86,7 +86,8 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(getBaseContext(), FindDocDetail.class);
-                intent.putExtra("","");
+                id=list1.get(i).get("id").toString();
+                intent.putExtra("id",id);
                 startActivity(intent);
             }
         });
@@ -161,6 +162,7 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
             data = JsonUtils.getMapObj(object.get("data").toString());
             doctors = JsonUtils.getListMap(data.get("doctors").toString());
             list1 = doctors;
+
             listView.setAdapter(new FindDocAdapter1(list1, getBaseContext()
             ));
 
