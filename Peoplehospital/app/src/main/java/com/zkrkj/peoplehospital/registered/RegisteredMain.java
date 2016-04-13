@@ -1,23 +1,42 @@
 package com.zkrkj.peoplehospital.registered;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.User.MyUserActivity;
+import com.zkrkj.peoplehospital.activity.FindHospitalActivity;
 import com.zkrkj.peoplehospital.activity.TimeSecActivity;
+import com.zkrkj.peoplehospital.login.LoginActivity;
 import com.zkrkj.peoplehospital.xzqh.ProcinceActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.Constants;
+import util.DateUtil;
+import util.JsonUtils;
+import util.SerializableMap;
 import util.TitleBarUtils;
+import util.ToastUtil;
+import widget.ProgressDialogStyle;
 
 /**
  * Describe:     预约挂号首页
@@ -46,6 +65,11 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
     private RelativeLayout rl_wdjzr, rl_history, min_sjwk, min_city;
     private Button btn_submit;
 
+    String hosId,hosname;
+    private Map<String, Object> obj,arrayJob,appoint;
+    private Dialog pb;
+    private MyApplication app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +82,90 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
     private void init() {
         initTitle();
         initWidget();
+        initData();
+
+    }
+    /**
+    * Describe:     获取默认医院
+    * User:         LF
+    * Date:         2016/4/12 16:07
+    */
+    private void initData() {
+        pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+        pb.show();
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Constants.SERVER_ADDRESS + "arrayJob/default";
+        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadData(response);
+                pb.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ToastUtil.ToastShow(RegisteredMain.this, "网络错误", true);
+                pb.dismiss();
+            }
+        });
+        queue.add(request);
+    }
+    /**
+     * Describe:     格式化数据
+     * User:         LF
+     * Date:         2016/4/7 10:28
+     */
+    private void loadData(String json) {
+        try {
+            obj = JsonUtils.getMapObj(json);
+            if (obj.get("success").toString().equals("0")) {
+                ToastUtil.ToastShow(this, obj.get("msg").toString(), true);
+            } else if (obj.get("success").toString().equals("1")) {
+                obj = JsonUtils.getMapObj(obj.get("data").toString());
+                arrayJob = JsonUtils.getMapObj(obj.get("arrayJob").toString());
+                appoint= JsonUtils.getMapObj(obj.get("appoint").toString());
+                formatData();
+            } else {
+                ToastUtil.ToastShow(this, "登录过期", true);
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void formatData() {
+        if(TextUtils.isEmpty(appoint.get("zonename").toString())){//地区
+            tvLoc.setText("无");
+        }else{
+            tvLoc.setText(appoint.get("zonename").toString());
+        }
+        if(TextUtils.isEmpty(appoint.get("orgName").toString())){//医院
+            tvHospital.setText("无");
+        }else{
+            tvHospital.setText(appoint.get("orgName").toString());
+        }
+        if(TextUtils.isEmpty(appoint.get("deptName").toString())){//科室
+            tvSjwk.setText("无");
+        }else{
+            tvSjwk.setText(appoint.get("deptName").toString());
+        }
+        String date;
+        if(TextUtils.isEmpty(appoint.get("appDate").toString())){//时间
+            date="无";
+        }else{
+            date= DateUtil.formatedDateTime("yyyy年MM月dd日",Long.parseLong(appoint.get("appDate").toString()));
+        }
+        if(!TextUtils.isEmpty(appoint.get("periodName").toString())){//上午下午或晚上
+            date+="     "+appoint.get("periodName").toString();
+        }
+        tvDate.setText(date);
+        if(TextUtils.isEmpty(appoint.get("clinicName").toString())){//门诊
+            tvPtmz.setText("无");
+        }else{
+            tvPtmz.setText(appoint.get("clinicName").toString());
+        }
     }
 
     private void initWidget() {
@@ -74,6 +182,7 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
         min_city.setOnClickListener(this);
         minDate.setOnClickListener(this);
         minPtmz.setOnClickListener(this);
+        minHospital.setOnClickListener(this);
     }
 
     private void initTitle() {
@@ -98,16 +207,32 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.btn_submit://预约详情
-                Intent intent1 = new Intent(this, RegisteredDetail.class);
-                startActivity(intent1);
+                if(app.loginFlag){
+                    if(arrayJob==null){
+                        ToastUtil.ToastShow(this,"该时间预约已满",true);
+                    }else{
+                        SerializableMap arrayJobMap=new SerializableMap();
+                        arrayJobMap.setMap(arrayJob);
+                        Intent intent1 = new Intent(this, RegisteredDetail.class);
+                        intent1.putExtra("arrayJob",arrayJobMap);
+                        startActivity(intent1);
+                    }
+                }else{
+                    ToastUtil.ToastShow(this, "请先登录", true);
+                    intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 break;
             case R.id.rl_history://我的预约
                 Intent intent2 = new Intent(this, RegisteredHistory.class);
                 startActivity(intent2);
                 break;
             case R.id.min_sjwk://科室选择
-                Intent intent3 = new Intent(this, DepartmentRegistered.class);
-                startActivity(intent3);
+                intent = new Intent(this, DepartmentRegistered.class);
+                intent.putExtra("hosId",hosId);
+                intent.putExtra("hosname",hosname);
+                startActivity(intent);
                 break;
             case R.id.min_city://地区选择
                 Intent intent4 = new Intent(this, ProcinceActivity.class);
@@ -120,6 +245,10 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
             case R.id.min_ptmz://普通门诊
                 Intent intent6 = new Intent(this, TimeSecActivity.class);
                 startActivityForResult(intent6, 6);
+                break;
+            case R.id.min_hospital://医院选择
+                intent =new Intent(this,FindHospitalActivity.class);
+                startActivity(intent);
                 break;
         }
     }

@@ -189,8 +189,10 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tab_jiuyidaohang:
+            case R.id.tab_jiuyidaohang://就医导航
                 intent = new Intent(getActivity(), MedicalNavigationActivity.class);
+                intent.putExtra("hosId",hosId);
+                intent.putExtra("hosname",hosname);
                 startActivity(intent);
                 break;
             case R.id.tab_yuyueguahao:

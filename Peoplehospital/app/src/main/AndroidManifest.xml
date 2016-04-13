@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -17,6 +17,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <service android:name="com.zkrkj.peoplehospital.update.service.UpdateService" />
+
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -175,21 +178,32 @@
             android:name=".registered.RegisteredSuccess"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-
-
-        <activity android:name=".hospital.DepartmentInformationActivity"></activity>
-        <activity android:name=".Search.TFSearchActivity"/>
-        <service android:name="base.PushSmsService"/>
-
-        <activity android:name=".record.PatientInfo"
+        <activity
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            />
-        <activity android:name=".User.AboutUs"
+            android:name=".hospital.DepartmentInformationActivity" />
+        <activity
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            />
+            android:name=".Search.TFSearchActivity" />
 
+        <service
+            android:name="base.PushSmsService"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".record.PatientInfo"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".User.AboutUs"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".hospital.MedicalNaviDetail"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

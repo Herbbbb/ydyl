@@ -1,7 +1,9 @@
 package com.zkrkj.peoplehospital.update;
 
+import java.util.Map;
+
 public interface TaskInf {
-	public void onPreExecute() ;
+	void onPreExecute() ;
 	
-	public void isSuccess(Object b);
+	void isSuccess(Map<String, Object> b);
 }

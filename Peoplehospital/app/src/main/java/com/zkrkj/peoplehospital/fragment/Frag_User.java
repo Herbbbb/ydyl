@@ -1,8 +1,12 @@
 package com.zkrkj.peoplehospital.fragment;
+
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +34,12 @@ import com.zkrkj.peoplehospital.User.PersonalDetail;
 import com.zkrkj.peoplehospital.User.UnreadMessagesActivity;
 import com.zkrkj.peoplehospital.activity.MainActivity;
 import com.zkrkj.peoplehospital.registered.RegisteredHistory;
+import com.zkrkj.peoplehospital.update.CheckVersionTask;
+import com.zkrkj.peoplehospital.update.Config;
+import com.zkrkj.peoplehospital.update.NetworkTool;
+import com.zkrkj.peoplehospital.update.TaskInf;
+import com.zkrkj.peoplehospital.update.UpdateVersion;
+import com.zkrkj.peoplehospital.update.service.UpdateService;
 
 import java.util.List;
 import java.util.Map;
@@ -45,6 +55,7 @@ import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
+import widget.ProgressDialogStyle;
 
 /**
  * Created by lenovo on 2016/3/16.
@@ -52,7 +63,7 @@ import util.ToastUtil;
 
 public class Frag_User extends BaseFragment implements View.OnClickListener {
 
-    MessageBean message=new MessageBean();
+    MessageBean message = new MessageBean();
     @Bind(R.id.titleBar)
     TitleBarUtils titleBar;
     @Bind(R.id.imageView4)
@@ -94,23 +105,22 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     private String idNo, gender;
     private RequestQueue queue;
     private String token;
-    boolean first=true;
+    boolean first = true;
     private DataBaseManager db;
-    public Handler handler=new Handler(){
+    public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 0x123:
-                    Log.i("hand","消息是"+msg.arg1);
-                    idSum.setText(msg.arg1+"");
+                    Log.i("hand", "消息是" + msg.arg1);
+                    idSum.setText(msg.arg1 + "");
                     break;
 
             }
             super.handleMessage(msg);
         }
     };
-
-
+    private Dialog pb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -143,17 +153,14 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         if (!MyApplication.loginFlag) {
             usernameText.setText("未登录");
         }
-
         initView();
         initAction();
     }
 
     @Override
     protected void initView() {
-
-
         xiugaimima.setOnClickListener(this);
-
+        update.setOnClickListener(this);
         jiuyika.setOnClickListener(this);
         about.setOnClickListener(this);
         usernameText.setOnClickListener(this);
@@ -167,11 +174,9 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
         idSum.setText(o.getPres("unmsg"));
 
         if (MyApplication.loginFlag) {
-
-
             queue = Volley.newRequestQueue(getActivity());
             IStringRequest requset = new IStringRequest(Request.Method.GET,
-                    Constants.SERVER_ADDRESS+"userinfo/summary?token=" + token,
+                    Constants.SERVER_ADDRESS + "userinfo/summary?token=" + token,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -198,51 +203,43 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
 
     private void insertdb(String response) {
         Map<String, Object> object = null;
-        List< Map<String, Object>> data = null;
+        List<Map<String, Object>> data = null;
         try {
-            object=JsonUtils.getMapObj(response);
+            object = JsonUtils.getMapObj(response);
             data = JsonUtils.getListMap(object.get("data").toString());
-            Message msg=Message.obtain();
-            msg.arg1=data.size();
-            msg.what=0x123;
-            Log.i("sizem",msg.arg1+"");
+            Message msg = Message.obtain();
+            msg.arg1 = data.size();
+            msg.what = 0x123;
+            Log.i("sizem", msg.arg1 + "");
             handler.sendMessage(msg);
 
-            Log.i("size",data.size()+"");
-            o.putPres("unmsg",data.size()+"");
+            Log.i("size", data.size() + "");
+            o.putPres("unmsg", data.size() + "");
 
-            for (int i=0;i<data.size();i++){
+            for (int i = 0; i < data.size(); i++) {
                 message.setContext1(data.get(i).get("msg").toString());
                 message.setContext(data.get(i).get("msg").toString());
                 message.setMesid(data.get(i).get("id").toString());
                 message.setMessagetype(data.get(i).get("msgtype").toString());
                 message.setUpdate1(data.get(i).get("createtime").toString());
-                  db=DataBaseManager.getInstance(getActivity());
-                db.insertData1("m"+ MyApplication.phone,message);
-                db.getDataCounts("m"+ MyApplication.phone);
-
-
-
+                db = DataBaseManager.getInstance(getActivity());
+                db.insertData1("m" + MyApplication.phone, message);
+                db.getDataCounts("m" + MyApplication.phone);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void parseUser(String response) {
         Map<String, Object> object = null;
         Map<String, Object> data = null;
         Map<String, Object> user = null;
-
         try {
             object = JsonUtils.getMapObj(response);
-
-                data = JsonUtils.getMapObj(object.get("data").toString());
-            if (data.size()==0){
-
-            }else {
+            data = JsonUtils.getMapObj(object.get("data").toString());
+            if (data.size() == 0) {
+            } else {
                 String sum = data.get("myPatientCount").toString();
                 user = JsonUtils.getMapObj(data.get("user").toString());
                 name = user.get("name").toString();
@@ -251,15 +248,12 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 idNo = user.get("idNo").toString();
                 gender = user.get("gender").toString();
                 textView9.setText(sum);
-                if (name.length()==0) {
+                if (name.length() == 0) {
                     usernameText.setText("请设置用户名");
                 } else {
                     usernameText.setText(name);
                 }
             }
-
-
-
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -269,14 +263,14 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initAction() {
 
-        if (first&&MyApplication.loginFlag) {
+        if (first && MyApplication.loginFlag) {
             IStringRequest requset1 = new IStringRequest(Request.Method.GET,
-                    Constants.SERVER_ADDRESS+"usermessage/unread?token=" + token,
+                    Constants.SERVER_ADDRESS + "usermessage/unread?token=" + token,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Log.i("aaa", response);
-                           // insertdb(response);
+                            // insertdb(response);
 
 
                         }
@@ -291,7 +285,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
             );
 
             //queue.add(requset1);
-            first=false;
+            first = false;
         }
     }
 
@@ -311,7 +305,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
-            case R.id.username_text:                           //个人信息
+            case R.id.username_text://个人信息
                 if (MyApplication.loginFlag) {
                     intent = new Intent(getActivity(), PersonalDetail.class);
                     intent.putExtra("name", name);
@@ -330,35 +324,35 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), RegisteredHistory.class);
                 startActivity(intent);
                 break;
-            case R.id.setaccount:
-                Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.wodejiuzhenren:                         //我的就诊人
+//            case R.id.setaccount:
+//                Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
+//                break;
+            case R.id.wodejiuzhenren://我的就诊人
                 if (MyApplication.loginFlag == false) {
                     ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
                 } else {
                     intent = new Intent(getActivity(), MyUserActivity.class);
-                    intent.putExtra("type",0);
+                    intent.putExtra("type", 0);
                     startActivity(intent);
                 }
                 break;
             case R.id.func:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.yijian:
+            case R.id.yijian://意见反馈
                 if (MyApplication.loginFlag == false) {
                     ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
                 } else {
-                    intent = new Intent(getActivity(), FeedBackActivity.class);//意见反馈
+                    intent = new Intent(getActivity(), FeedBackActivity.class);
                     startActivity(intent);
                 }
                 break;
-            case R.id.about:
-                intent = new Intent(getActivity(), AboutUs.class);//意见反馈
+            case R.id.about://关于
+                intent = new Intent(getActivity(), AboutUs.class);
                 startActivity(intent);
                 break;
-            case R.id.update:
-                Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
+            case R.id.update://检查更新
+                checkUpdate();
                 break;
             case R.id.resiglogin:
                 Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
@@ -369,7 +363,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), MyDocCard.class);
                 startActivity(intent);
                 break;
-            case R.id.tab_message:                         //未读消息
+            case R.id.tab_message://未读消息
                 if (MyApplication.loginFlag == false) {
                     ToastUtil.ToastShow(getActivity(), "您还没有登录，登录账号后再来吧", true);
                 } else {
@@ -377,11 +371,88 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                     startActivity(intent);
                 }
                 break;
-            case R.id.xiugaimima:
+            case R.id.xiugaimima://修改密码
                 intent = new Intent(getActivity(), ChangePasswordActivity.class);
                 startActivity(intent);
                 break;
         }
     }
 
+    /**
+    * Describe:     检查更新
+    * User:         LF
+    * Date:         2016/4/12 15:21
+    */
+    private void checkUpdate(){
+        CheckVersionTask checkTask = new CheckVersionTask(getActivity());
+        checkTask.setListener(new TaskInf() {
+            @Override
+            public void onPreExecute() {
+                pb = ProgressDialogStyle.createLoadingDialog(getActivity(), "请求中...");
+                pb.show();
+            }
+
+            @Override
+            public void isSuccess(Map<String, Object> b) {
+                if (null !=pb) {
+                    pb.dismiss();
+                }
+                final Map<String, Object> map = (Map<String, Object>)b;
+                if ((Boolean) map.get("isUpdate")) {//版本需要更新
+                    String verName = Config.getVerName(getActivity());
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("检测到新版本:");
+                    sb.append(verName.replace("ver:", "").replace("build", "日期"));
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    sb.append(",\n更新内容："+map.get("content").toString());
+                    builder.setMessage(sb.toString());
+                    builder.setTitle("软件更新");
+                    builder.setPositiveButton("下载", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(UpdateVersion.getUninstallAPKInfo(getActivity(),Integer.parseInt(map.get("version").toString()))){
+                                UpdateVersion.showInstallDialog(getActivity());
+                            }else{
+                                // 启动下载安装任务
+                                boolean isupLocStart = NetworkTool
+                                        .isServiceRunning(getActivity(),
+                                                UpdateService.class.getName());
+                                if (isupLocStart) {
+                                    ToastUtil.ToastShow(getActivity(),"正在更新客户端",false);
+                                } else {
+                                    getActivity().startService(new Intent(getActivity(),
+                                            UpdateService.class));
+                                }
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                }else {//版本不需要更新
+                    String verName = Config.getVerName(getActivity());
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("当前版本:");
+                    sb.append(verName.replace("ver:", "").replace("build", "日期"));
+                    sb.append(",\n已是最新版本，无需更新!");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(sb.toString());
+                    builder.setTitle("软件更新");
+                    builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                }
+            }
+        });
+        checkTask.execute();
+    }
 }

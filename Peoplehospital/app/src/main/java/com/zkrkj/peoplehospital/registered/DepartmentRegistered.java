@@ -1,15 +1,13 @@
 package com.zkrkj.peoplehospital.registered;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import base.BaseActivity;
-import base.OptsharepreInterface;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.Constants;
@@ -40,87 +37,53 @@ import util.ToastUtil;
 import widget.ProgressDialogStyle;
 
 /**
-* Describe:     科室选择
-* User:         LF
-* Date:         2016/4/5 14:40
-*/
+ * Describe:     科室选择
+ * User:         LF
+ * Date:         2016/4/5 14:40
+ */
 public class DepartmentRegistered extends BaseActivity {
 
     @Bind(R.id.department_one)
     RecyclerView departmentOne;
+    @Bind(R.id.tv_hospital_name)
+    TextView tvHospitalName;
+    @Bind(R.id.department_two)
+    RecyclerView departmentTwo;
 
-    List<Map<String, Object>> listsOne=new ArrayList<Map<String, Object>>();
-//    List<String> listsTwo=new ArrayList<String>();
+    List<Map<String, Object>> listsAll = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> listsOne = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> listsTwo = new ArrayList<Map<String, Object>>();
     Map<String, Object> object = null;
+
     private Dialog pb;
+
+    String hosId,hosname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_department_registered);
         ButterKnife.bind(this);
+        hosId=getIntent().getStringExtra("hosId");//医院id
+        if(hosId==null||TextUtils.isEmpty(hosname)){
+            hosId="1";
+        }
+        hosname=getIntent().getStringExtra("hosname");//医院名称
+        if(hosname==null||TextUtils.isEmpty(hosname)){
+            hosname="测试";
+        }
         init();
     }
 
 
-
     private void init() {
         initTitle();
+        initHospitalName();
         initData();
     }
-    /**
-    * Describe:     获取所有科室
-    * User:         LF
-    * Date:         2016/4/7 10:28
-    */
-    private void initData() {
-        pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
-        pb.show();
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = Constants.SERVER_ADDRESS+"department?hosId=1";
-        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                loadData(response);
-                pb.dismiss();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                ToastUtil.ToastShow(DepartmentRegistered.this, "网络错误", true);
-                pb.dismiss();
-            }
-        });
-        queue.add(request);
-    }
-    /**
-    * Describe:     格式化科室数据
-    * User:         LF
-    * Date:         2016/4/7 10:28
-    */
-    private void loadData(String json) {
-        try {
-            object = JsonUtils.getMapObj(json);
-            if (object.get("success").toString().equals("0")) {
-                ToastUtil.ToastShow(this, object.get("msg").toString(), true);
-            } else if (object.get("success").toString().equals("1")) {
-                object=JsonUtils.getMapObj(object.get("data").toString());
-                listsOne=JsonUtils.getListMap(object.get("departments").toString());
-                initWidget();
-            } else {
-                ToastUtil.ToastShow(this, "登录过期", true);
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        } catch (Exception e) {
-        }
-    }
 
-    private void initWidget() {
-        DepartmentOneAdapter oneAdapter=new DepartmentOneAdapter();
-        departmentOne.setLayoutManager(new LinearLayoutManager(this));
-        departmentOne.setAdapter(oneAdapter);
+    private void initHospitalName() {
+        tvHospitalName.setText(hosname);
     }
 
     private void initTitle() {
@@ -136,29 +99,106 @@ public class DepartmentRegistered extends BaseActivity {
     }
 
     /**
-    * Describe:     左侧list适配器
-    * User:         LF
-    * Date:         2016/3/24 10:42
-    */
-    class DepartmentOneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+     * Describe:     获取所有科室
+     * User:         LF
+     * Date:         2016/4/7 10:28
+     */
+    private void initData() {
+        pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+        pb.show();
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Constants.SERVER_ADDRESS + "department?hosId="+hosId;
+        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadData(response);
+                pb.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ToastUtil.ToastShow(DepartmentRegistered.this, "网络错误", true);
+                pb.dismiss();
+            }
+        });
+        queue.add(request);
+    }
+
+    /**
+     * Describe:     格式化科室数据
+     * User:         LF
+     * Date:         2016/4/7 10:28
+     */
+    private void loadData(String json) {
+        try {
+            object = JsonUtils.getMapObj(json);
+            if (object.get("success").toString().equals("0")) {
+                ToastUtil.ToastShow(this, object.get("msg").toString(), true);
+            } else if (object.get("success").toString().equals("1")) {
+                object = JsonUtils.getMapObj(object.get("data").toString());
+                listsAll = JsonUtils.getListMap(object.get("departments").toString());
+                formatData();
+            } else {
+                ToastUtil.ToastShow(this, "登录过期", true);
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void formatData() {
+        for(int i=0;i<listsAll.size();i++){
+            if(TextUtils.isEmpty(listsAll.get(i).get("parentDeptId").toString())){
+                listsOne.add(listsAll.get(i));
+            }
+        }
+        initWidget();
+    }
+
+    private void initWidget() {
+        DepartmentOneAdapter oneAdapter = new DepartmentOneAdapter();
+        departmentOne.setLayoutManager(new LinearLayoutManager(this));
+        departmentOne.setAdapter(oneAdapter);
+        //右侧数据匹配
+        bindRecyclerviewTwoData(listsOne.get(0).get("id").toString());
+    }
+
+    /**
+     * Describe:     左侧list适配器
+     * User:         LF
+     * Date:         2016/3/24 10:42
+     */
+    class DepartmentOneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        public HashSet<MyViewHolderOne> getAllHolders() {
+            return allHolders;
+        }
 
         private HashSet<MyViewHolderOne> allHolders;
-        public DepartmentOneAdapter(){
+
+        public DepartmentOneAdapter() {
             allHolders = new HashSet<MyViewHolderOne>();
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView=LayoutInflater.from(DepartmentRegistered.this).inflate(R.layout.departmnet_one_item,parent,false);
-            MyViewHolderOne holder=new MyViewHolderOne(itemView);
+            View itemView = LayoutInflater.from(DepartmentRegistered.this).inflate(R.layout.departmnet_one_item, parent, false);
+            MyViewHolderOne holder = new MyViewHolderOne(itemView);
             allHolders.add(holder);
             return holder;
         }
 
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if(holder instanceof  MyViewHolderOne){
+            if (holder instanceof MyViewHolderOne) {
                 ((MyViewHolderOne) holder).tv_department_name.setText(listsOne.get(position).get("deptName").toString());
+                if(position==0){
+                    ((MyViewHolderOne) holder).itemView.setBackground(getResources().getDrawable(R.drawable.department_item_one_true));
+                }
+
             }
         }
 
@@ -170,27 +210,26 @@ public class DepartmentRegistered extends BaseActivity {
         class MyViewHolderOne extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView tv_department_name;
             private View itemView;
+
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             public MyViewHolderOne(View itemView) {
                 super(itemView);
-                tv_department_name= (TextView) itemView.findViewById(R.id.tv_department_name);
-                this.itemView=itemView;
+                tv_department_name = (TextView) itemView.findViewById(R.id.tv_department_name);
+                this.itemView = itemView;
                 itemView.setOnClickListener(this);
-                if(getPosition()==0){
-                    itemView.setBackground(getResources().getDrawable(R.drawable.department_item_one_true));
-                }
             }
 
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
-                  for(MyViewHolderOne holder:allHolders){
-                      if(holder.getPosition()==getPosition()){
-                          holder.itemView.setBackground(getResources().getDrawable(R.drawable.department_item_one_true));
-                      }else{
-                          holder.itemView.setBackground(getResources().getDrawable(R.drawable.department_item_one_false));
-                      }
-                  }
+                for (MyViewHolderOne holder : allHolders) {
+                    if (holder.getPosition() == getPosition()) {
+                        holder.itemView.setBackground(getResources().getDrawable(R.drawable.department_item_one_true));
+                        bindRecyclerviewTwoData(listsOne.get(getPosition()).get("id").toString());
+                    } else {
+                        holder.itemView.setBackground(getResources().getDrawable(R.drawable.department_item_one_false));
+                    }
+                }
             }
 
             public View getItemView() {
@@ -203,10 +242,17 @@ public class DepartmentRegistered extends BaseActivity {
         }
     }
 
-    /*private void bindRecyclerviewTwoData(String seleData){
+    /**
+    * Describe:     绑定右侧列表
+    * User:         LF
+    * Date:         2016/4/11 15:09
+    */
+    private void bindRecyclerviewTwoData(String seleid){
         listsTwo.clear();
-        for(int i=0;i<10;i++){
-            listsTwo.add(seleData+i);
+        for(int i=0;i<listsAll.size();i++){
+            if(listsAll.get(i).get("parentDeptId").toString().equals(seleid)){
+                listsTwo.add(listsAll.get(i));
+            }
         }
         departmentTwo.setLayoutManager(new LinearLayoutManager(this));
         departmentTwo.setAdapter(new DepartmentTwoAdapter());
@@ -224,7 +270,7 @@ public class DepartmentRegistered extends BaseActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if(holder instanceof  MyViewHolderTwo){
-                ((MyViewHolderTwo) holder).tv_department_name.setText(listsTwo.get(position));
+                ((MyViewHolderTwo) holder).tv_department_name.setText(listsTwo.get(position).get("deptName").toString());
             }
         }
 
@@ -245,10 +291,10 @@ public class DepartmentRegistered extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(DepartmentRegistered.this,listsTwo.get(getPosition()),Toast.LENGTH_SHORT);
+                ToastUtil.ToastShow(DepartmentRegistered.this,listsTwo.get(getPosition()).get("deptName").toString(),true);
             }
         }
-    }*/
+    }
 
 
     @Override

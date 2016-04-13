@@ -2,110 +2,107 @@ package com.zkrkj.peoplehospital.update;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.zkrkj.peoplehospital.login.LoginActivity;
+
+import util.JsonUtils;
+import util.ToastUtil;
+
+/**
+ * Describe:     检查更新异步任务
+ * User:         LF
+ * Date:         2016/4/12 10:21
+ */
 @SuppressLint("NewApi")
 public class CheckVersionTask extends AsyncTask<Void, Integer, Boolean> {
 
-	private int newVerCode = -1;
-	private String newVerName = "";
-	private Context currentContext;
-	private int curVerCode;
-	private int type; //
-	public static String UPDATE_SERVER;//
-	public static String UPDATE_VERJSON;//
-	public static String UPDATE_APKNAME;// 
-	public static String PACKAGE_NAME;// 
-	public static String APP_NAME;
-	public static String appName;
-	public static String UPDATE_SAVENAME;
-	private TaskInf inf;
-	private HashMap<String, String> map;
+    private int newVerCode = -1;
+    private String newVerName = "";
+    private Context currentContext;
+    private int curVerCode;
+    private int type; //
+    public static String UPDATE_SERVER;//更新的服务器地址
+    public static String UPDATE_VERJSON;//更新的版本号
+    public static String SERVER_APP_NAME;//更新的app名称
+    public static String UPDATE_SAVENAME;
+    private TaskInf inf;
+    Map<String, Object> object = null;
+    Map<String, Object> backObj = null;
 
-	public CheckVersionTask(Context context, String UPDATE_SERVER,
-			String UPDATE_VERJSON, String UPDATE_APKNAME, String PACKAGE_NAME,
-			String APP_NAME,String appName,String UPDATE_SAVENAME) {
-		this.currentContext = context;
-		this.UPDATE_SERVER = UPDATE_SERVER;
-		this.UPDATE_VERJSON = UPDATE_VERJSON;
-		this.UPDATE_APKNAME = UPDATE_APKNAME;
-		this.PACKAGE_NAME = PACKAGE_NAME;
-		this.APP_NAME = APP_NAME;
-		this.appName = appName;
-		this.UPDATE_SAVENAME = UPDATE_SAVENAME;
-		this.curVerCode = Config.getVerCode(context, PACKAGE_NAME);//101
-		Log.wtf("curVerCode", curVerCode+"");
-	}
+    public CheckVersionTask(Context context) {
+        this.currentContext = context;
+        this.UPDATE_SERVER =Config.UPDATE_SERVER;
+        this.SERVER_APP_NAME = Config.SERVER_APP_NAME;
+        this.curVerCode = Config.getVerCode(context);//当前应用版本号
+    }
 
-	public void setListener(TaskInf inf) {
-		this.inf = inf;
-	}
+    public void setListener(TaskInf inf) {
+        this.inf = inf;
+    }
 
-	private Boolean getServerVerCode() {
-		try {
-			String verjson = NetworkTool.getContent(UPDATE_SERVER
-					+ UPDATE_VERJSON);
-			JSONArray array = new JSONArray(verjson);
-			if (array.length() > 0) {
-				JSONObject obj = array.getJSONObject(0);
-				try {
-					newVerCode = Integer.parseInt(obj.getString("verCode"));
-					newVerName = obj.getString("verName");
-					type = Integer.parseInt(obj.getString("type"));
-					// application.setNewVername(newVerName);
-				} catch (Exception e) {
-					newVerCode = -1;
-					newVerName = "";
-					return false;
-				}
-			}
-		} catch (Exception e) {
-			if (e != null) {
+    private Integer getServerVerCode() {
+        try {
+//			String verjson = NetworkTool.getContent(UPDATE_SERVER
+//					+ UPDATE_VERJSON);
+            String verjson = "{'success':'1','msg':'成功','data':{'version':'2','versionName':'1.1（build:2016-02-20）','content':'修复bug'}}";
 
-			}
-			return false;
-		}
-		return true;
-	}
+            object = JsonUtils.getMapObj(verjson);
+            if (object.get("success").toString().equals("0")) {
+                return 0;
+            } else if(object.get("success").toString().equals("1")) {
+                object = JsonUtils.getMapObj(object.get("data").toString());
+                return 1;
+            }else{
+                return 2;
+            }
+        } catch (Exception e) {
+            return 2;
+        }
+    }
 
-	@Override
-	protected void onPreExecute() {
-		inf.onPreExecute();
-		super.onPreExecute();
-	}
+    @Override
+    protected void onPreExecute() {
+        inf.onPreExecute();
+        super.onPreExecute();
+    }
 
-	@Override
-	protected Boolean doInBackground(Void... params) {
-		Log.wtf("getServerVerCode()", getServerVerCode()+"");
-		if (getServerVerCode()) {
-			if (newVerCode > curVerCode) {
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    protected Boolean doInBackground(Void... params) {
+        if (getServerVerCode()==1) {
+            newVerCode=Integer.parseInt(object.get("version").toString());//获取服务器存储的版本号
+            if (newVerCode > curVerCode) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	protected void onPostExecute(Boolean result) {
-		// TODO Auto-generated method stub
-		super.onPostExecute(result);
-		map = new HashMap<String, String>();
-		if (result) {
-			map.put("newVerName", newVerName);
-			map.put("IsUpdate", "true");
-			map.put("checkTime", String.valueOf(System.currentTimeMillis()));
-			map.put("type", type+"");
-			map.put("newVerCode", newVerCode+"");
-		}else {
-			map.put("IsUpdate", "false");
-		}
-		inf.isSuccess(map);
-	}
+    @Override
+    protected void onPostExecute(Boolean result) {
+        super.onPostExecute(result);
+        backObj=new HashMap<>();
+        if (result) {
+            backObj.put("version",object.get("version").toString());//更新版本号
+            backObj.put("curVerName",Config.getVerName(currentContext));//当前版本名称1.0.2
+            backObj.put("newVerName",object.get("versionName").toString());//更新版本名称1.0.3
+            backObj.put("content",object.get("content").toString());//更新内容
+            backObj.put("checkTime", String.valueOf(System.currentTimeMillis()));//更新时间
+            backObj.put("isUpdate",true);//是否更新
+        } else {
+            backObj.put("isUpdate",false);
+        }
+        inf.isSuccess(backObj);
+    }
 }
