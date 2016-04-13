@@ -64,7 +64,7 @@ public class SpecialDepartmentActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(getBaseContext(),DepartmentInformationActivity.class);
-
+                intent.putExtra("deptCode",departments.get(i).get("deptCode").toString());
                 intent.putExtra("keshi",departments.get(i).get("deptName").toString());
                 intent.putExtra("hosId",hosId);
                 intent.putExtra("hosname",hosname1);
@@ -98,7 +98,7 @@ public class SpecialDepartmentActivity extends BaseActivity {
     public void network() {
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP + "department/?hosId=" + hosId,
+                Constants.SERVER_ADDRESS_BACKUP + "department/?hosId=" + hosId+"&isSpec=0",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

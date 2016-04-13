@@ -8,64 +8,58 @@
 
 
 
-        <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:id="@+id/imageView8"
-            android:src="@mipmap/doc1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:text="张传外"
             android:textSize="16sp"
             android:textColor="#000000"
             android:id="@+id/textView21"
-            android:layout_alignTop="@+id/imageView8"
-            android:layout_toRightOf="@+id/imageView8"
-            android:layout_toEndOf="@+id/imageView8" />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="25dp"
             android:text="主任医师"
             android:textColor="#333333"
             android:textSize="13sp"
             android:id="@+id/textView22"
-            android:layout_alignBottom="@+id/textView21"
-            android:layout_toRightOf="@+id/textView21"
-            android:layout_toEndOf="@+id/textView21" />
+            android:layout_marginStart="25dp"
+            android:layout_alignTop="@+id/textView24"
+            android:layout_toRightOf="@+id/textView24"
+            android:layout_toEndOf="@+id/textView24" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#333333"
             android:textSize="13sp"
+            android:layout_marginTop="5dp"
             android:text="北京大学口腔医院"
             android:id="@+id/textView23"
-            android:layout_alignBottom="@+id/imageView8"
+            android:layout_below="@+id/textView21"
             android:layout_alignLeft="@+id/textView21"
             android:layout_alignStart="@+id/textView21" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
             android:textColor="#333333"
             android:textSize="13sp"
             android:text="消化内科"
             android:id="@+id/textView24"
-            android:layout_marginStart="24dp"
+            android:layout_marginLeft="21dp"
+            android:layout_marginStart="21dp"
             android:layout_alignTop="@+id/textView23"
-            android:layout_toRightOf="@+id/textView22"
-            android:layout_toEndOf="@+id/textView22" />
+            android:layout_toRightOf="@+id/textView23"
+            android:layout_toEndOf="@+id/textView23" />
     </RelativeLayout>
 
 </LinearLayout>

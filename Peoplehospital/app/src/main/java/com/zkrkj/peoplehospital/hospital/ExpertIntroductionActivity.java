@@ -1,16 +1,34 @@
 package com.zkrkj.peoplehospital.hospital;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.adapter.FindDocAdapter;
+import com.zkrkj.peoplehospital.adapter.FindDocAdapter1;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import util.Constants;
+import util.IStringRequest;
+import util.JsonUtils;
 import util.TitleBarUtils;
+import util.ToastUtil;
+
 /*
 专家介绍Activity
 cause by  miao
@@ -24,6 +42,10 @@ public class ExpertIntroductionActivity extends BaseActivity {
     ListView listView4;
     @Bind(R.id.hosname)
     TextView hosname;
+    String hosId="";
+    String hosCode="";
+    String hosname1="";
+    private List<Map<String,Object>> list1=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +63,11 @@ public class ExpertIntroductionActivity extends BaseActivity {
     @Override
     public void initView() {
       initTitle();
+        hosname.setText(getIntent().getStringExtra("hosname"));
+        hosCode=getIntent().getStringExtra("hosOrgCode");
+        hosId=getIntent().getStringExtra("hosId");
+        hosname1=getIntent().getStringExtra("hosname");
+        initData();
     }
 
     @Override
@@ -58,4 +85,63 @@ public class ExpertIntroductionActivity extends BaseActivity {
             }
         });
     }
+
+    private void initData(){
+        RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+        IStringRequest requset = new IStringRequest(Request.Method.POST,
+                Constants.SERVER_ADDRESS+"doctor",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("zhuanjia",response);
+                        parsedoc(response);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        ToastUtil.ToastShow(getBaseContext(),"服务器好像出错误了",true);
+
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() {
+                //在这里设置需要post的参数
+                Map<String, String> map = new HashMap<String, String>();
+                 map.put("keyWord",hosname1);
+
+
+                return map;
+            }
+        };
+
+
+
+        queue.add(requset);
+    }
+
+    private void parsedoc(String response) {
+        Map<String, Object> object = null;
+        Map<String, Object> data = null;
+        List<Map<String, Object>> doctors = null;
+        try {
+            object = JsonUtils.getMapObj(response);
+            data = JsonUtils.getMapObj(object.get("data").toString());
+            doctors = JsonUtils.getListMap(data.get("doctors").toString());
+            list1 = doctors;
+            listView4.setAdapter(new FindDocAdapter1(list1, getBaseContext()
+            ));
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }

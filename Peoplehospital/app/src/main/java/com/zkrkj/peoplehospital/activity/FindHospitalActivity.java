@@ -1,8 +1,9 @@
 package com.zkrkj.peoplehospital.activity;
+
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,6 +35,7 @@ import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
 import view.SearchView;
+import widget.RefreshLayout;
 
 /**
  * Created by miao on 2016/3/16.
@@ -56,10 +59,17 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
     TextView tv3;
     @Bind(R.id.l1)
     LinearLayout l1;
+    @Bind(R.id.refresh)
+    RefreshLayout refresh;
+
+
     private PopupWindow popupWindow;
     private String hosid;
-    private String hosLevel="",hosType="";
-    List<Map<String, Object>> list=new ArrayList<>();
+    private String hosLevel = "", hosType = "";
+    List<Map<String, Object>> list = new ArrayList<>();
+    private String hosname = "";
+    private int totalCount,startIndex;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,21 +89,47 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
 
         initTitle();
         finddoc.setHint(this, "医院");
-
-
+        if (getIntent().getStringExtra("hosname") != null) {
+            hosname = getIntent().getStringExtra("hosname");
+        }
         hoslist();
 
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
         tv3.setOnClickListener(this);
+//
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                totalCount = 0;
+                startIndex = 1;
+               // lists.clear();
+               // initData();
+                refresh.setRefreshing(false);
+            }
+        });
+        refresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+            @Override
+            public void onLoad() {
+
+                if (totalCount != 0 && totalCount % Constants.PAGE_SIZE != 0) {
+                    refresh.setLoading(false);
+                    ToastUtil.ToastShow(getBaseContext(), "没有更多", false);
+                } else {
+                    // initData();
+                    refresh.setLoading(false);
+                }
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(getBaseContext(),MainActivity.class);
-                intent.putExtra("postion",1);
-                intent.putExtra("hosOrgName",list.get(i).get("hosOrgName").toString());
-                intent.putExtra("hosOrgCode",list.get(i).get("hosOrgCode").toString());
-                intent.putExtra("hosId",list.get(i).get("hosId").toString());
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                intent.putExtra("postion", 1);
+                intent.putExtra("hosOrgName", list.get(i).get("hosOrgName").toString());
+                intent.putExtra("hosOrgCode", list.get(i).get("hosOrgCode").toString());
+                intent.putExtra("hosId", list.get(i).get("hosId").toString());
                 startActivity(intent);
             }
         });
@@ -128,11 +164,11 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
     public void hoslist() {
         RequestQueue queue = Volley.newRequestQueue(getBaseContext());
         IStringRequest requset = new IStringRequest(Request.Method.POST,
-                Constants.SERVER_ADDRESS+"hospital",
+                Constants.SERVER_ADDRESS + "hospital?limit=" + Constants.PAGE_SIZE + "&offset=" + startIndex,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       parsehos(response);
+                        parsehos(response);
 
 
                     }
@@ -141,30 +177,31 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        ToastUtil.ToastShow(getBaseContext(),"服务器好像出错误了",true);
+                        ToastUtil.ToastShow(getBaseContext(), "服务器好像出错误了", true);
 
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 //在这里设置需要post的参数
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("divisioncode","");
-                map.put("hosLevel",hosLevel);
-                map.put("hosType","");
-              //  map.put("divisioncode", adv.toString());
-             //   map.put("token", token);
+                map.put("hosName", hosname + "");
+                map.put("divisioncode", "");
+                map.put("hosLevel", hosLevel);
+                map.put("hosType", "");
+                //  map.put("divisioncode", adv.toString());
+                //   map.put("token", token);
                 return map;
             }
         };
 
 
-
         queue.add(requset);
 
     }
-    private void parsehos(String response){
+
+    private void parsehos(String response) {
         Map<String, Object> object = null;
         Map<String, Object> data = null;
         List<Map<String, Object>> hospitalSimples = null;
@@ -172,7 +209,7 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
             object = JsonUtils.getMapObj(response);
             data = JsonUtils.getMapObj(object.get("data").toString());
             hospitalSimples = JsonUtils.getListMap(data.get("hospitalSimples").toString());
-            list=hospitalSimples;
+            list = hospitalSimples;
             listView.setAdapter(new FindHosAdapter(hospitalSimples, getBaseContext()
             ));
         } catch (Exception e) {
@@ -186,15 +223,15 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.tv1:
                 initPopWindow(1);
-                showPop(view,0,0,0);
+                showPop(view, 0, 0, 0);
                 break;
             case R.id.tv2:
                 initPopWindow(2);
-                showPop(view,0,0,0);
+                showPop(view, 0, 0, 0);
                 break;
             case R.id.tv3:
                 initPopWindow(3);
-                showPop(view,0,0,0);
+                showPop(view, 0, 0, 0);
                 break;
         }
     }
@@ -236,33 +273,33 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
 
         l3.add("其它");
 
-        if (x==1){
+        if (x == 1) {
             listview.setAdapter(new PupAdapter(this, l1));
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                 //tv2.setText(l2.get(i).toString());
+                    //tv2.setText(l2.get(i).toString());
                     popupWindow.dismiss();
                 }
             });
-        }else if(x==2){
+        } else if (x == 2) {
             listview.setAdapter(new PupAdapter(this, l2));
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    tv2.setText(l2.get(i).toString()+"▼");
-                    switch (l2.get(i).toString()){
+                    tv2.setText(l2.get(i).toString() + "▼");
+                    switch (l2.get(i).toString()) {
                         case "三级":
-                            hosLevel=3+"";
+                            hosLevel = 3 + "";
                             break;
                         case "二级":
-                            hosLevel=2+"";
+                            hosLevel = 2 + "";
                             break;
                         case "一级":
-                            hosLevel=1+"";
+                            hosLevel = 1 + "";
                             break;
                         case "全部":
-                            hosLevel="";
+                            hosLevel = "";
                             break;
                     }
                     popupWindow.dismiss();
@@ -270,18 +307,16 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
 
                 }
             });
-        }else {
+        } else {
             listview.setAdapter(new PupAdapter(this, l3));
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    tv3.setText(l3.get(i).toString()+"▼");
+                    tv3.setText(l3.get(i).toString() + "▼");
                     popupWindow.dismiss();
                 }
             });
         }
-
-
 
 
     }

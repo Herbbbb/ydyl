@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import util.Constants;
+import util.ToastUtil;
+import widget.RefreshLayout;
+
 /**
  * Created by lenovo on 2016/3/22.
  */
@@ -18,6 +22,7 @@ public class FindHosAdapter extends BaseAdapter{
     private List<Map<String,Object>> list1=new ArrayList<>();
 
     private Context context;
+    //private RefreshLayout swipRefresh;
 
     public FindHosAdapter(List<Map<String, Object>> list1, Context context) {
         this.list1 = list1;
@@ -45,10 +50,16 @@ public class FindHosAdapter extends BaseAdapter{
         if (view==null){
             view=View.inflate(context, R.layout.item_findhos,null);
             holder=new ViewHolder();
+            //swipRefresh = (RefreshLayout) view.findViewById(R.id.rl);
             holder.textView1= (TextView) view.findViewById(R.id.textView21);
             holder.textView2= (TextView) view.findViewById(R.id.textView22);
             holder.textView3= (TextView) view.findViewById(R.id.textView25);
             holder.textView4= (TextView) view.findViewById(R.id.textView26);
+
+
+
+
+
             view.setTag(holder);
             }else {
             holder= (ViewHolder) view.getTag();

@@ -20,30 +20,38 @@
          ></view.SearchView>
      <LinearLayout
          android:background="#B8DFCB"
+         android:id="@+id/l1"
+         android:orientation="horizontal"
          android:weightSum="3"
          android:layout_width="match_parent"
-         android:layout_height="60dp">
-          <Spinner
+         android:layout_height="40dp">
+          <TextView
+              android:id="@+id/tv1"
               android:layout_width="0dp"
-
               android:layout_height="match_parent"
               android:layout_weight="1"
-              android:entries="@array/zhicheng"
-              ></Spinner>
-          <Spinner
+              android:textColor="@color/black"
+              android:gravity="center"
+              android:text="附近▼"
+              />
+          <TextView
+              android:id="@+id/tv2"
               android:layout_width="0dp"
-
               android:layout_height="match_parent"
               android:layout_weight="1"
-              android:entries="@array/zhicheng"
-              ></Spinner>
-          <Spinner
-         android:layout_width="0dp"
-
-         android:layout_height="match_parent"
-         android:layout_weight="1"
-              android:entries="@array/zhicheng"
-         ></Spinner>
+              android:textColor="@color/black"
+              android:gravity="center"
+              android:text="科室▼"
+              />
+          <TextView
+              android:id="@+id/tv3"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:textColor="@color/black"
+              android:gravity="center"
+              android:text="职称▼"
+              />
      </LinearLayout>
 
      <ListView

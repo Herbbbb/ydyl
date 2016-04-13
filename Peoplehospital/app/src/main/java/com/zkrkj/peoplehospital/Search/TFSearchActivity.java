@@ -1,6 +1,7 @@
 package com.zkrkj.peoplehospital.Search;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -26,6 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.activity.FindHospitalActivity;
+import com.zkrkj.peoplehospital.activity.MainActivity;
 import com.zkrkj.peoplehospital.adapter.FindDocAdapter;
 import com.zkrkj.peoplehospital.adapter.FindHosAdapter1;
 
@@ -95,17 +98,7 @@ public class TFSearchActivity extends Activity implements OnClickListener {
         mAutoListView = (ListView) findViewById(R.id.auto_listview);
         //ed1= (EditText) findViewById(R.id.auto_edit);
         //mAutoListView.setAdapter(mSearchAutoAdapter);
-        mAutoListView.setOnItemClickListener(new OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View view, int position,
-                                    long arg3) {
-                //	String data = (String) mSearchAutoAdapter.getItem(position);
-                //mAutoEdit.setText(data);
-
-
-            }
-        });
 
         mSearchButtoon = (TextView) findViewById(R.id.search_button);
         mSearchButtoon.setOnClickListener(this);
@@ -150,6 +143,25 @@ public class TFSearchActivity extends Activity implements OnClickListener {
 
             public void onClick(View v) {
                 mAutoEdit.setText("");
+            }
+        });
+        mAutoListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(getBaseContext(),MainActivity.class);
+                intent.putExtra("postion",1);
+                intent.putExtra("hosOrgName",list.get(i).get("hosOrgName").toString());
+                intent.putExtra("hosOrgCode",list.get(i).get("hosOrgCode").toString());
+                intent.putExtra("hosId",list.get(i).get("hosId").toString());
+                startActivity(intent);
+            }
+        });
+        gengduo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getBaseContext(),FindHospitalActivity.class);
+                intent.putExtra("hosname",mAutoEdit.getText().toString().trim());
+                startActivity(intent);
             }
         });
     }
@@ -267,9 +279,10 @@ public class TFSearchActivity extends Activity implements OnClickListener {
             data = JsonUtils.getMapObj(object.get("data").toString());
             hospitalSimples = JsonUtils.getListMap(data.get("hospitalSimples").toString());
             list = hospitalSimples;
-            thos.setText("医院（共搜索到"+list.size()+"条结果）");
-            mAutoListView.setAdapter(new FindHosAdapter1(hospitalSimples, getBaseContext()
+            mAutoListView.setAdapter(new FindHosAdapter1(list, getBaseContext()
             ));
+            thos.setText("医院（共搜索到"+list.size()+"条结果）");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -320,9 +333,11 @@ public class TFSearchActivity extends Activity implements OnClickListener {
             data = JsonUtils.getMapObj(object.get("data").toString());
             doctors = JsonUtils.getListMap(data.get("doctors").toString());
             list1 = doctors;
-            tdoc.setText("医生（共搜索到"+list1.size()+"条结果）");
-            mAutoListView.setAdapter(new FindDocAdapter(list1, getBaseContext()
+            listview2.setAdapter(new FindDocAdapter(list1, getBaseContext()
             ));
+
+            tdoc.setText("医生（共搜索到"+list1.size()+"条结果）");
+
         } catch (Exception e) {
             e.printStackTrace();
         }

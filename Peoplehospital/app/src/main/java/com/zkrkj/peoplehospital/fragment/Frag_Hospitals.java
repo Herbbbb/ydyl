@@ -134,8 +134,10 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
     RelativeLayout pup;
     private PopupWindow popupWindow;
     private List<Map<String, Object>> hospitalSimples=new ArrayList<>();
+    private List<Map<String, Object>> list1=new ArrayList<>();
     private String hosId;
     private String hosname;
+    private String hosOrgCode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -206,6 +208,9 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.tab_zhuanjiajieshao:
                 intent = new Intent(getActivity(), ExpertIntroductionActivity.class);
+                intent.putExtra("hosId",hosId);
+                intent.putExtra("hosname",hosname);
+                intent.putExtra("hosOrgCode",hosOrgCode);
                 startActivity(intent);
                 break;
             case R.id.tab_yiyuandaohang:
@@ -269,7 +274,66 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                     }
                 }
         );
+        IStringRequest requset1 = new IStringRequest(Request.Method.GET,
+                Constants.SERVER_ADDRESS_BACKUP + "hospital/default",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("hos",response);
+                        Map<String, Object> object = null;
+                        Map<String, Object> data = null;
+
+                        try {
+                            object = JsonUtils.getMapObj(response);
+                            data = JsonUtils.getMapObj(object.get("data").toString());
+                            hosId=data.get("id").toString();
+                            hosname=data.get("hosOrgName").toString();
+                            hosOrgCode=data.get("hosOrgCode").toString();
+                            if (data.get("hosOrgName").toString().length()==0){
+                                textView11.setText("暂无信息");
+                            }else {
+                                textView11.setText(data.get("hosOrgName").toString());
+                            }
+
+                            if (data.get("hosLevel").toString().length()==0){
+                                textView11.setText("暂无信息");
+                            }else {
+                                textView10.setText(data.get("hosLevel").toString());
+                            }
+
+                            if (data.get("hosType").toString().length()==0){
+                                textView11.setText("暂无信息");
+                            }else {
+                                textView12.setText(data.get("hosType").toString());
+                            }
+                            if (data.get("hosAddr").toString().length()==0){
+                                textView11.setText("暂无信息");
+                            }else {
+                                textView14.setText(data.get("hosAddr").toString());
+                            }
+
+
+
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("aaa", error.toString());
+
+                    }
+                }
+        );
+
         queue.add(requset);
+        queue.add(requset1);
     }
 
     private void initPopWindow() {

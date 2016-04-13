@@ -86,7 +86,7 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
         initTitle();
 
         time = System.currentTimeMillis();
-        long time0 = System.currentTimeMillis() -6* 24 * 60 * 60 * 1000;
+        long time0 = System.currentTimeMillis() -100* 24 * 60 * 60 * 1000;
         long time1 = System.currentTimeMillis() + 24 * 60 * 60 * 1000;
         long time2 = System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000;
         long time3 = System.currentTimeMillis() + 3 * 24 * 60 * 60 * 1000;
@@ -271,9 +271,10 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
 
 
                 }
-                map.put("dateStart",mtime);
-                map.put("dateEnd",mtime1);
+                map.put("dateStart","");
+                map.put("dateEnd","");
                 return map;
+
             }
         };
 

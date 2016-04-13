@@ -50,6 +50,7 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
     private OptsharepreInterface share;
     private Dialog pb;
     private MyReceiver dataReceiver;
+    private TitleBarUtils titleBarUtils;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
     }
 
     private void initTitle() {
-        TitleBarUtils titleBarUtils = (TitleBarUtils) view.findViewById(R.id.titleBar);
+        titleBarUtils = (TitleBarUtils) view.findViewById(R.id.titleBar);
         titleBarUtils.setTitle("百姓医院");
         titleBarUtils.setLeftImage(R.mipmap.menu);
         titleBarUtils.setRightImageOne(R.mipmap.email);
@@ -214,6 +215,8 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
             int a=bundle.getInt("i");
             String mag=bundle.getString("msg");
             text1.setText("    "+mag);
+            titleBarUtils.setRightImageOne(R.mipmap.message2);
+
             o=new OptsharepreInterface(getActivity());
             o.putPres("unmsg",a+"");
          
