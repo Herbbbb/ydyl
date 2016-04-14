@@ -12,8 +12,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.adapter.DrugPriceAdapter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import base.BaseActivity;
@@ -43,6 +46,7 @@ public class DrugPriceActivity extends BaseActivity {
     ListView listView2;
     @Bind(R.id.search)
     SearchView search;
+    List<Map<String,Object>> list=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class DrugPriceActivity extends BaseActivity {
     public void initView() {
         initTitle();
         search.setHint(this,"药品");
+        initData();
 
     }
 
@@ -81,10 +86,13 @@ public class DrugPriceActivity extends BaseActivity {
             }
         });
     }
+
+
+
     private void  initData(){
         RequestQueue queue = Volley.newRequestQueue(getBaseContext());
         IStringRequest requset = new IStringRequest(Request.Method.POST,
-                Constants.SERVER_ADDRESS_BACKUP + "hospital/default",
+                Constants.SERVER_ADDRESS_BACKUP + "hospital/medicinePrice",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -95,7 +103,9 @@ public class DrugPriceActivity extends BaseActivity {
                         try {
                             object = JsonUtils.getMapObj(response);
                             data = JsonUtils.getMapObj(object.get("data").toString());
-                            data.get("hosOrgName").toString();
+                            list=JsonUtils.getListMap(data.get("dugPriceList").toString());
+                            DrugPriceAdapter adapter=new DrugPriceAdapter(list,getBaseContext());
+                            listView2.setAdapter(adapter);
                         }catch (Exception e){
                             e.printStackTrace();
                         }
@@ -115,8 +125,9 @@ public class DrugPriceActivity extends BaseActivity {
             protected Map<String, String> getParams() {
                 //在这里设置需要post的参数
                 Map<String, String> map = new HashMap<String, String>();
-               // map.put("info", adv.toString());
+                map.put("hosId","1");
                 //map.put("token", token);
+
                 return map;
             }
         };

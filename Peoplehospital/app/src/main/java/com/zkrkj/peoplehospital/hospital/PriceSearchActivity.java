@@ -46,8 +46,8 @@ public class PriceSearchActivity extends BaseActivity {
 
     @Override
     public void initView() {
-       search1.setHint(this,"药品");
-        search.setHint(this,"服务项目");
+       search1.setHint(this,"医疗服务项目");
+        search.setHint(this,"药品");
         initTitle();
     }
 
