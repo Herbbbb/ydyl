@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,15 +35,18 @@ import util.ToastUtil;
 import widget.ProgressDialogStyle;
 
 /**
- * Created by miao on 2016/3/16.
- * 叫号跟踪activity
- */
+* Describe:     叫号跟踪
+* User:         LF
+* Date:         2016/4/14 17:02
+*/
 public class TrackingStationActivity extends BaseActivity {
 
     @Bind(R.id.call_num_list)
     RecyclerView callNumList;
     @Bind(R.id.btn_refresh)
     Button btnRefresh;
+    @Bind(R.id.tv_hospital_name)
+    TextView tvHospitalName;
 
     private Dialog pb;
 
@@ -62,11 +64,24 @@ public class TrackingStationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_station);
         ButterKnife.bind(this);
+        hosOrgName = getIntent().getStringExtra("hosname");
+        hosOrgCode = getIntent().getStringExtra("hosOrgCode");
         init();
     }
 
     private void init() {
         initTitle();
+        initListener();
+        initData();
+    }
+
+    /**
+     * Describe:     刷新监听
+     * User:         LF
+     * Date:         2016/4/14 16:58
+     */
+    private void initListener() {
+        tvHospitalName.setText(hosOrgName);
         btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,11 +91,10 @@ public class TrackingStationActivity extends BaseActivity {
                 initData();
             }
         });
-        initData();
     }
 
     /**
-     * Describe:     To Do
+     * Describe:     查询该医院所有门诊的跟踪号码
      * User:         LF
      * Date:         2016/4/14 11:35
      */
@@ -140,12 +154,16 @@ public class TrackingStationActivity extends BaseActivity {
 
     }
 
+    /**
+    * Describe:     刷新时间
+    * User:         LF
+    * Date:         2016/4/14 17:03
+    */
     private Handler handler = new Handler();
     int time, adaptertime, hour, minute, sec;
     public Runnable runnable = new Runnable() {
 
         public void run() {
-            Log.e(Constants.TAG,"start");
             for (Map<String, Object> obj : lists) {
                 if (obj.get("time") == null) {
                     obj.put("time", 1);

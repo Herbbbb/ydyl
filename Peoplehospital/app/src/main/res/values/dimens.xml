@@ -13,4 +13,6 @@
     <dimen name="margin">3dip</dimen>
     <dimen name="list_below">15sp</dimen>
     <dimen name="shouye_border">5dp</dimen>
+    <!--医院名称栏高度-->
+    <dimen name="hospital_height">50dp</dimen>
 </resources>
