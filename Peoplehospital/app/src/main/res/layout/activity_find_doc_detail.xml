@@ -64,7 +64,8 @@
                         android:layout_alignParentRight="true"
                         android:textSize="16sp"
                         android:layout_marginTop="5dp"
-                        android:text="主任医师"/>
+                        android:text="主任医师"
+                        android:id="@+id/zhicheng" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -72,7 +73,8 @@
                         android:layout_alignParentRight="true"
                         android:textSize="16sp"
                         android:layout_marginTop="5dp"
-                        android:text="北京大学第三医院 消化内科"/>
+                        android:text="北京大学第三医院 消化内科"
+                        android:id="@+id/yiyuan" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -99,7 +101,8 @@
                 android:layout_margin="10dp"
                 android:textSize="15sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="栗震亚，男，1981年华西医科大学口腔医学院研究生毕业，硕士。国际牙医师学院院士，甘肃省优秀专家。主任医师，教授，兰州大学硕士研究生导师，中华医学会甘肃省分会副会长。" />
+                android:text="栗震亚，男，1981年华西医科大学口腔医学院研究生毕业，硕士。国际牙医师学院院士，甘肃省优秀专家。主任医师，教授，兰州大学硕士研究生导师，中华医学会甘肃省分会副会长。"
+                android:id="@+id/jianjie" />
 
             <View
                 android:layout_width="match_parent"
@@ -162,7 +165,8 @@
                     </LinearLayout>
                     <LinearLayout
                         style="@style/table_col_border"
-                        >
+                        android:orientation="vertical"
+                        android:id="@+id/x1">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -170,7 +174,8 @@
                     </LinearLayout>
                     <LinearLayout
                         style="@style/table_col_border"
-                        >
+                        android:orientation="vertical"
+                        android:id="@+id/x2">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -178,7 +183,8 @@
                     </LinearLayout>
                     <LinearLayout
                         style="@style/table_col_border"
-                        >
+                        android:orientation="vertical"
+                        android:id="@+id/x3">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -186,7 +192,8 @@
                     </LinearLayout>
                     <LinearLayout
                         style="@style/table_col_border"
-                        >
+                        android:orientation="vertical"
+                        android:id="@+id/x4">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -194,7 +201,8 @@
                     </LinearLayout>
                     <LinearLayout
                         style="@style/table_col_border"
-                        >
+                        android:orientation="vertical"
+                        android:id="@+id/x5">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -202,7 +210,8 @@
                     </LinearLayout>
                     <LinearLayout
                         style="@style/table_col_border"
-                        >
+                        android:orientation="vertical"
+                        android:id="@+id/x6">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -210,7 +219,8 @@
                     </LinearLayout>
                     <LinearLayout
                         style="@style/table_col_border"
-                        >
+                        android:orientation="vertical"
+                        android:id="@+id/x7">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -227,48 +237,113 @@
                             android:text="上午"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_margin="1dp"
                         style="@style/table_col_border"
-                        >
-                        <Button
-                            style="@style/table_btn_no"/>
+                        android:orientation="vertical"
+                        android:id="@+id/a1">
+
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_margin="1dp"
                         style="@style/table_col_border"
-                        >
-                        <Button
-                            style="@style/table_btn_no"/>
+                        android:orientation="vertical"
+                        android:id="@+id/a2">
+
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_margin="1dp"
                         style="@style/table_col_border"
-                        >
+                        android:orientation="horizontal"
+                        android:id="@+id/a3">
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_margin="1dp"
                         style="@style/table_col_border"
-                        >
-                        <Button
-                            style="@style/table_btn_yes"/>
+                        android:orientation="vertical"
+                        android:id="@+id/a4">
+
                     </LinearLayout>
                     <LinearLayout
+
+                        android:layout_margin="1dp"
                         style="@style/table_col_border"
-                        >
-                        <Button
-                            style="@style/table_btn_yes"/>
+                        android:orientation="vertical"
+                        android:id="@+id/a5">
+
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/a6">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/a7">
+
+                    </LinearLayout>
+                </TableRow>
+                <TableRow>
+                    <LinearLayout
+
                         style="@style/table_col_border"
                         >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""/>
+                            android:text="下午"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_margin="1dp"
                         style="@style/table_col_border"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""/>
+                        android:orientation="vertical"
+                        android:id="@+id/p1">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/p2">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/p3">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/p4">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/p5">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/p6">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/p7">
+
                     </LinearLayout>
                 </TableRow>
                 <TableRow>
@@ -278,59 +353,58 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="下午"/>
+                            android:text="晚上"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_margin="1dp"
                         style="@style/table_col_border"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""/>
-                    </LinearLayout>
-                    <LinearLayout
-                        style="@style/table_col_border"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="#cccccc"
-                            android:text=""/>
-                    </LinearLayout>
-                    <LinearLayout
-                        style="@style/table_col_border"
-                        >
-                        <Button
-                            style="@style/table_btn_yes"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        style="@style/table_col_border"
-                        >
+                        android:orientation="vertical"
+                        android:id="@+id/n1">
 
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_margin="1dp"
                         style="@style/table_col_border"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""/>
+                        android:orientation="vertical"
+                        android:id="@+id/n2">
+
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_margin="1dp"
                         style="@style/table_col_border"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""/>
+                        android:orientation="vertical"
+                        android:id="@+id/n3">
+
+
+
                     </LinearLayout>
                     <LinearLayout
+                        android:layout_margin="1dp"
                         style="@style/table_col_border"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""/>
+                        android:orientation="vertical"
+                        android:id="@+id/n4">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/n5">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/n6">
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_margin="1dp"
+                        style="@style/table_col_border"
+                        android:orientation="vertical"
+                        android:id="@+id/n7">
+
                     </LinearLayout>
                 </TableRow>
             </TableLayout>

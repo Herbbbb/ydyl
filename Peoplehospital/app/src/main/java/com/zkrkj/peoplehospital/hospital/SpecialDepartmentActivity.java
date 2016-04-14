@@ -39,6 +39,7 @@ public class SpecialDepartmentActivity extends BaseActivity {
     @Bind(R.id.listView5)
     ListView listView5;
     String hosId, hosname1;
+    private String hosOrgCode="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class SpecialDepartmentActivity extends BaseActivity {
         hosname1 = getIntent().getStringExtra("hosname");
         hosname.setText(hosname1);
         hosId = getIntent().getStringExtra("hosId");
+        hosOrgCode = getIntent().getStringExtra("hosOrgCode");
         initTitle();
         network();
         listView5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,6 +68,8 @@ public class SpecialDepartmentActivity extends BaseActivity {
                 Intent intent=new Intent(getBaseContext(),DepartmentInformationActivity.class);
                 intent.putExtra("deptCode",departments.get(i).get("deptCode").toString());
                 intent.putExtra("keshi",departments.get(i).get("deptName").toString());
+                intent.putExtra("hosOrgCode",hosOrgCode);
+
                 intent.putExtra("hosId",hosId);
                 intent.putExtra("hosname",hosname1);
                 startActivity(intent);

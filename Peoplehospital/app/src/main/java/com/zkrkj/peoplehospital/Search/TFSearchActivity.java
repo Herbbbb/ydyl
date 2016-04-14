@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import base.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import util.Constants;
@@ -46,7 +47,7 @@ import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
 
-public class TFSearchActivity extends Activity implements OnClickListener {
+public class TFSearchActivity extends BaseActivity implements OnClickListener {
 
     public static final String SEARCH_HISTORY = "search_history";
     @Bind(R.id.titleBar)
@@ -88,6 +89,21 @@ public class TFSearchActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         init();
         initPopWindow();
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initAction() {
 
     }
 

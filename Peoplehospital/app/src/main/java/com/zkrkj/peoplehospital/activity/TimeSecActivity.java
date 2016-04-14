@@ -15,9 +15,12 @@ import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.adapter.MyAdapter;
 
+import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,21 +83,39 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
     public int getLayoutId() {
         return 0;
     }
+    private Long getStartTime(){
+           Calendar todayStart = Calendar.getInstance();
+              todayStart.set(Calendar.HOUR, 0);
+              todayStart.set(Calendar.MINUTE, 0);
+             todayStart.set(Calendar.MILLISECOND, 0);
+              return todayStart.getTime().getTime();
+          }
+
 
     @Override
     public void initView() {
         initTitle();
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
 
-        time = System.currentTimeMillis();
-        long time0 = System.currentTimeMillis() -100* 24 * 60 * 60 * 1000;
-        long time1 = System.currentTimeMillis() + 24 * 60 * 60 * 1000;
-        long time2 = System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000;
-        long time3 = System.currentTimeMillis() + 3 * 24 * 60 * 60 * 1000;
-        long time4 = System.currentTimeMillis() + 4 * 24 * 60 * 60 * 1000;
-        long time5 = System.currentTimeMillis() + 5 * 24 * 60 * 60 * 1000;
-        long time6 = System.currentTimeMillis() + 6 * 24 * 60 * 60 * 1000;
-        long time7 = System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000;
+
+       // System.out.println(cal.getTimeInMillis());
+      //  time = cal.getTimeInMillis();
+        time=getStartTime();
+        long time0 = time - 10*24 * 60 * 60 * 1000;
+        long time1 = time + 24 * 60 * 60 * 1000;
+        long time2 = time + 2 * 24 * 60 * 60 * 1000;
+        long time3 = time + 3 * 24 * 60 * 60 * 1000;
+        long time4 = time + 4 * 24 * 60 * 60 * 1000;
+        long time5 = time + 5 * 24 * 60 * 60 * 1000;
+        long time6 = time + 6 * 24 * 60 * 60 * 1000;
+        long time7 = time + 7 * 24 * 60 * 60 * 1000;
         date0 =new Date(time0);
+
+
         date  = new Date(time);
          date1 = new Date(time1);
         date2 = new Date(time2);
@@ -135,6 +156,7 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
     }
 
 
+
     private String riqi(Date date) {
         SimpleDateFormat format = new SimpleDateFormat("E");
         String xingqi = format.format(date);
@@ -144,7 +166,7 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
         return xingqi + "\n" + riqi;
     }
     private String riqi1(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-hh:mm:ss");
         String xingqi = format.format(date);
 
         Log.i("time",xingqi);
@@ -237,11 +259,11 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
                 //在这里设置需要post的参数
                 Map<String, String> map = new HashMap<String, String>();
 
-                map.put("hosId","1");
-                map.put("deptCode","");
+               // map.put("hosId","1");
+             //   map.put("deptCode","");
                 switch (postion){
                     case 1:
-                        mtime=riqi1(date0);
+                        mtime=riqi1(date);
                         mtime1=riqi1(date1);
                         break;
                     case 2:
@@ -271,8 +293,8 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
 
 
                 }
-                map.put("dateStart","");
-                map.put("dateEnd","");
+               map.put("dateStart",mtime);
+                map.put("dateEnd",mtime1);
                 return map;
 
             }

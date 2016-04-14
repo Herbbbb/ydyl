@@ -56,8 +56,8 @@ public class FindDocAdapter1 extends BaseAdapter {
             hold= (ViewHolder) view.getTag();
         }
         hold.textView1.setText(list1.get(i).get("name").toString());
-        hold.textView2.setText(list1.get(i).get("hosOrgName").toString());
-        hold.textView3.setText(list1.get(i).get("occuRange").toString());
+        hold.textView2.setText(list1.get(i).get("hosOrgName").toString()+"  "+list1.get(i).get("occuRange").toString());
+       // hold.textView3.setText(list1.get(i).get("occuRange").toString());
         hold.textView4.setText(list1.get(i).get("profeTitleDn").toString());
         return view;
     }

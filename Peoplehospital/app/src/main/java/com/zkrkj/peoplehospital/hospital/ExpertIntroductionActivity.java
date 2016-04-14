@@ -1,8 +1,10 @@
 package com.zkrkj.peoplehospital.hospital;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.adapter.FindDocAdapter;
 import com.zkrkj.peoplehospital.adapter.FindDocAdapter1;
+import com.zkrkj.peoplehospital.findDoc.FindDocDetail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +49,7 @@ public class ExpertIntroductionActivity extends BaseActivity {
     String hosCode="";
     String hosname1="";
     private List<Map<String,Object>> list1=new ArrayList<>();
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,16 @@ public class ExpertIntroductionActivity extends BaseActivity {
         hosId=getIntent().getStringExtra("hosId");
         hosname1=getIntent().getStringExtra("hosname");
         initData();
+
+        listView4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(getBaseContext(), FindDocDetail.class);
+                id=list1.get(i).get("id").toString();
+                intent.putExtra("id",id);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -89,7 +103,7 @@ public class ExpertIntroductionActivity extends BaseActivity {
     private void initData(){
         RequestQueue queue = Volley.newRequestQueue(getBaseContext());
         IStringRequest requset = new IStringRequest(Request.Method.POST,
-                Constants.SERVER_ADDRESS+"doctor",
+                Constants.SERVER_ADDRESS+"doctor/spec",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -111,10 +125,10 @@ public class ExpertIntroductionActivity extends BaseActivity {
             protected Map<String, String> getParams() {
                 //在这里设置需要post的参数
                 Map<String, String> map = new HashMap<String, String>();
-                 map.put("keyWord",hosname1);
-
-
-                return map;
+                if (hosCode!=null){
+                 map.put("hosCode",hosCode);
+                }
+                 return map;
             }
         };
 

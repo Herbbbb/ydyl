@@ -5,23 +5,22 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
+
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
+
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
+
 
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.Search.TFSearchActivity;
+import com.zkrkj.peoplehospital.activity.DrugPriceActivity;
+import com.zkrkj.peoplehospital.activity.ServicePriceActivity;
 
-import util.ToastUtil;
 
 
 /**
@@ -200,10 +199,39 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 //                break;
             case R.id.search_in:
                 //ToastUtil.ToastShow(getContext(),"搜索",true);
-                Intent intent=new Intent(mContext, TFSearchActivity.class);
-                Log.i("sousuo",etInput.getText().toString());
-                intent.putExtra("con",etInput.getText().toString());
-                mContext.startActivity(intent);
+                switch (etInput.getHint().toString()){
+                    case "医院/医生":
+                        Intent intent=new Intent(mContext, TFSearchActivity.class);
+                        Log.i("sousuo",etInput.getText().toString());
+                        intent.putExtra("con",etInput.getText().toString());
+                        mContext.startActivity(intent);
+                        break;
+                    case "医院":
+                        Intent intent1=new Intent(mContext, TFSearchActivity.class);
+                        Log.i("sousuo",etInput.getText().toString());
+                        intent1.putExtra("con",etInput.getText().toString());
+                        mContext.startActivity(intent1);
+                        break;
+                    case "医生":
+                        Intent intent2=new Intent(mContext, TFSearchActivity.class);
+                        Log.i("sousuo",etInput.getText().toString());
+                        intent2.putExtra("con",etInput.getText().toString());
+                        mContext.startActivity(intent2);
+                        break;
+                    case "药品":
+                        Intent intent3=new Intent(mContext, DrugPriceActivity.class);
+                        Log.i("sousuo",etInput.getText().toString());
+                        intent3.putExtra("con",etInput.getText().toString());
+                        mContext.startActivity(intent3);
+                        break;
+                    case "医疗服务项目":
+                        Intent intent4=new Intent(mContext, ServicePriceActivity.class);
+                        Log.i("sousuo",etInput.getText().toString());
+                        intent4.putExtra("con",etInput.getText().toString());
+                        mContext.startActivity(intent4);
+                        break;
+                }
+
                 break;
         }
     }

@@ -205,7 +205,7 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                 intent = new Intent(getActivity(), SpecialDepartmentActivity.class);
                 intent.putExtra("hosId",hosId);
                 intent.putExtra("hosname",hosname);
-
+                intent.putExtra("hosOrgCode",hosOrgCode);
                 startActivity(intent);
                 break;
             case R.id.tab_zhuanjiajieshao:
