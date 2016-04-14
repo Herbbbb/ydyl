@@ -80,12 +80,15 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_talk, null);
+        ButterKnife.bind(this, view);
+        share = new OptsharepreInterface(getActivity());
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        Log.e(Constants.TAG, share.getPres("token"));
         if (MyApplication.loginFlag) {
             lists.clear();
             totalCount = 0;
@@ -100,8 +103,6 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
     }
 
     private void init() {
-        ButterKnife.bind(this, view);
-        share = new OptsharepreInterface(getActivity());
         initWidget();
         initPatient();
         initView();
@@ -173,7 +174,6 @@ public class Frag_Talk extends BaseFragment implements View.OnClickListener {
     private void initData() {
         startIndex = totalCount + 1;
         Log.e(Constants.TAG, share.getPres("token"));
-        Log.e(Constants.TAG, share.getPres("id") );
         String url = Constants.SERVER_ADDRESS + "medicalRecords/patient-" + share.getPres("id") + "?limit=" + Constants.PAGE_SIZE + "&offset=" + startIndex + "&token=" + share.getPres("token");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
