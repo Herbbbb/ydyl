@@ -1,4 +1,5 @@
 package com.zkrkj.peoplehospital.activity;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.fragment.Frag_Home;
@@ -33,9 +35,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Fragment mNewsFragment;
     private Fragment mTalkFragment;
     private Fragment mUserFragment;
-    private ImageView image1,image2,image3,image4,docterimage;
-    private TextView textView1,textView2,textView3,textView4,doctertextView;
-
+    private ImageView image1, image2, image3, image4, docterimage;
+    private TextView textView1, textView2, textView3, textView4, doctertextView;
 
 
     @Override
@@ -52,38 +53,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initView() {
-        image1= (ImageView) findViewById(R.id.tab_home_image);
-        image2= (ImageView) findViewById(R.id.tab_hospital_image);
-        image3= (ImageView) findViewById(R.id.tab_find_image);
-        image4= (ImageView) findViewById(R.id.tab_user_image);
-        docterimage=(ImageView)findViewById(R.id.tab_docter);
-        textView1= (TextView) findViewById(R.id.tab_home_text);
-        textView2= (TextView) findViewById(R.id.tab_hospital_text);
-        textView3= (TextView) findViewById(R.id.tab_find_text);
-        textView4= (TextView) findViewById(R.id.tab_user_text);
-        doctertextView= (TextView) findViewById(R.id.tab_docter_text);
-        LinearLayout l1= (LinearLayout) findViewById(R.id.tab_home);
-        LinearLayout l2= (LinearLayout) findViewById(R.id.tab_hospitals);
-        LinearLayout l3= (LinearLayout) findViewById(R.id.tab_talk);
-        LinearLayout l4= (LinearLayout) findViewById(R.id.tab_user);
-        LinearLayout l5= (LinearLayout) findViewById(R.id.tab_docters);
+        image1 = (ImageView) findViewById(R.id.tab_home_image);
+        image2 = (ImageView) findViewById(R.id.tab_hospital_image);
+        image3 = (ImageView) findViewById(R.id.tab_find_image);
+        image4 = (ImageView) findViewById(R.id.tab_user_image);
+        docterimage = (ImageView) findViewById(R.id.tab_docter);
+        textView1 = (TextView) findViewById(R.id.tab_home_text);
+        textView2 = (TextView) findViewById(R.id.tab_hospital_text);
+        textView3 = (TextView) findViewById(R.id.tab_find_text);
+        textView4 = (TextView) findViewById(R.id.tab_user_text);
+        doctertextView = (TextView) findViewById(R.id.tab_docter_text);
+        LinearLayout l1 = (LinearLayout) findViewById(R.id.tab_home);
+        LinearLayout l2 = (LinearLayout) findViewById(R.id.tab_hospitals);
+        LinearLayout l3 = (LinearLayout) findViewById(R.id.tab_talk);
+        LinearLayout l4 = (LinearLayout) findViewById(R.id.tab_user);
+        LinearLayout l5 = (LinearLayout) findViewById(R.id.tab_docters);
         l1.setOnClickListener(this);
         l2.setOnClickListener(this);
         l3.setOnClickListener(this);
         l4.setOnClickListener(this);
         l5.setOnClickListener(this);
         select(0);
-      if (getIntent().getIntExtra("postion",0)!=0){
-          select(getIntent().getIntExtra("postion",0));
-      }else if(getIntent().getIntExtra("postion",1)==0){
-              select(0);
-          open();
-      }
-
-
-
-
-
+        if (getIntent().getIntExtra("postion", 0) != 0) {
+            select(getIntent().getIntExtra("postion", 0));
+        } else if (getIntent().getIntExtra("postion", 1) == 0) {
+            select(0);
+            open();
+        }
 
 
     }
@@ -92,6 +88,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void initAction() {
 
     }
+
     private void hideFragment(FragmentTransaction transaction) {
         if (mHomeFragment != null) {
             transaction.hide(mHomeFragment);
@@ -145,7 +142,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
-    long time=0;
+
+    long time = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -154,15 +153,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 time = System.currentTimeMillis();
                 Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
             } else {
-               // finish();
+                // finish();
                 MyApplication.getInstance().ExitApp();
             }
         }
         return true;
     }
+
     private void select(int position) {
         // 获取FragmentManager对象
-       // FragmentManager fm=getFragmentManager();
+        // FragmentManager fm=getFragmentManager();
         FragmentManager fm = getSupportFragmentManager();
         // 获取事务
         FragmentTransaction transaction = fm.beginTransaction();
@@ -231,6 +231,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         // 提交事务
         transaction.commit();
     }
+
     public void open() {
 
         Intent intent = new Intent(this, PushSmsService.class);
@@ -240,7 +241,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startService(intent);
 
     }
-
 
 
     private void changeStatus(int position) {

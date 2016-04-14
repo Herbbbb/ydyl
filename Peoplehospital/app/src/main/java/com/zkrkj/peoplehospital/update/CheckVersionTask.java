@@ -56,7 +56,7 @@ public class CheckVersionTask extends AsyncTask<Void, Integer, Boolean> {
         try {
 //			String verjson = NetworkTool.getContent(UPDATE_SERVER
 //					+ UPDATE_VERJSON);
-            String verjson = "{'success':'1','msg':'成功','data':{'version':'2','versionName':'1.1（build:2016-02-20）','content':'修复bug'}}";
+            String verjson = "{'success':'1','msg':'成功','data':{'version':'5720','versionName':'1.1（build:2016-02-20）','content':'修复bug'}}";
 
             object = JsonUtils.getMapObj(verjson);
             if (object.get("success").toString().equals("0")) {

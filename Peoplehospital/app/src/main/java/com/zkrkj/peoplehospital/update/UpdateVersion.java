@@ -11,11 +11,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.RelativeLayout;
 import android.support.v7.app.AlertDialog;
 
 import com.zkrkj.peoplehospital.update.service.UpdateService;
 
+import util.Constants;
 import util.ToastUtil;
 
 /**

@@ -13,7 +13,11 @@
         android:layout_above="@+id/ccc"
         android:layout_alignParentTop="true">
        </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/ccc"
+        android:background="#cccccc"/>
     <LinearLayout
         android:id="@+id/ccc"
 
