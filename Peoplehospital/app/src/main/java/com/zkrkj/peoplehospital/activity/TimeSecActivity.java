@@ -1,5 +1,6 @@
 package com.zkrkj.peoplehospital.activity;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,7 @@ import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
+import widget.ProgressDialogStyle;
 
 
 /**
@@ -67,6 +69,7 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
     private long time;
     private String mtime,mtime1;
     private Date date,date1,date2,date3,date4,date5,date6,date0,date7;
+    private Dialog pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,6 +236,10 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
 
     }
     private void initData(final int postion){
+        if(pb==null){
+            pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+            pb.show();
+        }
         RequestQueue queue = Volley.newRequestQueue(getBaseContext());
         IStringRequest requset = new IStringRequest(Request.Method.POST,
                 Constants.SERVER_ADDRESS+"arrayJob",
@@ -240,6 +247,7 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onResponse(String response) {
                         Log.i("haoyuan",response);
+                        pb.dismiss();
                          parsehaoyuan(response);
 
 
@@ -248,7 +256,7 @@ public class TimeSecActivity extends BaseActivity implements View.OnClickListene
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        pb.dismiss();
                         ToastUtil.ToastShow(getBaseContext(),"服务器好像出错误了",true);
 
                     }

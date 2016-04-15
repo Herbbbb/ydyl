@@ -1,5 +1,6 @@
 package com.zkrkj.peoplehospital.User;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
@@ -26,6 +27,7 @@ import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
+import widget.ProgressDialogStyle;
 
 public class EditUserActivity extends BaseActivity {
 
@@ -47,6 +49,7 @@ public class EditUserActivity extends BaseActivity {
     Button btnDel;
     private String name,gender,idNo,phone,id;
     private String token;
+    private Dialog pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +119,10 @@ public class EditUserActivity extends BaseActivity {
     }
 
     private void save() {
+        if(pb==null){
+            pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+            pb.show();
+        }
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
                 Constants.SERVER_ADDRESS+"patient/edit?name="+name+
@@ -123,6 +130,7 @@ public class EditUserActivity extends BaseActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        pb.dismiss();
                         Map<String,Object> object=null;
                         Map<String,Object> data=null;
 
@@ -148,6 +156,8 @@ public class EditUserActivity extends BaseActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        pb.dismiss();
+                        ToastUtil.ToastShow(getBaseContext(), "服务器好像出错误了", true);
                         Log.i("aaa",error.toString());
 
                     }

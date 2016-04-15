@@ -64,11 +64,11 @@ public class FindHosAdapter extends BaseAdapter{
             }else {
             holder= (ViewHolder) view.getTag();
         }
-        if (list1.get(i).get("hosLevel").toString().equals("3")){
+        if (list1.get(i).get("hosLevel").toString().equals("三级")){
             holder.textView3.setText("三级");
-        }else if (list1.get(i).get("hosLevel").toString().equals("2")) {
+        }else if (list1.get(i).get("hosLevel").toString().equals("二级")) {
             holder.textView3.setText("二级");
-        }else if (list1.get(i).get("hosLevel").toString().equals("1")) {
+        }else if (list1.get(i).get("hosLevel").toString().equals("一级")) {
             holder.textView3.setText("一级");
         }else if (list1.get(i).get("hosLevel").toString().equals("")){
             holder.textView3.setText("未知医院等级");

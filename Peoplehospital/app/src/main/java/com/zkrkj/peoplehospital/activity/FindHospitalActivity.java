@@ -1,9 +1,13 @@
 package com.zkrkj.peoplehospital.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,6 +39,7 @@ import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
 import view.SearchView;
+import widget.ProgressDialogStyle;
 import widget.RefreshLayout;
 
 /**
@@ -68,7 +73,15 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
     private String hosLevel = "", hosType = "";
     List<Map<String, Object>> list = new ArrayList<>();
     private String hosname = "";
-    private int totalCount,startIndex;
+    LinearLayoutManager mLayoutManager;
+    private int totalCount = 0;
+    private int startIndex = 1;
+
+    private FindHosAdapter adapter;
+    private Dialog pb;
+    private RequestQueue queue;
+    private boolean first=true;
+    private boolean dengji=false;
 
 
     @Override
@@ -92,36 +105,14 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
         if (getIntent().getStringExtra("hosname") != null) {
             hosname = getIntent().getStringExtra("hosname");
         }
+        queue = Volley.newRequestQueue(getBaseContext());
         hoslist();
 
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
         tv3.setOnClickListener(this);
-//
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
-            @Override
-            public void onRefresh() {
-                totalCount = 0;
-                startIndex = 1;
-               // lists.clear();
-               // initData();
-                refresh.setRefreshing(false);
-            }
-        });
-        refresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
-            @Override
-            public void onLoad() {
 
-                if (totalCount != 0 && totalCount % Constants.PAGE_SIZE != 0) {
-                    refresh.setLoading(false);
-                    ToastUtil.ToastShow(getBaseContext(), "没有更多", false);
-                } else {
-                    // initData();
-                    refresh.setLoading(false);
-                }
-            }
-        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -133,7 +124,39 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
                 startActivity(intent);
             }
         });
+        initWidget();
 
+
+    }
+    private void initWidget() {
+
+        refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        //下拉刷新
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                list.clear();
+                totalCount = 0;
+                startIndex = 1;
+                hoslist();
+                refresh.setRefreshing(false);
+            }
+        });
+        refresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+            @Override
+            public void onLoad() {
+                if (totalCount > 0 && totalCount % Constants.PAGE_SIZE == 0) {
+                    hoslist();
+                     refresh.setLoading(false);
+
+
+                } else {
+
+                    ToastUtil.ToastShow(getBaseContext(), "没有更多", false);
+                    refresh.setLoading(false);
+                }
+            }
+        });
 
     }
 
@@ -162,21 +185,26 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void hoslist() {
-        RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+
+        if(pb==null){
+            pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+            pb.show();
+        }
+
         IStringRequest requset = new IStringRequest(Request.Method.POST,
-                Constants.SERVER_ADDRESS + "hospital?limit=" + Constants.PAGE_SIZE + "&offset=" + startIndex,
+                Constants.SERVER_ADDRESS + "hospital?limit=" + Constants.PAGE_SIZE + "&offset=" + totalCount,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         parsehos(response);
-
+                        pb.dismiss();
 
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        pb.dismiss();
                         ToastUtil.ToastShow(getBaseContext(), "服务器好像出错误了", true);
 
                     }
@@ -209,9 +237,20 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
             object = JsonUtils.getMapObj(response);
             data = JsonUtils.getMapObj(object.get("data").toString());
             hospitalSimples = JsonUtils.getListMap(data.get("hospitalSimples").toString());
-            list = hospitalSimples;
-            listView.setAdapter(new FindHosAdapter(hospitalSimples, getBaseContext()
-            ));
+            if (first||dengji){
+                list = hospitalSimples;
+                first=false;
+                dengji=false;
+                adapter=new FindHosAdapter(list, getBaseContext());
+                listView.setAdapter(adapter);
+            }else {
+
+                list.addAll(hospitalSimples);
+                adapter.notifyDataSetChanged();
+            }
+            totalCount = list.size();
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -290,20 +329,36 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
                     tv2.setText(l2.get(i).toString() + "▼");
                     switch (l2.get(i).toString()) {
                         case "三级":
-                            hosLevel = 3 + "";
+                            hosLevel =3+"";
+                            ToastUtil.ToastShow(getBaseContext(),hosLevel.toString(),true);
+                            dengji=true;
+                            totalCount=0;
+                            hoslist();
                             break;
                         case "二级":
-                            hosLevel = 2 + "";
+                            hosLevel = 2+"";
+                            ToastUtil.ToastShow(getBaseContext(),hosLevel.toString(),true);
+                            dengji=true;
+                            totalCount=0;
+                            hoslist();
                             break;
                         case "一级":
-                            hosLevel = 1 + "";
+                            hosLevel =1+"";
+                            dengji=true;
+                            totalCount=0;
+                            ToastUtil.ToastShow(getBaseContext(),hosLevel.toString(),true);
+                            hoslist();
                             break;
                         case "全部":
                             hosLevel = "";
+                            totalCount=0;
+                            ToastUtil.ToastShow(getBaseContext(),hosLevel.toString(),true);
+                            dengji=true;
+                            hoslist();
                             break;
                     }
                     popupWindow.dismiss();
-                    hoslist();
+
 
                 }
             });

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.User.UnreadMessagesActivity;
 import com.zkrkj.peoplehospital.activity.DrugPriceActivity;
 import com.zkrkj.peoplehospital.activity.FindDocActivity;
 import com.zkrkj.peoplehospital.login.LoginActivity;
@@ -103,7 +104,10 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
         titleBarUtils.setRightButtonOneClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                text1.setText("等待新消息");
+                titleBarUtils.setRightImageOne(R.mipmap.email);
+                text1.setText("    等待新消息");
+                Intent intent=new Intent(getActivity(), UnreadMessagesActivity.class);
+                startActivity(intent);
             }
         });
     }

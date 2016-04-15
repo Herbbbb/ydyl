@@ -1,4 +1,5 @@
 package com.zkrkj.peoplehospital.User;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -25,6 +26,7 @@ import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
+import widget.ProgressDialogStyle;
 import widget.RefreshLayout;
 public class MyUserActivity extends BaseActivity {
     List<Map<String, Object>> list1 = null;
@@ -37,6 +39,7 @@ public class MyUserActivity extends BaseActivity {
     @Bind(R.id.slistview)
     RefreshLayout slistview;
     private Button button3;
+    private Dialog pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +87,17 @@ public class MyUserActivity extends BaseActivity {
         o = new OptsharepreInterface(this);
         String token = o.getPres("token");
         RequestQueue queue = Volley.newRequestQueue(this);
+        if(pb==null){
+            pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+            pb.show();
+        }
         IStringRequest requset = new IStringRequest(Request.Method.GET,
                 Constants.SERVER_ADDRESS+ "patients?limit=20&offset=0&token=" + token,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.i("aaa", response);
+                        pb.dismiss();
                         parseuser(response);
 
 
@@ -99,7 +107,7 @@ public class MyUserActivity extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i("err", error.toString());
-
+                      pb.dismiss();
                     }
                 }
         );

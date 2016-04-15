@@ -71,6 +71,8 @@ public class ExpertIntroductionActivity extends BaseActivity {
         hosCode=getIntent().getStringExtra("hosOrgCode");
         hosId=getIntent().getStringExtra("hosId");
         hosname1=getIntent().getStringExtra("hosname");
+
+        ToastUtil.ToastShow(this,hosCode,true);
         initData();
 
         listView4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
