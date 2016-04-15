@@ -185,13 +185,59 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.btn_date_up:
                 setDate(-7);
+
+                rem();
+
+                cal.setTime(firstDay);
+                cal.add(Calendar.DAY_OF_MONTH, -7);
+                firstDay = cal.getTime();
+                cal.setTime(endDay);
+                cal.add(Calendar.DAY_OF_MONTH, -7);
+                endDay = cal.getTime();
+                hoslist();
+
+
                 break;
             case R.id.btn_date_down:
                 setDate(7);
+
+                rem();
+                
+                cal.setTime(firstDay);
+                cal.add(Calendar.DAY_OF_MONTH, 7);
+                firstDay = cal.getTime();
+                cal.setTime(endDay);
+                cal.add(Calendar.DAY_OF_MONTH, 7);
+                endDay = cal.getTime();
+                hoslist();
                 break;
             default:
                 break;
         }
+    }
+    private void rem(){
+        removeView(a1);
+        removeView(a2);
+        removeView(a3);
+        removeView(a4);
+        removeView(a5);
+        removeView(a6);
+        removeView(a7);
+        removeView(p1);
+        removeView(p2);
+        removeView(p3);
+        removeView(p4);
+        removeView(p5);
+        removeView(p6);
+        removeView(p7);
+        removeView(n1);
+        removeView(n2);
+        removeView(n3);
+        removeView(n4);
+        removeView(n5);
+        removeView(n6);
+        removeView(n7);
+        removeView(n7);
     }
 
     /**
@@ -223,6 +269,18 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
         SimpleDateFormat format = new SimpleDateFormat("E");
         String xingqi = format.format(date);
         return xingqi;
+    }
+    private void removeView(LinearLayout linearLayout) {
+        //获取linearlayout子view的个数
+        int count = linearLayout.getChildCount();
+
+        //第count-1个是那个文字被置中的textview
+        //因此，在remove的时候，只能操作的是0<location<count-1这个范围的
+        //在执行每次remove时，我们从count-2的位置即textview上面的那个控件开始删除~
+        if (count > 0) {
+            //count-2>0用来判断当前linearlayout子view数多于2个，即还有我们点add增加的button
+            linearLayout.removeViewAt(0);
+        }
     }
 
     @Override

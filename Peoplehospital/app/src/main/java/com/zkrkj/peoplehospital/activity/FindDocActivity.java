@@ -257,13 +257,12 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
 
 
         l3.add("全部");
-
-        l3.add("主任医师");
+        l3.add("普通医师");
         l3.add("副主任医师");
+        l3.add("主任医师");
+        l3.add("特约专家");
+        l3.add("其他");
 
-        l3.add("主治医师");
-        l3.add("医师");
-        l3.add("医士");
 
 
         if (x == 1) {
@@ -294,6 +293,43 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     tv3.setText(l3.get(i).toString() + "▼");
+//                    switch (l3.get(i).toString()) {
+//                        case "全部":
+//                            hosType = "";
+//                            ToastUtil.ToastShow(getBaseContext(), hosLevel.toString(), true);
+//                            dengji = true;
+//                            totalCount = 0;
+//                            hoslist();
+//                            break;
+//                        case "医院":
+//                            hosType = "A";
+//                            ToastUtil.ToastShow(getBaseContext(), hosType.toString(), true);
+//                            dengji = true;
+//                            totalCount = 0;
+//                            hoslist();
+//                            break;
+//                        case "社区卫生服务中心（站）":
+//                            hosType = "B";
+//                            dengji = true;
+//                            totalCount = 0;
+//                            ToastUtil.ToastShow(getBaseContext(), hosType.toString(), true);
+//                            hoslist();
+//                            break;
+//                        case "":
+//                            hosType = "";
+//                            totalCount = 0;
+//                            ToastUtil.ToastShow(getBaseContext(), hosType.toString(), true);
+//                            dengji = true;
+//                            hoslist();
+//                            break;
+//                        default:
+//                            hosType = "B";
+//                            dengji = true;
+//                            totalCount = 0;
+//                            ToastUtil.ToastShow(getBaseContext(), hosType.toString(), true);
+//                            hoslist();
+//                            break;
+//                    }
                     popupWindow.dismiss();
                 }
             });
