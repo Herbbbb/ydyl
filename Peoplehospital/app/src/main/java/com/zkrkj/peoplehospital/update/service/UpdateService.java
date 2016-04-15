@@ -61,7 +61,7 @@ public class UpdateService extends Service {
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		notification = new Notification();
 		notification.flags = Notification.FLAG_AUTO_CANCEL;
-		notification.icon = R.mipmap.ic_launcher;
+		notification.icon = R.mipmap.desk;
 		notification.tickerText = Config.APP_NAME + "更新";
 		notification.when = System.currentTimeMillis();
 		notification.defaults = Notification.DEFAULT_LIGHTS;

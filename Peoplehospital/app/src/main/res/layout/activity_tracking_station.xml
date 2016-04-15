@@ -14,13 +14,13 @@
     </util.TitleBarUtils>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/hospital_height"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:textSize="16sp"
         android:textColor="#000000"
         android:text="北京大学第三医院"
-
+        android:id="@+id/tv_hospital_name"
         />
     <View
         android:layout_width="match_parent"
@@ -29,68 +29,25 @@
         />
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/call_num_list"
+            android:layout_width="match_parent"
+            android:layout_above="@+id/btn_refresh"
+            android:layout_height="match_parent"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/linearLayout">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:textColor="#000000"
-                android:text="88"
-                android:background="#FFCC00"
-                android:gravity="center"
-                android:layout_weight="1"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="当前叫号"
-                android:background="#33CC99"
-                android:textColor="#ffffff"
-                android:gravity="center"
-                />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="儿科门诊"
-            android:textColor="#000000"
-            android:id="@+id/textView41"
-            android:layout_alignTop="@+id/linearLayout"
-            android:layout_toRightOf="@+id/linearLayout"
-            android:layout_toEndOf="@+id/linearLayout" />
+            android:background="@drawable/login_btn_register"
+            android:textColor="@color/white"
+            android:text="刷新"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/btn_refresh" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="更新与2小时前"
-            android:id="@+id/textView42"
-            android:layout_marginBottom="20dp"
-
-            android:layout_alignBottom="@+id/linearLayout"
-            android:layout_alignLeft="@+id/textView41"
-            android:layout_alignStart="@+id/textView41" />
     </RelativeLayout>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:id="@+id/listView3"
-        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>

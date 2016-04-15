@@ -28,6 +28,11 @@ import util.Constants;
 import util.TitleBarUtils;
 import widget.FitGridView;
 
+/**
+* Describe:     此接口废弃
+* User:         LF
+* Date:         2016/4/14 10:05
+*/
 public class ProcinceActivity extends BaseActivity {
 
 	private LinearLayout ll_zxs,ll_s,ll_zzq;

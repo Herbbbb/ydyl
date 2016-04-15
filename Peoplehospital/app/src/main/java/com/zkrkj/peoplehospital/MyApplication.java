@@ -3,6 +3,7 @@ package com.zkrkj.peoplehospital;
 import android.app.Activity;
 import android.app.Application;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.util.Stack;
 
 import base.OptsharepreInterface;
+import util.Constants;
 import util.LogUtil;
 import util.NetUtil;
 import util.SharedPreferenceUtil;
@@ -45,6 +47,7 @@ public class MyApplication extends Application {
        // String flag = SharedPreferenceUtil.readString(getApplicationContext(), "loginFlag", "false");
         o=new OptsharepreInterface(getApplicationContext());
         String flag=o.getPres("loginFlag");
+        Log.e(Constants.TAG,flag);
         loginFlag = Boolean.parseBoolean(flag);
         //获取user对象
 
@@ -183,4 +186,6 @@ public class MyApplication extends Application {
 
         }
     }
+
+
 }

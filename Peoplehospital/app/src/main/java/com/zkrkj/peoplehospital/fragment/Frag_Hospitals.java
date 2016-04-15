@@ -197,39 +197,41 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                 intent.putExtra("hosname",hosname);
                 startActivity(intent);
                 break;
-            case R.id.tab_yuyueguahao:
+            case R.id.tab_yuyueguahao://预约挂号
                 intent = new Intent(getActivity(), DepartmentRegistered.class);
                 startActivity(intent);
                 break;
-            case R.id.tab_tesekeshi:
+            case R.id.tab_tesekeshi://特色科室
                 intent = new Intent(getActivity(), SpecialDepartmentActivity.class);
                 intent.putExtra("hosId",hosId);
                 intent.putExtra("hosname",hosname);
                 intent.putExtra("hosOrgCode",hosOrgCode);
                 startActivity(intent);
                 break;
-            case R.id.tab_zhuanjiajieshao:
+            case R.id.tab_zhuanjiajieshao://专家介绍
                 intent = new Intent(getActivity(), ExpertIntroductionActivity.class);
                 intent.putExtra("hosId",hosId);
                 intent.putExtra("hosname",hosname);
                 intent.putExtra("hosOrgCode",hosOrgCode);
                 startActivity(intent);
                 break;
-            case R.id.tab_yiyuandaohang:
+            case R.id.tab_yiyuandaohang://医院导航
                 intent = new Intent(getActivity(), HospitalNavigationActivity.class);
                 intent.putExtra("hosId",hosId);
                 intent.putExtra("hosname",hosname);
                 startActivity(intent);
                 break;
-            case R.id.tab_jiaohaogenzong:
+            case R.id.tab_jiaohaogenzong://叫号跟踪
                 intent = new Intent(getActivity(), TrackingStationActivity.class);
+                intent.putExtra("hosOrgCode",hosId);
+                intent.putExtra("hosname",hosname);
                 startActivity(intent);
                 break;
-            case R.id.tab_jiagechaxun:
+            case R.id.tab_jiagechaxun://价格查询
                 intent = new Intent(getActivity(), PriceSearchActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.textView15:
+            case R.id.textView15://切换医院
                 ToastUtil.ToastShow(getActivity() ,"切换",false);
                 initPopWindow();
                 showPop(view, 50, 50, 20);
