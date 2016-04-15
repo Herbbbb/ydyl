@@ -92,7 +92,7 @@ public class HospitalNavigationActivity extends BaseActivity {
     public void network() {
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP + "hospital/" + hosId,
+                Constants.SERVER_ADDRESS + "hospital/" + hosId,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

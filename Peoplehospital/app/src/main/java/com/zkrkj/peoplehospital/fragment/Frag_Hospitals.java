@@ -249,7 +249,7 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
     public void hoslist() {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP + "hospital",
+                Constants.SERVER_ADDRESS + "hospital",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -279,7 +279,7 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                 }
         );
         IStringRequest requset1 = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP + "hospital/default",
+                Constants.SERVER_ADDRESS + "hospital/default",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

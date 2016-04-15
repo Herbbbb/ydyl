@@ -92,7 +92,7 @@ public class DrugPriceActivity extends BaseActivity {
     private void  initData(){
         RequestQueue queue = Volley.newRequestQueue(getBaseContext());
         IStringRequest requset = new IStringRequest(Request.Method.POST,
-                Constants.SERVER_ADDRESS_BACKUP + "hospital/medicinePrice",
+                Constants.SERVER_ADDRESS + "hospital/medicinePrice",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
