@@ -5,17 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-
-    <util.TitleBarUtils
-        android:id="@+id/titleBar"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="46dp"/>
-
-
-
-
+        android:layout_height="@dimen/bigButtonHeight"
+        android:background="#2ec075"
+        android:gravity="center"
+        android:text="健康资讯"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
     <RadioGroup
         android:id="@+id/rg"
         android:layout_width="match_parent"

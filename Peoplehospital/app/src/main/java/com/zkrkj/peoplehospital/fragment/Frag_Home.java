@@ -12,15 +12,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.activity.DrugPriceActivity;
 import com.zkrkj.peoplehospital.activity.FindDocActivity;
+import com.zkrkj.peoplehospital.adapter.HomeNewsAdapter;
 import com.zkrkj.peoplehospital.login.LoginActivity;
 import com.zkrkj.peoplehospital.activity.FindHospitalActivity;
 import com.zkrkj.peoplehospital.activity.ServicePriceActivity;
 import com.zkrkj.peoplehospital.registered.RegisteredMain;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import base.BaseFragment;
 import base.OptsharepreInterface;
@@ -47,6 +53,9 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
     LinearLayout ll_yygh;
     TextView text1;
 
+    private ListView health_news_lv;
+    private List<Map<String,Object>> mLists=new ArrayList<Map<String,Object>>();
+    
     private OptsharepreInterface share;
     private Dialog pb;
     private MyReceiver dataReceiver;
@@ -54,25 +63,31 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onStart();
         view = inflater.inflate(R.layout.frag_home, null);
         share=new OptsharepreInterface(getActivity());
-        Log.e(Constants.TAG,"行政区划状态："+share.getPres("isFirst SavaXzqh"));
-        if(share.getPres("isFirstSavaXzqh").equals("0")){
-            new MyTask().execute();//加载行政区划数据
-        }else{
-            initWidget();
-            initView();
-            initTitle();
-        }
+        init();
+        return view;
+    }
+
+    private void init(){
+        initWidget();
+        initView();
+        initTitle();
+        initNewsData();
+        initReceiver();
+    }
+
+    private void initNewsData() {
+        health_news_lv.setAdapter(new HomeNewsAdapter(getActivity(), mLists));
+    }
+
+    private void initReceiver() {
         dataReceiver = new MyReceiver();//动态注册广播
         IntentFilter filter = new IntentFilter();// 创建IntentFilter对象
         filter.addAction("android.intent.action.test");
         getActivity().registerReceiver(dataReceiver, filter);// 注册Broadcast Receiver
-        super.onStart();
-        return view;
     }
-
-
 
 
     private void initWidget() {
@@ -84,7 +99,7 @@ public class Frag_Home extends BaseFragment implements View.OnClickListener {
         finddoc=(LinearLayout) view.findViewById(R.id.finddoc);
         findhos1=(LinearLayout) view.findViewById(R.id.findhos1);
         ll_yygh=(LinearLayout) view.findViewById(R.id.ll_yygh);
-
+        health_news_lv= (ListView) view.findViewById(R.id.health_news_lv);
     }
 
     private void initTitle() {

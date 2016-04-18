@@ -106,18 +106,24 @@ public class SeeDocDetailJcd extends BaseFragment {
                     object = JsonUtils.getMapObj(list.get(position).get("checkReport").toString());
                 } catch (Exception e) {
                 }
-                //主观描述
-                if (TextUtils.isEmpty(object.get("reportImpression").toString())) {
+                if(object==null){
                     ((MyHolders) holder).tv_zg.setText("无");
-                } else {
-                    ((MyHolders) holder).tv_zg.setText(object.get("reportImpression").toString());
-                }
-                //客观描述
-                if (TextUtils.isEmpty(object.get("reportDescription").toString())) {
                     ((MyHolders) holder).tv_kg.setText("无");
-                } else {
-                    ((MyHolders) holder).tv_kg.setText(object.get("reportDescription").toString());
+                }else{
+                    //主观描述
+                    if (TextUtils.isEmpty(object.get("reportImpression").toString())) {
+                        ((MyHolders) holder).tv_zg.setText("无");
+                    } else {
+                        ((MyHolders) holder).tv_zg.setText(object.get("reportImpression").toString());
+                    }
+                    //客观描述
+                    if (TextUtils.isEmpty(object.get("reportDescription").toString())) {
+                        ((MyHolders) holder).tv_kg.setText("无");
+                    } else {
+                        ((MyHolders) holder).tv_kg.setText(object.get("reportDescription").toString());
+                    }
                 }
+
             }
         }
 

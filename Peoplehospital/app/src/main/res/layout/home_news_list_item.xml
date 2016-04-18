@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:background="@color/white"
+    android:layout_marginTop="10dp"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_news_img"
+        android:layout_marginLeft="10dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@mipmap/zixun_01"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="健康饮食，预防糖尿病"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:maxLines="2"
+            android:text="我国悠久的茶文化表明，常喝茶益于身体健康。唐朝诗人顾况在《茶赋》中写道：“滋饭蔬之精素、攻肉食之膻腻、发当暑之清吟、涤通宵之昏寐。"/>
+
+    </LinearLayout>
+</LinearLayout>

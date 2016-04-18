@@ -17,6 +17,11 @@ import butterknife.ButterKnife;
 import util.SerializableMap;
 import util.TitleBarUtils;
 
+/**
+* Describe:     就医导航详情
+* User:         LF
+* Date:         2016/4/18 10:37
+*/
 public class MedicalNaviDetail extends BaseActivity {
 
 

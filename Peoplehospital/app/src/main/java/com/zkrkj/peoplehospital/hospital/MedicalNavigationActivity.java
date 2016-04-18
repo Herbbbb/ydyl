@@ -30,15 +30,17 @@ import butterknife.ButterKnife;
 import util.Constants;
 import util.JsonUtils;
 import util.SerializableMap;
+import util.SpaceItemDecoration;
 import util.TitleBarUtils;
 import util.ToastUtil;
 import view.DividerGridItemDecoration;
 import widget.ProgressDialogStyle;
 
 /**
- * Created by miao on 2016/3/16.
- * 就医导航activity
- */
+* Describe:     就医导航列表
+* User:         LF
+* Date:         2016/4/18 10:38
+*/
 public class MedicalNavigationActivity extends BaseActivity {
 
 
@@ -149,7 +151,7 @@ public class MedicalNavigationActivity extends BaseActivity {
 
     private void initWidget() {
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        recyclerview.addItemDecoration(new DividerGridItemDecoration(this));
+        recyclerview.addItemDecoration(new SpaceItemDecoration(this,1));
         recyclerview.setAdapter(new MyRecyclerview());
     }
 
