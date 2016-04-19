@@ -92,7 +92,7 @@ public class ServicePriceActivity extends BaseActivity {
         refresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                if (totalCount > 0 && totalCount % Constants.PAGE_SIZE != 0) {
+                if (totalCount > 0 && totalCount % Constants.PAGE_SIZE == 0) {
 
                     refresh.setLoading(false);
                     initData();

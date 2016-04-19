@@ -204,7 +204,11 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity android:name=".xzqh.NewProcinceActivity" />
-
+        <activity
+            android:name=".User.MyCard"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name=".User.AddHosCard"></activity>
     </application>
 
 </manifest>

@@ -118,6 +118,9 @@ public class FindHospitalActivity extends BaseActivity implements View.OnClickLi
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 intent.putExtra("postion", 1);
+                intent.putExtra("hosLevel", list.get(i).get("hosLevel").toString());
+                intent.putExtra("hosType", list.get(i).get("hosType").toString());
+               // intent.putExtra("hosAddr", list.get(i).get("hosAddr").toString());
                 intent.putExtra("hosOrgName", list.get(i).get("hosOrgName").toString());
                 intent.putExtra("hosOrgCode", list.get(i).get("hosOrgCode").toString());
                 intent.putExtra("hosId", list.get(i).get("hosId").toString());

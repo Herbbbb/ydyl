@@ -184,31 +184,33 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_date_up:
-                setDate(-7);
+
 
                 rem();
 
-                cal.setTime(firstDay);
-                cal.add(Calendar.DAY_OF_MONTH, -7);
-                firstDay = cal.getTime();
-                cal.setTime(endDay);
-                cal.add(Calendar.DAY_OF_MONTH, -7);
-                endDay = cal.getTime();
+//                cal.setTime(firstDay);
+//                cal.add(Calendar.DAY_OF_MONTH, -7);
+//                firstDay = cal.getTime();
+//                cal.setTime(endDay);
+//                cal.add(Calendar.DAY_OF_MONTH, -7);
+//                endDay = cal.getTime();
+                setDate(-7);
                 hoslist();
 
 
                 break;
             case R.id.btn_date_down:
-                setDate(7);
+
 
                 rem();
-                
-                cal.setTime(firstDay);
-                cal.add(Calendar.DAY_OF_MONTH, 7);
-                firstDay = cal.getTime();
-                cal.setTime(endDay);
-                cal.add(Calendar.DAY_OF_MONTH, 7);
-                endDay = cal.getTime();
+
+//                cal.setTime(firstDay);
+//                cal.add(Calendar.DAY_OF_MONTH, 7);
+//                firstDay = cal.getTime();
+//                cal.setTime(endDay);
+//                cal.add(Calendar.DAY_OF_MONTH, 7);
+//                endDay = cal.getTime();
+                setDate(7);
                 hoslist();
                 break;
             default:

@@ -146,6 +146,15 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
         ButterKnife.bind(this, view);
         hosname=getActivity().getIntent().getStringExtra("hosOrgName");
         hosId=getActivity().getIntent().getStringExtra("hosId");
+        textView10.setText(getActivity().getIntent().getStringExtra("hosLevel"));
+
+          //  textView14.setText(getActivity().getIntent().getStringExtra("hosAddr"));
+
+        textView12.setText(getActivity().getIntent().getStringExtra("hosType"));
+
+
+
+        hosOrgCode=getActivity().getIntent().getStringExtra("hosOrgCode");
         textView11.setText(hosname);
         initView();
         return view;
@@ -301,18 +310,20 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                                 }
 
                                 if (data.get("hosLevel").toString().length() == 0) {
-                                    textView11.setText("暂无信息");
+                                    textView10.setText("暂无信息");
                                 } else {
+
                                     textView10.setText(data.get("hosLevel").toString());
+
                                 }
 
                                 if (data.get("hosType").toString().length() == 0) {
-                                    textView11.setText("暂无信息");
+                                    textView12.setText("暂无信息");
                                 } else {
                                     textView12.setText(data.get("hosType").toString());
                                 }
                                 if (data.get("hosAddr").toString().length() == 0) {
-                                    textView11.setText("暂无信息");
+                                    textView14.setText("暂无信息");
                                 } else {
                                     textView14.setText(data.get("hosAddr").toString());
                                 }

@@ -90,7 +90,7 @@ public class DrugPriceActivity extends BaseActivity {
         refresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                if (totalCount > 0 && totalCount % Constants.PAGE_SIZE != 0&&totalCount>Constants.PAGE_SIZE) {
+                if (totalCount > 0 && totalCount % Constants.PAGE_SIZE == 0) {
                     initData();
                     refresh.setLoading(false);
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.zkrkj.peoplehospital.User.AddHosCard">
+    <util.TitleBarUtils
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bigButtonHeight" >
+    </util.TitleBarUtils>
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/et"
+        android:hint="医院名字"
+        android:enabled="false"
+        android:layout_margin="10dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="就医卡号"
+        android:background="@drawable/et"
+        android:layout_margin="10dp"
+        />
+
+
+
+</LinearLayout>
