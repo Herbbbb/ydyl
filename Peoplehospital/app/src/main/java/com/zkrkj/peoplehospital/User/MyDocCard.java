@@ -1,23 +1,38 @@
 package com.zkrkj.peoplehospital.User;
 
+import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.User.adapter.DocCardAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import base.BaseActivity;
+import base.OptsharepreInterface;
 import bean.MyRecord;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import util.Constants;
+import util.IStringRequest;
+import util.JsonUtils;
 import util.TitleBarUtils;
+import util.ToastUtil;
+import widget.ProgressDialogStyle;
 
 /**
  * Describe:     我的就医卡
@@ -26,18 +41,19 @@ import util.TitleBarUtils;
  */
 public class MyDocCard extends BaseActivity {
 
-    @Bind(R.id.tv_hospital_name)
-    TextView tvHospitalName;
-    @Bind(R.id.rl_lists)
-    RecyclerView rlLists;
+
     @Bind(R.id.titleBar)
     TitleBarUtils titleBar;
-    @Bind(R.id.tv_cardid)
-    TextView tvCardid;
-
+    @Bind(R.id.rl_lists)
+    ListView rlLists;
     private List<MyRecord> lists = new ArrayList<MyRecord>();
     private String hosOrgName = "";
     private String cardno = "";
+    private String token = "";
+    private Dialog pb;
+    private List<Map<String, Object>> list;
+    private TextView tvHospitalName;
+    private TextView tvCardid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +69,21 @@ public class MyDocCard extends BaseActivity {
     }
 
     private void initWidget() {
+        View v=View.inflate(this,R.layout.card1,null);
+        tvHospitalName= (TextView) v.findViewById(R.id.tv_hospital_name);
+        tvCardid= (TextView) v.findViewById(R.id.tv_cardid);
         hosOrgName = getIntent().getStringExtra("hosOrgName");
         cardno = getIntent().getStringExtra("cardno");
+        o = new OptsharepreInterface(this);
+        token = o.getPres("token");
+
         tvHospitalName.setText(hosOrgName);
-        tvCardid.setText("就医卡号： "+cardno);
-        rlLists.setLayoutManager(new LinearLayoutManager(this));
-        rlLists.setAdapter(new DocCardAdapter());
+        tvCardid.setText("就医卡号： " + cardno);
+        rlLists.addHeaderView(v);
+
+        mycard();
+
+
     }
 
     private void initTitle() {
@@ -73,41 +98,6 @@ public class MyDocCard extends BaseActivity {
         });
     }
 
-    class DocCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            MyViewHolder holder = new MyViewHolder(LayoutInflater.from(MyDocCard.this).inflate(R.layout.doc_card_lists_item, parent, false));
-            return holder;
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if (holder instanceof MyViewHolder) {
-                ((MyViewHolder) holder).tv_date.setText("03/25");
-                ((MyViewHolder) holder).tv_time.setText("14:01");
-                ((MyViewHolder) holder).tv_price.setText("-94.00");
-                ((MyViewHolder) holder).tv_note.setText("检验项目消费94.00元。");
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return 4;
-        }
-
-        class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView tv_date, tv_time, tv_price, tv_note;
-
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                tv_date = (TextView) itemView.findViewById(R.id.tv_date);
-                tv_time = (TextView) itemView.findViewById(R.id.tv_time);
-                tv_price = (TextView) itemView.findViewById(R.id.tv_price);
-                tv_note = (TextView) itemView.findViewById(R.id.tv_note);
-            }
-        }
-    }
 
     @Override
     public int getLayoutId() {
@@ -123,4 +113,65 @@ public class MyDocCard extends BaseActivity {
     public void initAction() {
 
     }
+
+
+    private void mycard() {
+        if (pb == null) {
+            pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+            pb.show();
+        }
+        RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+        IStringRequest requset = new IStringRequest(Request.Method.POST,
+                Constants.SERVER_ADDRESS + "opcard/" + cardno + "/",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("card", response);
+                        pb.dismiss();
+
+                        parsereg(response);
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pb.dismiss();
+                        ToastUtil.ToastShow(getBaseContext(), "服务器好像出错误了", true);
+
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+
+
+                //在这里设置需要post的参数
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("token", token);
+                return map;
+            }
+        };
+
+
+        queue.add(requset);
+    }
+
+    private void parsereg(String response) {
+        Map<String, Object> object = null;
+        List<Map<String, Object>> data = new ArrayList<>();
+        try {
+            object = JsonUtils.getMapObj(response);
+            data = JsonUtils.getListMap(object.get("data").toString());
+            list = data;
+            Log.i("card---listsize", list.size() + "");
+            rlLists.setAdapter(new DocCardAdapter(list, getBaseContext()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

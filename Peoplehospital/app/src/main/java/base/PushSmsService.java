@@ -190,7 +190,7 @@ public class PushSmsService extends Service {
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    ToastUtil.ToastShow(getBaseContext(), "服务器好像出了点问题", true);
+                                   // ToastUtil.ToastShow(getBaseContext(), "服务器好像出了点问题", true);
 
                                 }
                             }

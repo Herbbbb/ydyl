@@ -2,6 +2,9 @@ package com.zkrkj.peoplehospital.User;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.zkrkj.peoplehospital.R;
 
@@ -14,6 +17,16 @@ public class AddHosCard extends BaseActivity {
 
     @Bind(R.id.titleBar)
     TitleBarUtils titleBar;
+    @Bind(R.id.et_hosname)
+    EditText etHosname;
+    @Bind(R.id.et_cardid)
+    EditText etCardid;
+    @Bind(R.id.textView63)
+    TextView textView63;
+    @Bind(R.id.textView64)
+    TextView textView64;
+    @Bind(R.id.button5)
+    Button button5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
