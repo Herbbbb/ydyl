@@ -9,6 +9,7 @@ getPackageManager().getPackageInfo(getPackageName(),0).versionName，得到应�
 
  */
 
+import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -37,6 +38,7 @@ import util.Constants;
 import util.IStringRequest;
 import util.TitleBarUtils;
 import util.ToastUtil;
+import widget.ProgressDialogStyle;
 
 public class FeedBackActivity extends BaseActivity implements TextWatcher {
 
@@ -49,6 +51,7 @@ public class FeedBackActivity extends BaseActivity implements TextWatcher {
     private Map<String,String> params;
     private StringBuilder adv;
     private String advice="";
+    private Dialog pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +85,17 @@ public class FeedBackActivity extends BaseActivity implements TextWatcher {
 
                 o = new OptsharepreInterface(getBaseContext());
                 final String token = o.getPres("token");
+//                if(pb==null){
+//                    pb = ProgressDialogStyle.createLoadingDialog(getBaseContext(), "请求中...");
+//                    pb.show();
+//                }
                 RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                 IStringRequest requset = new IStringRequest(Request.Method.POST,
                         Constants.SERVER_ADDRESS+"useropinion/add?",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+                               // pb.dismiss();
                                 ToastUtil.ToastShow(getBaseContext(),"意见反馈成功",true);
                                 finish();
                                // parseuser(response);
@@ -98,7 +106,7 @@ public class FeedBackActivity extends BaseActivity implements TextWatcher {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-
+                            ///   pb.dismiss();
                                ToastUtil.ToastShow(getBaseContext(),"服务器好像出错误了",true);
 
                             }

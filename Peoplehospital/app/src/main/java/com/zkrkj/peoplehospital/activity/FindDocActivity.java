@@ -1,8 +1,10 @@
 package com.zkrkj.peoplehospital.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.adapter.FindDocAdapter1;
+import com.zkrkj.peoplehospital.adapter.FindHosAdapter;
 import com.zkrkj.peoplehospital.findDoc.FindDocDetail;
 import com.zkrkj.peoplehospital.hospital.adapter.PupAdapter;
 
@@ -35,6 +38,8 @@ import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
 import view.SearchView;
+import widget.ProgressDialogStyle;
+import widget.RefreshLayout;
 
 /**
  * Created by miao on 2016/3/16.
@@ -57,9 +62,16 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
     TextView tv3;
     @Bind(R.id.l1)
     LinearLayout l1;
+    @Bind(R.id.refresh)
+    RefreshLayout refresh;
     private PopupWindow popupWindow;
-    private List<Map<String, Object>> list1=new ArrayList<>();
-    private String id="";
+    private List<Map<String, Object>> list1 = new ArrayList<>();
+    private String id = "";
+    private Dialog pb;
+    private int totalCount=0,startIndex=1;
+    private FindDocAdapter1 adapter;
+    private boolean first=true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_find_doc);
@@ -73,6 +85,37 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
     public int getLayoutId() {
         return 0;
     }
+    private void initWidget() {
+
+        refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        //下拉刷新
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                list1.clear();
+                totalCount = 0;
+                startIndex = 1;
+                hoslist();
+                refresh.setRefreshing(false);
+            }
+        });
+        refresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+            @Override
+            public void onLoad() {
+                if (totalCount > 0 && totalCount % Constants.PAGE_SIZE == 0) {
+                    hoslist();
+                    refresh.setLoading(false);
+
+                } else {
+
+
+                    refresh.setLoading(false);
+                    ToastUtil.ToastShow(getBaseContext(), "没有更多", false);
+                }
+            }
+        });
+
+    }
 
     @Override
     public void initView() {
@@ -85,12 +128,14 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(getBaseContext(), FindDocDetail.class);
-                id=list1.get(i).get("id").toString();
-                intent.putExtra("id",id);
+
+                Intent intent = new Intent(getBaseContext(), FindDocDetail.class);
+                id = list1.get(i).get("id").toString();
+                intent.putExtra("id", id);
                 startActivity(intent);
             }
         });
+        initWidget();
 
     }
 
@@ -116,13 +161,19 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
         ButterKnife.unbind(this);
         super.onDestroy();
     }
+
     public void hoslist() {
+        if (pb == null) {
+            pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
+            pb.show();
+        }
         RequestQueue queue = Volley.newRequestQueue(getBaseContext());
         IStringRequest requset = new IStringRequest(Request.Method.POST,
                 Constants.SERVER_ADDRESS + "doctor",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        pb.dismiss();
                         parsedoc(response);
 
 
@@ -131,7 +182,7 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        pb.dismiss();
                         ToastUtil.ToastShow(getBaseContext(), "服务器好像出错误了", true);
 
                     }
@@ -141,8 +192,10 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
             protected Map<String, String> getParams() {
                 //在这里设置需要post的参数
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("keyWord","");
-
+                map.put("keyWord", "");
+                map.put("limit",Constants.PAGE_SIZE+"");
+              //  map.put("limit",5+"");
+                map.put("offset",totalCount+"");
 
                 return map;
             }
@@ -161,10 +214,18 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
             object = JsonUtils.getMapObj(response);
             data = JsonUtils.getMapObj(object.get("data").toString());
             doctors = JsonUtils.getListMap(data.get("doctors").toString());
-            list1 = doctors;
+            if (first){
+                list1 = doctors;
+                first=false;
+                adapter=new FindDocAdapter1(list1, getBaseContext());
+                listView.setAdapter(adapter);
+            }else {
 
-            listView.setAdapter(new FindDocAdapter1(list1, getBaseContext()
-            ));
+                list1.addAll(doctors);
+                adapter.notifyDataSetChanged();
+            }
+            totalCount = list1.size();
+
 
 
 
@@ -197,13 +258,12 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
 
 
         l3.add("全部");
-
-        l3.add("主任医师");
+        l3.add("普通医师");
         l3.add("副主任医师");
+        l3.add("主任医师");
+        l3.add("特约专家");
+        l3.add("其他");
 
-        l3.add("主治医师");
-        l3.add("医师");
-        l3.add("医士");
 
 
         if (x == 1) {
@@ -224,7 +284,7 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
 
 
                     popupWindow.dismiss();
-                   // hoslist();
+                    // hoslist();
 
                 }
             });
@@ -234,6 +294,43 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     tv3.setText(l3.get(i).toString() + "▼");
+//                    switch (l3.get(i).toString()) {
+//                        case "全部":
+//                            hosType = "";
+//                            ToastUtil.ToastShow(getBaseContext(), hosLevel.toString(), true);
+//                            dengji = true;
+//                            totalCount = 0;
+//                            hoslist();
+//                            break;
+//                        case "医院":
+//                            hosType = "A";
+//                            ToastUtil.ToastShow(getBaseContext(), hosType.toString(), true);
+//                            dengji = true;
+//                            totalCount = 0;
+//                            hoslist();
+//                            break;
+//                        case "社区卫生服务中心（站）":
+//                            hosType = "B";
+//                            dengji = true;
+//                            totalCount = 0;
+//                            ToastUtil.ToastShow(getBaseContext(), hosType.toString(), true);
+//                            hoslist();
+//                            break;
+//                        case "":
+//                            hosType = "";
+//                            totalCount = 0;
+//                            ToastUtil.ToastShow(getBaseContext(), hosType.toString(), true);
+//                            dengji = true;
+//                            hoslist();
+//                            break;
+//                        default:
+//                            hosType = "B";
+//                            dengji = true;
+//                            totalCount = 0;
+//                            ToastUtil.ToastShow(getBaseContext(), hosType.toString(), true);
+//                            hoslist();
+//                            break;
+//                    }
                     popupWindow.dismiss();
                 }
             });
@@ -266,7 +363,7 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
                 showPop(view, 0, 0, 0);
                 break;
             case R.id.tv2:
-                ToastUtil.ToastShow(getBaseContext(),"科室",true);
+                ToastUtil.ToastShow(getBaseContext(), "科室", true);
                 initPopWindow(2);
 
                 showPop(view, 0, 0, 0);

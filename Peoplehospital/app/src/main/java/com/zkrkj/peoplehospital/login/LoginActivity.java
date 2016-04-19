@@ -168,6 +168,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 o.putPres("password", pwd);
                 o.putPres("guid",userId);
                 MyApplication.loginFlag=true;
+                o.putPres("loginFlag","true");
                 MyApplication.token=token;
                 msg = object.get("msg").toString();
                 MyApplication.phone=account;

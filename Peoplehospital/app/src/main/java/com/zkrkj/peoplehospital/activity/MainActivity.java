@@ -74,11 +74,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         l4.setOnClickListener(this);
         l5.setOnClickListener(this);
         select(0);
+        if (MyApplication.loginFlag){
+            open();
+        }
         if (getIntent().getIntExtra("postion", 0) != 0) {
             select(getIntent().getIntExtra("postion", 0));
         } else if (getIntent().getIntExtra("postion", 1) == 0) {
             select(0);
-            open();
+
         }
 
 

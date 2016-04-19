@@ -13,8 +13,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.activity.MainActivity;
+import com.zkrkj.peoplehospital.login.LoginActivity;
 
 import java.util.Map;
 
@@ -67,6 +69,11 @@ public class ChangePasswordActivity extends BaseActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            if (!MyApplication.loginFlag){
+                ToastUtil.ToastShow(getBaseContext(),"您需要先登录",false);
+                Intent intent=new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
+                }
                 s1=etAccount.getText().toString();
                s2=etPwd.getText().toString();
                  s3=etPwd1.getText().toString();
@@ -80,6 +87,7 @@ public class ChangePasswordActivity extends BaseActivity {
                 else if (!s2.equals(s3)){
                     ToastUtil.ToastShow(getBaseContext(),"再次输入的密码不一致",true);
                 }else {
+
                     change();
                 }
             }
@@ -96,7 +104,23 @@ public class ChangePasswordActivity extends BaseActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.i("aaa",response);
+
                         Map<String, Object> object = null;
+                        try {
+                            object=JsonUtils.getMapObj(response);
+                            if (object.get("success").equals("1")){
+                                o.putPres("loginFlag","false");
+                                ToastUtil.ToastShow(getBaseContext(),"密码修改成功您需要重新登录",true);
+                                Intent intent=new Intent(getBaseContext(), LoginActivity.class);
+                                startActivity(intent);
+                            }else {
+                                ToastUtil.ToastShow(getBaseContext(),"服务器未知异常",true);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
 
 
 
@@ -105,6 +129,7 @@ public class ChangePasswordActivity extends BaseActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        ToastUtil.ToastShow(getBaseContext(),"服务器好像出了点错误" ,false);
                         Log.i("aaa",error.toString());
 
                     }
@@ -123,14 +148,14 @@ public class ChangePasswordActivity extends BaseActivity {
    private void initTitle() {
        TitleBarUtils titleBarUtils = (TitleBarUtils) findViewById(R.id.titleBar);
        titleBarUtils.setTitle("修改密码");
-
-
        titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
 
            @Override
            public void onClick(View v) {
                finish();
            }
+
        });
+
    }
 }

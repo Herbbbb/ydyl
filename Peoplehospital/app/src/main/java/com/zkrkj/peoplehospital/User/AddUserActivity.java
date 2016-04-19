@@ -1,5 +1,6 @@
 package com.zkrkj.peoplehospital.User;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
+import widget.ProgressDialogStyle;
 
 public class AddUserActivity extends BaseActivity {
 
@@ -39,6 +41,7 @@ public class AddUserActivity extends BaseActivity {
     EditText et4;
     @Bind(R.id.button4)
     Button button4;
+    private Dialog pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,8 @@ public class AddUserActivity extends BaseActivity {
         String s4=et4.getText().toString().trim();
         OptsharepreInterface o = new OptsharepreInterface(this);
         String token = o.getPres("token");
+
+
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
                 Constants.SERVER_ADDRESS+"patient/add?gender="+s1+"&idNo="+s3+"&name="+s2+"&phone="+s4+"&token="+token,
@@ -95,6 +100,7 @@ public class AddUserActivity extends BaseActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.i("aaa", response);
+                      pb.dismiss();
                         Map<String, Object> object = null;
                         try {
                             object = JsonUtils.getMapObj(response);
@@ -117,6 +123,7 @@ public class AddUserActivity extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i("err", error.toString());
+                        pb.dismiss();
                         ToastUtil.ToastShow(getBaseContext(),"服务器好像出了点问题",true);
 
                     }

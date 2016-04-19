@@ -1,8 +1,13 @@
 package com.zkrkj.peoplehospital.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.adapter.DrugPriceAdapter;
+import com.zkrkj.peoplehospital.adapter.ServicePriceAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,9 +33,9 @@ import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
-import view.SearchView;
+import widget.RefreshLayout;
+
 /**
- *
  * Created by miao on 2016/3/16.
  * 药品价格activity
  */
@@ -44,9 +50,21 @@ public class DrugPriceActivity extends BaseActivity {
     TextView textView37;
     @Bind(R.id.listView2)
     ListView listView2;
-    @Bind(R.id.search)
-    SearchView search;
-    List<Map<String,Object>> list=new ArrayList<>();
+
+    List<Map<String, Object>> list = new ArrayList<>();
+    @Bind(R.id.search_et_input)
+    EditText searchEtInput;
+    @Bind(R.id.search_in)
+    ImageView searchIn;
+    @Bind(R.id.refresh)
+    RefreshLayout refresh;
+    private String cont = "";//搜索内容
+    private RequestQueue queue;
+    private int totalCount = 0;
+    private int startIndex = 1;
+    private boolean first = true;
+    private boolean sousuo = false;
+    private DrugPriceAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +72,36 @@ public class DrugPriceActivity extends BaseActivity {
         setContentView(R.layout.activity_drug_price);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
+    }
+    private void initWidget() {
+
+        refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        //下拉刷新
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                list.clear();
+                totalCount = 0;
+                startIndex = 1;
+                initData();
+                refresh.setRefreshing(false);
+            }
+        });
+        refresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+            @Override
+            public void onLoad() {
+                if (totalCount > 0 && totalCount % Constants.PAGE_SIZE == 0) {
+                    initData();
+                    refresh.setLoading(false);
+
+                } else {
+
+                    ToastUtil.ToastShow(getBaseContext(), "没有更多", false);
+                    refresh.setLoading(false);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -64,8 +112,40 @@ public class DrugPriceActivity extends BaseActivity {
     @Override
     public void initView() {
         initTitle();
-        search.setHint(this,"药品");
+
+        queue = Volley.newRequestQueue(getBaseContext());
         initData();
+        searchIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cont = searchEtInput.getText().toString();
+                sousuo=true;
+                totalCount=0;
+                initData();
+            }
+        });
+        searchEtInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (searchEtInput.getText().length() == 0) {
+                    cont = "";
+                    totalCount=0;
+                    sousuo=true;
+                    initData();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        initWidget();
 
     }
 
@@ -88,25 +168,36 @@ public class DrugPriceActivity extends BaseActivity {
     }
 
 
+    private void initData() {
 
-    private void  initData(){
-        RequestQueue queue = Volley.newRequestQueue(getBaseContext());
         IStringRequest requset = new IStringRequest(Request.Method.POST,
                 Constants.SERVER_ADDRESS + "hospital/medicinePrice",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("yaopin",response);
+                        Log.i("yaopin", response);
                         Map<String, Object> object = null;
                         Map<String, Object> data = null;
-
+                        List<Map<String,Object>> dugPriceList=null;
                         try {
                             object = JsonUtils.getMapObj(response);
                             data = JsonUtils.getMapObj(object.get("data").toString());
-                            list=JsonUtils.getListMap(data.get("dugPriceList").toString());
-                            DrugPriceAdapter adapter=new DrugPriceAdapter(list,getBaseContext());
-                            listView2.setAdapter(adapter);
-                        }catch (Exception e){
+                            dugPriceList = JsonUtils.getListMap(data.get("dugPriceList").toString());
+
+                            if (first||sousuo){
+                                list = dugPriceList;
+                                first=false;
+                                sousuo=false;
+                                adapter =new DrugPriceAdapter(list, getBaseContext());
+                                listView2.setAdapter(adapter);
+                            }else {
+
+                                list.addAll(dugPriceList);
+                                adapter.notifyDataSetChanged();
+                            }
+                            totalCount = list.size();
+
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -116,22 +207,27 @@ public class DrugPriceActivity extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        ToastUtil.ToastShow(getBaseContext(),"服务器好像出错误了",true);
+                        ToastUtil.ToastShow(getBaseContext(), "服务器好像出错误了", true);
 
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 //在这里设置需要post的参数
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("hosId","1");
-                //map.put("token", token);
+                map.put("hosId", "1");
+                if (cont != null) {
+                    map.put("medName", cont);
+                }
+                map.put("limit",Constants.PAGE_SIZE+"");
+                //map.put("limit",1+"");
+                map.put("offset",totalCount+"");
 
                 return map;
             }
         };
-            queue.add(requset);
+        queue.add(requset);
     }
 
 

@@ -28,11 +28,13 @@ import com.zkrkj.peoplehospital.R;
 import com.zkrkj.peoplehospital.User.AboutUs;
 import com.zkrkj.peoplehospital.User.ChangePasswordActivity;
 import com.zkrkj.peoplehospital.User.FeedBackActivity;
+import com.zkrkj.peoplehospital.User.MyCard;
 import com.zkrkj.peoplehospital.User.MyDocCard;
 import com.zkrkj.peoplehospital.User.MyUserActivity;
 import com.zkrkj.peoplehospital.User.PersonalDetail;
 import com.zkrkj.peoplehospital.User.UnreadMessagesActivity;
 import com.zkrkj.peoplehospital.activity.MainActivity;
+import com.zkrkj.peoplehospital.login.LoginActivity;
 import com.zkrkj.peoplehospital.registered.RegisteredHistory;
 import com.zkrkj.peoplehospital.update.CheckVersionTask;
 import com.zkrkj.peoplehospital.update.Config;
@@ -46,6 +48,7 @@ import java.util.Map;
 
 import base.BaseFragment;
 import base.OptsharepreInterface;
+import base.PushSmsService;
 import bean.MessageBean;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -355,12 +358,18 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 checkUpdate();
                 break;
             case R.id.resiglogin:
-                Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
+                resiglogin1();
+              //  Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
+                o.putPres("loginFlag","false");
+                Intent intent1=new Intent(getActivity(), PushSmsService.class);
+                getActivity().stopService(intent1);
+
+
                 MyApplication.loginFlag = false;
                 onResume();
                 break;
             case R.id.jiuyika://我的就医卡
-                intent = new Intent(getActivity(), MyDocCard.class);
+                intent = new Intent(getActivity(), MyCard.class);
                 startActivity(intent);
                 break;
             case R.id.tab_message://未读消息
@@ -376,6 +385,36 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
         }
+    }
+    //退出登录
+    private void resiglogin1() {
+
+        IStringRequest requset1 = new IStringRequest(Request.Method.GET,
+                Constants.SERVER_ADDRESS + "logout?token=" + token,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("aaa", response);
+                      //  parseUser(response);
+
+                        ToastUtil.ToastShow(getActivity(),"退出登录成功",false);
+                        Intent intent=new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("err", error.toString());
+
+                    }
+                }
+        );
+
+
+        queue.add(requset1);
+
     }
 
     /**
