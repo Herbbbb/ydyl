@@ -177,7 +177,7 @@ public class PushSmsService extends Service {
                     // 采用get方式向服务器发送请求
                     RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                     IStringRequest requset = new IStringRequest(Request.Method.GET,
-                            Constants.SERVER_ADDRESS_BACKUP + "usermessage/unread?token=" + token,
+                            Constants.SERVER_ADDRESS + "usermessage/unread?token=" + token,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {

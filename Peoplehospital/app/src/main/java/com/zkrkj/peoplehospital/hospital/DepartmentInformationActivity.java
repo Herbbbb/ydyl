@@ -154,7 +154,7 @@ public class DepartmentInformationActivity extends BaseActivity {
     public void network() {
         
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP + "doctor/recommend?hosOrgCode="+hosOrgCode,
+                Constants.SERVER_ADDRESS + "doctor/recommend?hosOrgCode="+hosOrgCode,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

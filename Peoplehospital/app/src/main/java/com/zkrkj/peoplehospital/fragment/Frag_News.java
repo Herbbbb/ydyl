@@ -44,7 +44,6 @@ public class Frag_News extends BaseFragment implements ViewPager.OnPageChangeLis
 
     private void init() {
         ButterKnife.bind(this, view);
-        initTitle();
         initFragment();
         initViewPager();
         initListener();
@@ -73,19 +72,6 @@ public class Frag_News extends BaseFragment implements ViewPager.OnPageChangeLis
             news.setArguments(bundle);
             listFragment.add(news);
         }
-    }
-
-    private void initTitle() {
-        TitleBarUtils titleBarUtils = (TitleBarUtils) view.findViewById(R.id.titleBar);
-        titleBarUtils.setTitle("健康资讯");
-        titleBarUtils.setLeftButtonClick(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

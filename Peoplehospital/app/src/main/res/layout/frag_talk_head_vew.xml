@@ -31,7 +31,7 @@
                 android:gravity="center"
                 android:text="刘敏"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 

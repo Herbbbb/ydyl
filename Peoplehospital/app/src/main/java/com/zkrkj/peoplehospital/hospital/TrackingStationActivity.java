@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +104,7 @@ public class TrackingStationActivity extends BaseActivity {
         pb.show();
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Constants.SERVER_ADDRESS + "his/getCallNoOut?hosOrgCode=" + hosOrgCode + "&hosOrgName=" + hosOrgName;
+        Log.e(Constants.TAG,url);
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

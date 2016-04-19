@@ -102,7 +102,7 @@ public class SpecialDepartmentActivity extends BaseActivity {
     public void network() {
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
-                Constants.SERVER_ADDRESS_BACKUP + "department/?hosId=" + hosId+"&isSpec=0",
+                Constants.SERVER_ADDRESS + "department/?hosId=" + hosId+"&isSpec=0",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

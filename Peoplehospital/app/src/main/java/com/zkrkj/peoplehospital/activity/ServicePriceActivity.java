@@ -167,7 +167,7 @@ public class ServicePriceActivity extends BaseActivity {
     private void initData() {
 
         IStringRequest requset = new IStringRequest(Request.Method.POST,
-                Constants.SERVER_ADDRESS_BACKUP + "hospital/servicePrice",
+                Constants.SERVER_ADDRESS + "hospital/servicePrice",
                 new Response.Listener<String>() {
 
 

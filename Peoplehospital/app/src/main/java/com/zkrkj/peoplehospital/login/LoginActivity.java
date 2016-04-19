@@ -117,7 +117,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 loginMethod();
             }
         }
-
     }
 
     private void loginMethod() {
@@ -160,11 +159,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ToastUtil.ToastShow(getBaseContext(),"用户手机号或密码错误", true);
             }else {
                 data = JsonUtils.getMapObj(object.get("data").toString());
-
                 Log.i("aaa", success);
-
                 token = data.get("token").toString();
-
                 String userId=data.get("userId").toString();
                 OptsharepreInterface o = new OptsharepreInterface(this);
                 o.putPres("token", token);
@@ -176,21 +172,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 MyApplication.token=token;
                 msg = object.get("msg").toString();
                 MyApplication.phone=account;
-                ToastUtil.ToastShow(getBaseContext(), msg, true);
+                ToastUtil.ToastShow(getBaseContext(), msg, false);
                 Intent intent=new Intent(getBaseContext(), MainActivity.class);
                 intent.putExtra("postion",0);
-
-
                 startActivity(intent);
             }
-
-
-
-
-
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
