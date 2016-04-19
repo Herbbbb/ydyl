@@ -199,6 +199,8 @@ public class Frag_Hospitals extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.tab_yuyueguahao://预约挂号
                 intent = new Intent(getActivity(), DepartmentRegistered.class);
+                intent.putExtra("hosId",hosId);
+                intent.putExtra("hosname",hosname);
                 startActivity(intent);
                 break;
             case R.id.tab_tesekeshi://特色科室

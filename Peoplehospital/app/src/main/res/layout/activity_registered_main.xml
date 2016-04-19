@@ -129,7 +129,8 @@
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:layout_marginTop="10dp"
-            android:background="@drawable/login_btn_submit"
+            android:enabled="true"
+            android:background="@drawable/registered_submit"
             android:text="预  约"
             android:textColor="@color/white" />
 

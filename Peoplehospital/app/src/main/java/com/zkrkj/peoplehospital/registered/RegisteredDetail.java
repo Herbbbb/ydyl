@@ -7,9 +7,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -347,6 +349,9 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
                     mLists = JsonUtils.getListMap(object.get("data").toString());
                     popupwindow = new SelePatientWindow(this, mLists);
                     popupwindow.showAtLocation(llMain,Gravity.BOTTOM| Gravity.CENTER_HORIZONTAL, 0, 0);
+                    backgroundAlpha(0.5f);
+                    //添加pop窗口关闭事件
+                    popupwindow.setOnDismissListener(new poponDismissListener());
                     popupwindow.setiMyItemClick(new IMyItemClick() {
                         @Override
                         public void myItemOnClick(int position) {
@@ -366,6 +371,30 @@ public class RegisteredDetail extends BaseActivity implements View.OnClickListen
         } catch (Exception e) {
             Log.e(Constants.TAG,e.getMessage());
         }
+    }
+
+    /**
+     * 添加popWin关闭事件，背景透明度改回来
+     */
+    class poponDismissListener implements PopupWindow.OnDismissListener{
+
+        @Override
+        public void onDismiss() {
+            // TODO Auto-generated method stub
+            //Log.v("List_noteTypeActivity:", "我是关闭事件");
+            backgroundAlpha(1f);
+        }
+
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     */
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
     }
 
     @Override

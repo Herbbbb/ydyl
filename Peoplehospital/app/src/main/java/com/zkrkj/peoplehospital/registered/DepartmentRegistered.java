@@ -11,8 +11,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -49,28 +49,30 @@ public class DepartmentRegistered extends BaseActivity {
     TextView tvHospitalName;
     @Bind(R.id.department_two)
     RecyclerView departmentTwo;
+    @Bind(R.id.ll_contain)
+    LinearLayout llContain;
+
+    private Dialog pb;
 
     List<Map<String, Object>> listsAll = new ArrayList<Map<String, Object>>();
     List<Map<String, Object>> listsOne = new ArrayList<Map<String, Object>>();
     List<Map<String, Object>> listsTwo = new ArrayList<Map<String, Object>>();
     Map<String, Object> object = null;
 
-    private Dialog pb;
-
-    String hosId,hosname;
+    String hosId, hosname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_department_registered);
         ButterKnife.bind(this);
-        hosId=getIntent().getStringExtra("hosId");//医院id
-        if(hosId==null||TextUtils.isEmpty(hosname)){
-            hosId="1";
+        hosId = getIntent().getStringExtra("hosId");//医院id
+        if (hosId == null || TextUtils.isEmpty(hosname)) {
+            hosId = "1";
         }
-        hosname=getIntent().getStringExtra("hosname");//医院名称
-        if(hosname==null||TextUtils.isEmpty(hosname)){
-            hosname="测试";
+        hosname = getIntent().getStringExtra("hosname");//医院名称
+        if (hosname == null || TextUtils.isEmpty(hosname)) {
+            hosname = "测试";
         }
         init();
     }
@@ -107,7 +109,7 @@ public class DepartmentRegistered extends BaseActivity {
         pb = ProgressDialogStyle.createLoadingDialog(this, "请求中...");
         pb.show();
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = Constants.SERVER_ADDRESS + "department?hosId="+hosId;
+        String url = Constants.SERVER_ADDRESS + "department?hosId=" + hosId;
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -137,7 +139,12 @@ public class DepartmentRegistered extends BaseActivity {
             } else if (object.get("success").toString().equals("1")) {
                 object = JsonUtils.getMapObj(object.get("data").toString());
                 listsAll = JsonUtils.getListMap(object.get("departments").toString());
-                formatData();
+                if (listsAll.size() > 0) {
+                    formatData();
+                } else {
+                    llContain.setVisibility(View.GONE);
+                }
+
             } else {
                 ToastUtil.ToastShow(this, "登录过期", true);
                 Intent intent = new Intent(this, LoginActivity.class);
@@ -149,8 +156,8 @@ public class DepartmentRegistered extends BaseActivity {
     }
 
     private void formatData() {
-        for(int i=0;i<listsAll.size();i++){
-            if(TextUtils.isEmpty(listsAll.get(i).get("parentDeptId").toString())){
+        for (int i = 0; i < listsAll.size(); i++) {
+            if (TextUtils.isEmpty(listsAll.get(i).get("parentDeptId").toString())) {
                 listsOne.add(listsAll.get(i));
             }
         }
@@ -195,7 +202,7 @@ public class DepartmentRegistered extends BaseActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof MyViewHolderOne) {
                 ((MyViewHolderOne) holder).tv_department_name.setText(listsOne.get(position).get("deptName").toString());
-                if(position==0){
+                if (position == 0) {
                     ((MyViewHolderOne) holder).itemView.setBackground(getResources().getDrawable(R.drawable.department_item_one_true));
                 }
 
@@ -243,14 +250,14 @@ public class DepartmentRegistered extends BaseActivity {
     }
 
     /**
-    * Describe:     绑定右侧列表
-    * User:         LF
-    * Date:         2016/4/11 15:09
-    */
-    private void bindRecyclerviewTwoData(String seleid){
+     * Describe:     绑定右侧列表
+     * User:         LF
+     * Date:         2016/4/11 15:09
+     */
+    private void bindRecyclerviewTwoData(String seleid) {
         listsTwo.clear();
-        for(int i=0;i<listsAll.size();i++){
-            if(listsAll.get(i).get("parentDeptId").toString().equals(seleid)){
+        for (int i = 0; i < listsAll.size(); i++) {
+            if (listsAll.get(i).get("parentDeptId").toString().equals(seleid)) {
                 listsTwo.add(listsAll.get(i));
             }
         }
@@ -258,18 +265,18 @@ public class DepartmentRegistered extends BaseActivity {
         departmentTwo.setAdapter(new DepartmentTwoAdapter());
     }
 
-    class DepartmentTwoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    class DepartmentTwoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView=LayoutInflater.from(DepartmentRegistered.this).inflate(R.layout.departmnet_one_item,parent,false);
-            MyViewHolderTwo holder=new MyViewHolderTwo(itemView);
+            View itemView = LayoutInflater.from(DepartmentRegistered.this).inflate(R.layout.departmnet_one_item, parent, false);
+            MyViewHolderTwo holder = new MyViewHolderTwo(itemView);
             return holder;
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if(holder instanceof  MyViewHolderTwo){
+            if (holder instanceof MyViewHolderTwo) {
                 ((MyViewHolderTwo) holder).tv_department_name.setText(listsTwo.get(position).get("deptName").toString());
             }
         }
@@ -281,17 +288,18 @@ public class DepartmentRegistered extends BaseActivity {
 
         class MyViewHolderTwo extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView tv_department_name;
+
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             public MyViewHolderTwo(View itemView) {
                 super(itemView);
-                tv_department_name= (TextView) itemView.findViewById(R.id.tv_department_name);
+                tv_department_name = (TextView) itemView.findViewById(R.id.tv_department_name);
                 itemView.setOnClickListener(this);
                 itemView.setBackground(getResources().getDrawable(R.drawable.department_item_one_true));
             }
 
             @Override
             public void onClick(View v) {
-                ToastUtil.ToastShow(DepartmentRegistered.this,listsTwo.get(getPosition()).get("deptName").toString(),true);
+                ToastUtil.ToastShow(DepartmentRegistered.this, listsTwo.get(getPosition()).get("deptName").toString(), true);
             }
         }
     }

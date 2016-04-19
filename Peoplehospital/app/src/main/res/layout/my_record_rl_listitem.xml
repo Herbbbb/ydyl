@@ -46,34 +46,38 @@
 
                 <TextView
                     android:id="@+id/tv_fyd"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="费用单"
+                    android:textSize="13sp"
+                    android:background="@drawable/record_bg_border_style"
                     android:textColor="#2ec075" />
 
                 <TextView
                     android:id="@+id/tv_cfd"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="处方单"
+                    android:textSize="13sp"
+                    android:background="@drawable/record_bg_border_style"
                     android:textColor="#2ec075" />
 
                 <TextView
                     android:id="@+id/tv_jyd"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="检验单"
+                    android:textSize="13sp"
+                    android:background="@drawable/record_bg_border_style"
                     android:textColor="#2ec075" />
 
                 <TextView
                     android:id="@+id/tv_jcd"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="检查单"
+                    android:textSize="13sp"
+                    android:background="@drawable/record_bg_border_style"
                     android:textColor="#2ec075" />
             </LinearLayout>
 

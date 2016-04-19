@@ -2,24 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:gravity="center"
-    android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content">
+    android:background="@drawable/patient_sele_style"
+    android:layout_margin="5dp"
+    android:layout_height="40dp">
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:gravity="center"
         android:textColor="@color/black"
         android:text="李飞"/>
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#f2f2f2"/>
+
 </LinearLayout>

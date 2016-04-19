@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -28,7 +30,7 @@ import util.ConvertDpAndPx;
  * @date: ${date} ${time}
  */
 public class SelePatientWindow extends PopupWindow {
-    private ListView lv;
+    private GridView lv;
     private View mMenuView;
     private List<Map<String,Object>> mLists;
 
@@ -48,7 +50,7 @@ public class SelePatientWindow extends PopupWindow {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.sele_patient_window, null);
-        lv = (ListView) mMenuView.findViewById(R.id.lv);
+        lv = (GridView) mMenuView.findViewById(R.id.lv);
         lv.setAdapter(new MyAdapter(context));
         //设置SelectPicPopupWindow的View
         this.setContentView(mMenuView);
@@ -82,6 +84,8 @@ public class SelePatientWindow extends PopupWindow {
         });
 
     }
+
+
 
     class MyAdapter extends BaseAdapter{
         private Context mContext;

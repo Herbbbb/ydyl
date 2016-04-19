@@ -123,7 +123,11 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
                 ToastUtil.ToastShow(this, obj.get("msg").toString(), true);
             } else if (obj.get("success").toString().equals("1")) {
                 obj = JsonUtils.getMapObj(obj.get("data").toString());
-                arrayJob = JsonUtils.getMapObj(obj.get("arrayJob").toString());
+                if(TextUtils.isEmpty(obj.get("arrayJob").toString())){
+                    btn_submit.setEnabled(false);
+                }else{
+                    arrayJob = JsonUtils.getMapObj(obj.get("arrayJob").toString());
+                }
                 appoint= JsonUtils.getMapObj(obj.get("appoint").toString());
                 formatData();
             } else {
@@ -203,14 +207,19 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
         Intent intent;
         switch (v.getId()) {
             case R.id.rl_wdjzr://我的就诊人
-                intent = new Intent(this, MyUserActivity.class);
-                intent.putExtra("type", 0);
-                startActivity(intent);
+                if(app.loginFlag){
+                    intent = new Intent(this, MyUserActivity.class);
+                    intent.putExtra("type", 0);
+                    startActivity(intent);
+                }else{
+                    ToastUtil.ToastShow(this,"请先登录",false);
+                    jumpLogin();
+                }
                 break;
             case R.id.btn_submit://预约详情
                 if(app.loginFlag){
                     if(arrayJob==null){
-                        ToastUtil.ToastShow(this,"该时间预约已满",true);
+                        ToastUtil.ToastShow(this,"不能逾越或预约已满",true);
                     }else{
                         SerializableMap arrayJobMap=new SerializableMap();
                         arrayJobMap.setMap(arrayJob);
@@ -219,15 +228,18 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
                         startActivity(intent1);
                     }
                 }else{
-                    ToastUtil.ToastShow(this, "请先登录", true);
-                    intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    ToastUtil.ToastShow(this,"请先登录",false);
+                    jumpLogin();
                 }
                 break;
             case R.id.rl_history://我的预约
-                Intent intent2 = new Intent(this, RegisteredHistory.class);
-                startActivity(intent2);
+                if(app.loginFlag){
+                    Intent intent2 = new Intent(this, RegisteredHistory.class);
+                    startActivity(intent2);
+                }else{
+                    ToastUtil.ToastShow(this,"请先登录",false);
+                    jumpLogin();
+                }
                 break;
             case R.id.min_sjwk://科室选择
                 intent = new Intent(this, DepartmentRegistered.class);
@@ -252,6 +264,13 @@ public class RegisteredMain extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
         }
+    }
+
+    private void jumpLogin(){
+        ToastUtil.ToastShow(this, "请先登录", true);
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
