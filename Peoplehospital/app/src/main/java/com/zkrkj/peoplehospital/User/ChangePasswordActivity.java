@@ -109,6 +109,7 @@ public class ChangePasswordActivity extends BaseActivity {
                         try {
                             object=JsonUtils.getMapObj(response);
                             if (object.get("success").equals("1")){
+                                o.putPres("loginFlag","false");
                                 ToastUtil.ToastShow(getBaseContext(),"密码修改成功您需要重新登录",true);
                                 Intent intent=new Intent(getBaseContext(), LoginActivity.class);
                                 startActivity(intent);

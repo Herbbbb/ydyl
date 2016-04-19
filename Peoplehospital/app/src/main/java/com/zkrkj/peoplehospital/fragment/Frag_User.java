@@ -48,6 +48,7 @@ import java.util.Map;
 
 import base.BaseFragment;
 import base.OptsharepreInterface;
+import base.PushSmsService;
 import bean.MessageBean;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -359,8 +360,12 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
             case R.id.resiglogin:
                 resiglogin1();
               //  Toast.makeText(getActivity(), "点击了退出登录", Toast.LENGTH_SHORT).show();
-                MyApplication.loginFlag = false;
+                o.putPres("loginFlag","false");
+                Intent intent1=new Intent(getActivity(), PushSmsService.class);
+                getActivity().stopService(intent1);
 
+
+                MyApplication.loginFlag = false;
                 onResume();
                 break;
             case R.id.jiuyika://我的就医卡
@@ -383,6 +388,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
     }
     //退出登录
     private void resiglogin1() {
+
         IStringRequest requset1 = new IStringRequest(Request.Method.GET,
                 Constants.SERVER_ADDRESS + "logout?token=" + token,
                 new Response.Listener<String>() {
@@ -390,6 +396,7 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                     public void onResponse(String response) {
                         Log.i("aaa", response);
                       //  parseUser(response);
+
                         ToastUtil.ToastShow(getActivity(),"退出登录成功",false);
                         Intent intent=new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
@@ -404,6 +411,8 @@ public class Frag_User extends BaseFragment implements View.OnClickListener {
                     }
                 }
         );
+
+
         queue.add(requset1);
 
     }

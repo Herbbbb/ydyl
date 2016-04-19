@@ -1,5 +1,6 @@
 package com.zkrkj.peoplehospital.hospital;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -33,6 +34,7 @@ import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
 import util.ToastUtil;
+import widget.ProgressDialogStyle;
 import widget.RefreshLayout;
 
 public class DepartmentInformationActivity extends BaseActivity {
@@ -57,6 +59,7 @@ public class DepartmentInformationActivity extends BaseActivity {
     private RequestQueue queue;
     private String hosOrgCode="";
     private String id;
+    private Dialog pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,12 +155,16 @@ public class DepartmentInformationActivity extends BaseActivity {
     }
 
     public void network() {
-        
+        if (pb==null){
+            pb = ProgressDialogStyle.createLoadingDialog(this, "正在登录...");
+            pb.show();
+        }
         IStringRequest requset = new IStringRequest(Request.Method.GET,
                 Constants.SERVER_ADDRESS + "doctor/recommend?hosOrgCode="+hosOrgCode,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        pb.dismiss();
                         Log.i("KESHIXINXI",response);
                         Map<String, Object> object = null;
                         Map<String, Object> data = null;
@@ -180,6 +187,7 @@ public class DepartmentInformationActivity extends BaseActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        pb.dismiss();
                         Log.i("aaa", error.toString());
 
                     }

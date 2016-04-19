@@ -11,7 +11,9 @@ import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.login.LoginActivity;
 import com.zkrkj.peoplehospital.registered.RegisteredDetail;
 
 import java.util.ArrayList;
@@ -90,21 +92,27 @@ public class MyAdapter extends BaseAdapter {
                 holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        int k = Integer.parseInt(list2.get(i).get("allowReservationNum").toString());
-                        if (k<=0){
-                            // adapterView.getItemAtPosition(i)
-                            ToastUtil.ToastShow(context,"已经约满",true);
+                        if (MyApplication.loginFlag) {
+                            int k = Integer.parseInt(list2.get(i).get("allowReservationNum").toString());
+                            if (k <= 0) {
+                                // adapterView.getItemAtPosition(i)
+                                ToastUtil.ToastShow(context, "已经约满", true);
+                            } else {
+                                Intent intent = new Intent(context, RegisteredDetail.class);
+                                Map<String, Object> data = list2.get(i);
+                                SerializableMap tmpmap = new SerializableMap();
+                                tmpmap.setMap(data);
+
+                                intent.putExtra("arrayJob", tmpmap);
+
+                                context.startActivity(intent);
+                            }
+
                         }else {
-                            Intent intent = new Intent(context, RegisteredDetail.class);
-                            Map<String, Object> data = list2.get(i);
-                            SerializableMap tmpmap = new SerializableMap();
-                            tmpmap.setMap(data);
-
-                            intent.putExtra("arrayJob", tmpmap);
-
+                            ToastUtil.ToastShow(context,"您还没有登录,请登录",false);
+                            Intent intent = new Intent(context, LoginActivity.class);
                             context.startActivity(intent);
                         }
-
                     }
                 });
 

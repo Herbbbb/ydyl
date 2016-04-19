@@ -16,7 +16,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.zkrkj.peoplehospital.MyApplication;
 import com.zkrkj.peoplehospital.R;
+import com.zkrkj.peoplehospital.login.LoginActivity;
 import com.zkrkj.peoplehospital.registered.RegisteredDetail;
 
 import java.text.SimpleDateFormat;
@@ -425,16 +427,22 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
+                                        if (MyApplication.loginFlag==true) {
+                                            Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            Map<String, Object> data = arrayjobs.get(j);
+                                            SerializableMap tmpmap = new SerializableMap();
+                                            tmpmap.setMap(data);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                            intent.putExtra("arrayJob", tmpmap);
 
-                                       startActivity(intent);
+                                            startActivity(intent);
 
+                                        }else {
+                                            ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                            Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                            startActivity(intent);
+                                        }
                                     }
                                 });
                             }else {
@@ -464,17 +472,26 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -498,20 +515,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -539,20 +565,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -577,20 +612,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -614,20 +658,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -695,6 +748,8 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+
+
                                         Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
                                         Map<String,Object> data=arrayjobs.get(j);
@@ -729,20 +784,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -769,20 +833,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -807,20 +880,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -845,20 +927,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setTextColor(Color.WHITE);
 
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -885,20 +976,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -923,20 +1023,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -960,20 +1069,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -1000,20 +1118,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -1040,20 +1167,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -1083,20 +1219,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
 
 
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -1123,20 +1268,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -1161,20 +1315,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");
@@ -1198,20 +1361,29 @@ public class FindDocDetail extends BaseActivity implements View.OnClickListener 
                                 btn1.setBackgroundColor(Color.parseColor("#FF9900"));
                                 btn1.setTextColor(Color.WHITE);
                                 final int j=i;
-                                btn1.setOnClickListener(new View.OnClickListener() {
+                                            btn1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent=new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        Map<String,Object> data=arrayjobs.get(j);
-                                        SerializableMap tmpmap=new SerializableMap();
-                                        tmpmap.setMap(data);
+                                            if (MyApplication.loginFlag==true) {
+                                                Intent intent = new Intent(getBaseContext(), RegisteredDetail.class);
 
-                                        intent.putExtra("arrayJob",tmpmap);
+                                                Map<String, Object> data = arrayjobs.get(j);
+                                                SerializableMap tmpmap = new SerializableMap();
+                                                tmpmap.setMap(data);
 
-                                       startActivity(intent);
+                                                intent.putExtra("arrayJob", tmpmap);
 
-                                    }
+                                                startActivity(intent);
+
+                                            }else {
+                                                ToastUtil.ToastShow(getBaseContext(),"您还没有登录,请登录",false);
+                                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+
                                 });
                             }else {
                                 btn1.setText("约满");

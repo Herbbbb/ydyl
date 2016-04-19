@@ -1,6 +1,7 @@
 package com.zkrkj.peoplehospital.hospital;
 //特色科室Activity
 //miao
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import util.Constants;
 import util.IStringRequest;
 import util.JsonUtils;
 import util.TitleBarUtils;
+import widget.ProgressDialogStyle;
 
 public class SpecialDepartmentActivity extends BaseActivity {
     List<Map<String, Object>> departments = new ArrayList<>();
@@ -40,6 +42,7 @@ public class SpecialDepartmentActivity extends BaseActivity {
     ListView listView5;
     String hosId, hosname1;
     private String hosOrgCode="";
+    private Dialog pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,12 +103,17 @@ public class SpecialDepartmentActivity extends BaseActivity {
         ButterKnife.unbind(this);
     }
     public void network() {
+        if (pb==null){
+            pb = ProgressDialogStyle.createLoadingDialog(this, "正在登录...");
+            pb.show();
+        }
         RequestQueue queue = Volley.newRequestQueue(this);
         IStringRequest requset = new IStringRequest(Request.Method.GET,
                 Constants.SERVER_ADDRESS + "department/?hosId=" + hosId+"&isSpec=0",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        pb.dismiss();
                         Map<String, Object> object = null;
                         Map<String, Object> data = null;
 
@@ -128,6 +136,7 @@ public class SpecialDepartmentActivity extends BaseActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        pb.dismiss();
                         Log.i("aaa", error.toString());
 
                     }

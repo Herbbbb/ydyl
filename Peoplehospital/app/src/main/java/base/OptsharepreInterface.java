@@ -78,7 +78,7 @@ public class OptsharepreInterface {
         } else if (optName.equals("unmsg")) {// 手机号
             values = settings.getString("unmsg", "0");
         } else if (optName.equals("loginFlag")) {// 手机号
-            values = settings.getString("loginFlag", "false");
+            values = settings.getString("loginFlag", "");
         } else if (optName.equals("token")) {//登录成功后返回token值
             values = settings.getString("token", "");
         } else {

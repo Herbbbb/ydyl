@@ -73,7 +73,7 @@ public class PushSmsService extends Service {
 
         System.out.println("oncreate()");
         o=new OptsharepreInterface(getApplicationContext());
-
+        token = o.getPres("token");
 
        // this.client = new AsyncHttpClient();
 
@@ -156,7 +156,7 @@ public class PushSmsService extends Service {
         public void run() {
 
                 String url = "http://110.65.99.66:8080/jerry/PushSmsServlet";
-                token = MyApplication.token;
+
                 while (flag) {
 
                     System.out.println("发送请求");

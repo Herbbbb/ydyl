@@ -128,6 +128,7 @@ public class FindDocActivity extends BaseActivity implements View.OnClickListene
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 Intent intent = new Intent(getBaseContext(), FindDocDetail.class);
                 id = list1.get(i).get("id").toString();
                 intent.putExtra("id", id);
