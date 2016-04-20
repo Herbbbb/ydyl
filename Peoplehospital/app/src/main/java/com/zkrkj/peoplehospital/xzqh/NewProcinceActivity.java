@@ -46,15 +46,24 @@ public class NewProcinceActivity extends BaseActivity {
     private RecyclerView xzqh_rl;
     List<CityNewBean> lists = new ArrayList<CityNewBean>();
     private XZQHDBHelper dbHelper;
+    private MyAdapter adapter;
+    private View headerView;
 
-    private Handler handler=new Handler(){
+    private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            if(msg.what==0){
+            if (msg.what == 0) {
                 xzqh_rl.setLayoutManager(new LinearLayoutManager(NewProcinceActivity.this));
-                xzqh_rl.setAdapter(new MyAdapter());
-            }else if(msg.what==1){
+                adapter = new MyAdapter();
+                headerView = LayoutInflater.from(NewProcinceActivity.this).inflate(R.layout.new_procince_list_header, null);
+                RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                headerView.setLayoutParams(lp);
+                adapter.setmHeaderView(headerView);
+                xzqh_rl.setAdapter(adapter);
+            } else if (msg.what == 1) {
             }
-        };
+        }
+
+        ;
     };
 
     public LocationClient mLocationClient = null;
@@ -64,7 +73,7 @@ public class NewProcinceActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_procince);
-        dbHelper=new XZQHDBHelper(this);
+        dbHelper = new XZQHDBHelper(this);
         // 实例化汉字转拼音类
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
@@ -80,17 +89,17 @@ public class NewProcinceActivity extends BaseActivity {
 
     private void initLoc() {
         mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
-        mLocationClient.registerLocationListener( myListener );    //注册监听函数
+        mLocationClient.registerLocationListener(myListener);    //注册监听函数
         initLocation();
         mLocationClient.start();
     }
 
-    private void initLocation(){
+    private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
         );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        int span=0;
+        int span = 0;
         option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         option.setOpenGps(true);//可选，默认false,设置是否使用gps
@@ -108,7 +117,7 @@ public class NewProcinceActivity extends BaseActivity {
 
             @Override
             public void run() {
-                lists=dbHelper.queryAllProcince();
+                lists = dbHelper.queryAllProcince();
                 listSort();
                 handler.sendEmptyMessage(0);
             }
@@ -116,7 +125,7 @@ public class NewProcinceActivity extends BaseActivity {
     }
 
     private void initWidget() {
-        xzqh_rl= (RecyclerView) findViewById(R.id.xzqh_rl);
+        xzqh_rl = (RecyclerView) findViewById(R.id.xzqh_rl);
     }
 
     private void initTitle() {
@@ -131,7 +140,7 @@ public class NewProcinceActivity extends BaseActivity {
         });
     }
 
-    private void listSort(){
+    private void listSort() {
         lists = filledData(lists);
         // 根据a-z进行排序源数据
         Collections.sort(lists, pinyinComparator);
@@ -165,27 +174,58 @@ public class NewProcinceActivity extends BaseActivity {
         return mSortList;
     }
 
-    class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         String level;
+
+        public static final int TYPE_HEADER = 0;
+        public static final int TYPE_NORMAL = 1;
+
+        public View getmHeaderView() {
+            return mHeaderView;
+        }
+
+        public void setmHeaderView(View mHeaderView) {
+            this.mHeaderView = mHeaderView;
+        }
+
+        private View mHeaderView;
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position == 0) return TYPE_HEADER;
+            return TYPE_NORMAL;
+        }
+
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            MyHolder holder=new MyHolder(LayoutInflater.from(NewProcinceActivity.this).inflate(R.layout.activity_group_member_item,parent,false));
+            MyHolder holder = null;
+            if (viewType == TYPE_NORMAL) {
+                holder = new MyHolder(LayoutInflater.from(NewProcinceActivity.this).inflate(R.layout.activity_group_member_item, parent, false));
+            } else {
+                holder = new MyHolder(mHeaderView);
+            }
             return holder;
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if(holder instanceof MyHolder){
-                // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
-                if (position == getPositionForSection(position)) {
-                    ((MyHolder) holder).catalog.setVisibility(View.VISIBLE);
-                    ((MyHolder) holder).catalog.setText(lists.get(position).getSortLetters());
+            if (holder instanceof MyHolder) {
+                if (position == 0) {
+
                 } else {
-                    ((MyHolder) holder).catalog.setVisibility(View.GONE);
+                    position=position-1;
+                    // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
+                    if (position == getPositionForSection(position)) {
+                        ((MyHolder) holder).catalog.setVisibility(View.VISIBLE);
+                        ((MyHolder) holder).catalog.setText(lists.get(position).getSortLetters());
+                    } else {
+                        ((MyHolder) holder).catalog.setVisibility(View.GONE);
+                    }
+
+                    ((MyHolder) holder).title.setText(lists.get(position).getZone_desc());
                 }
 
-                ((MyHolder) holder).title.setText(lists.get(position).getZone_desc());
             }
         }
 
@@ -193,7 +233,7 @@ public class NewProcinceActivity extends BaseActivity {
          * 根据分类的首字母的Char ascii值获取其第一次出现该首字母的位置
          */
         public int getPositionForSection(int position) {
-            for (int i = 0; i < getItemCount(); i++) {
+            for (int i = 0; i < getItemCount() + 1; i++) {
                 String sortStr = lists.get(i).getSortLetters();
                 char firstChar = sortStr.toUpperCase().charAt(0);
                 if (firstChar == lists.get(position).getSortLetters().charAt(0)) {
@@ -205,46 +245,53 @@ public class NewProcinceActivity extends BaseActivity {
 
         @Override
         public int getItemCount() {
-            return lists.size();
+            return lists.size() + 1;
         }
 
-        class MyHolder extends RecyclerView.ViewHolder{
+        class MyHolder extends RecyclerView.ViewHolder {
 
-            TextView catalog,title;
+            TextView catalog, title;
+
             public MyHolder(View itemView) {
                 super(itemView);
-                catalog= (TextView) itemView.findViewById(R.id.catalog);
-                title= (TextView) itemView.findViewById(R.id.title);
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        level=lists.get(getPosition()).getZone_level();
-                        if(level.equals("1")){
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Log.e(Constants.TAG,lists.get(getPosition()).getZone_code());
-                                    lists=dbHelper.queryCityByCode(lists.get(getPosition()).getZone_code());
-                                    listSort();
-                                    handler.sendEmptyMessage(0);
-                                }
-                            }).start();
-                        }else if(level.equals("2")){
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    lists=dbHelper.queryCountyByCode(lists.get(getPosition()).getZone_code());
-                                    listSort();
-                                    handler.sendEmptyMessage(0);
-                                }
-                            }).start();
-                        }else{
-                            Intent intent =new Intent(NewProcinceActivity.this,FindHospitalActivity.class);
-                            intent.putExtra("cityNewBean",lists.get(getPosition()));
-                            startActivity(intent);
+                if (itemView == mHeaderView) {
+
+                } else {
+                    catalog = (TextView) itemView.findViewById(R.id.catalog);
+                    title = (TextView) itemView.findViewById(R.id.title);
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            level = lists.get(getPosition()-1).getZone_level();
+                            if (level.equals("1")) {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Log.e(Constants.TAG, lists.get(getPosition()-1).getZone_code());
+                                        lists = dbHelper.queryCityByCode(lists.get(getPosition()-1).getZone_code());
+                                        listSort();
+                                        handler.sendEmptyMessage(0);
+                                    }
+                                }).start();
+                            } else if (level.equals("2")) {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        lists = dbHelper.queryCountyByCode(lists.get(getPosition()-1).getZone_code());
+                                        listSort();
+                                        handler.sendEmptyMessage(0);
+                                    }
+                                }).start();
+                            } else {
+                                Intent intent = new Intent(NewProcinceActivity.this, FindHospitalActivity.class);
+                                intent.putExtra("cityNewBean", lists.get(getPosition()-1));
+                                Log.e(Constants.TAG, lists.get(getPosition()-1).getZone_desc());
+                                startActivity(intent);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         }
     }
@@ -265,7 +312,7 @@ public class NewProcinceActivity extends BaseActivity {
             sb.append(location.getLongitude());
             sb.append("\nradius : ");
             sb.append(location.getRadius());
-            if (location.getLocType() == BDLocation.TypeGpsLocation){// GPS定位结果
+            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
                 sb.append("\nspeed : ");
                 sb.append(location.getSpeed());// 单位：公里每小时
                 sb.append("\nsatellite : ");
@@ -279,7 +326,7 @@ public class NewProcinceActivity extends BaseActivity {
                 sb.append("\ndescribe : ");
                 sb.append("gps定位成功");
 
-            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation){// 网络定位结果
+            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
                 sb.append("\naddr : ");
                 sb.append(location.getAddrStr());
                 //运营商信息
@@ -321,15 +368,16 @@ public class NewProcinceActivity extends BaseActivity {
     }
 
 
-
     @Override
     public int getLayoutId() {
         return 0;
     }
+
     @Override
     public void initView() {
 
     }
+
     @Override
     public void initAction() {
 
